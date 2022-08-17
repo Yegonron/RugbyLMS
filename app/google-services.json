@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "803438366365",
+    "firebase_url": "https://rugbylms-5faea-default-rtdb.firebaseio.com",
+    "project_id": "rugbylms-5faea",
+    "storage_bucket": "rugbylms-5faea.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803438366365:android:6124d0b23498f8c95ece74",
+        "android_client_info": {
+          "package_name": "com.yegonron.rugbylms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803438366365-0ohlhhlh8h0rnh3j7b9od31g0n8o4n15.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHqZ0FA49tWpI0eUdQl80hLdX8928uwsw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803438366365-0ohlhhlh8h0rnh3j7b9od31g0n8o4n15.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
