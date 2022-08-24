@@ -16,6 +16,36 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RUGBYLMS">
         <activity
+            android:name=".RecordPlayerAttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".UpdateLeagueTableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecordGameFixturesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LivestreamGamesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LeagueTableActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GameFixturesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PlayerAttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AboutUsActivity"
+            android:exported="false" />
+        <activity
             android:name=".ProfileEditPlayerActivity"
             android:exported="false" />
         <activity
@@ -74,14 +104,17 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".SplashScreenActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

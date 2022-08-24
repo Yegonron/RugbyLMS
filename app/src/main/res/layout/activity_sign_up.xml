@@ -17,8 +17,8 @@
         android:minWidth="200dp"
         android:minHeight="100dp"
         android:text="Player"
-        android:textSize="18sp"
-        android:textColor="@color/green" />
+        android:textColor="@color/green"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/fanBtn"

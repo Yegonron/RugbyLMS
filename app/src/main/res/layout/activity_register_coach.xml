@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/black"
         android:padding="10dp">
 
@@ -28,7 +28,7 @@
             android:layout_centerHorizontal="true"
             android:text="Coach Registration"
             android:textColor="@color/green"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
@@ -47,7 +47,7 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="0dp"
-                android:src="@drawable/ic_person_gray"
+                android:src="@drawable/ic_person_white"
                 tools:ignore="NotSibling" />
 
             <EditText
@@ -201,7 +201,7 @@
                 android:backgroundTint="@color/black"
                 android:minWidth="120dp"
                 android:text="Register"
-                android:textColor="@color/green"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
             <TextView

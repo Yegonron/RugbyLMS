@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@color/black"
         android:padding="10dp">
 
@@ -28,9 +28,8 @@
             android:layout_centerHorizontal="true"
             android:text=" Edit Player "
             android:textColor="@color/green"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:textStyle="bold" />
-
 
     </RelativeLayout>
 
@@ -48,7 +47,7 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_person_gray"
+                android:src="@drawable/ic_person_white"
                 tools:ignore="NotSibling" />
 
             <EditText
@@ -126,8 +125,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_phone_gray"
-                android:drawableLeft="@drawable/ic_phone_gray"
+                android:drawableStart="@drawable/ic_calendar_gray"
+                android:drawableLeft="@drawable/ic_calendar_gray"
                 android:drawablePadding="5dp"
                 android:hint="Date Of Birth (DD/MM/YY)"
                 android:inputType="date"
@@ -168,8 +167,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_location_gray"
-                android:drawableLeft="@drawable/ic_location_gray"
+                android:drawableStart="@drawable/ic_rugby_gray"
+                android:drawableLeft="@drawable/ic_rugby_gray"
                 android:drawablePadding="5dp"
                 android:hint="Position"
                 android:inputType="number"
@@ -189,8 +188,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_location_gray"
-                android:drawableLeft="@drawable/ic_location_gray"
+                android:drawableStart="@drawable/ic_one_gray"
+                android:drawableLeft="@drawable/ic_one_gray"
                 android:drawablePadding="5dp"
                 android:hint="Boot Size"
                 android:inputType="number"
@@ -210,8 +209,8 @@
                 android:layout_marginRight="5dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_location_gray"
-                android:drawableLeft="@drawable/ic_location_gray"
+                android:drawableStart="@drawable/ic_one_gray"
+                android:drawableLeft="@drawable/ic_one_gray"
                 android:drawablePadding="5dp"
                 android:hint="Kit Size"
                 android:inputType="text"
@@ -228,7 +227,7 @@
                 android:backgroundTint="@color/black"
                 android:minWidth="120dp"
                 android:text="Update"
-                android:textColor="@color/green"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
         </RelativeLayout>

@@ -3,14 +3,19 @@ package com.yegonron.rugbylms;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageButton;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -23,10 +28,13 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Objects;
 
-public class MainAdminActivity extends AppCompatActivity {
+public class MainAdminActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private TextView nameTv, emailTv, phoneTv;
     private ImageView profileIv;
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    Toolbar toolbar;
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -39,22 +47,20 @@ public class MainAdminActivity extends AppCompatActivity {
         nameTv = findViewById ( R.id.nameTv );
         emailTv = findViewById ( R.id.emailTv );
         phoneTv = findViewById ( R.id.phoneTv );
-
         profileIv = findViewById(R.id.profileIv);
 
-        ImageButton settingsBtn = findViewById(R.id.settingsBtn);
-        ImageButton editProfileBtn = findViewById(R.id.editProfileBtn);
-        ImageButton logoutBtn = findViewById(R.id.logoutBtn);
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationView = findViewById(R.id.nav_view);
+        toolbar = findViewById(R.id.toolbar);
 
-        editProfileBtn.setOnClickListener(v -> startActivity(new Intent(MainAdminActivity.this, ProfileEditAdminActivity.class)));
-        settingsBtn.setOnClickListener(v -> startActivity(new Intent(MainAdminActivity.this, SettingsActivity.class)));
+        setSupportActionBar(toolbar);
 
-        logoutBtn.setOnClickListener (view -> {
-            //make offline
-            //sign out
-            //go to login activity
-            makeMeOffline();
-        });
+        navigationView.bringToFront();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,R.string.navigation_drawer_open , R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView.setNavigationItemSelectedListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance ();
         progressDialog = new ProgressDialog ( this );
@@ -62,6 +68,19 @@ public class MainAdminActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside ( false );
         checkUser();
 
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+
+        }
+        else{
+            super.onBackPressed();
+
+        }
     }
 
     private void makeMeOffline() {
@@ -112,11 +131,11 @@ public class MainAdminActivity extends AppCompatActivity {
                             emailTv.setText(email);
                             phoneTv.setText(phone);
                             try {
-                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_person_gray).into(profileIv);
+                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_person_white).into(profileIv);
 
                             }
                             catch (Exception e){
-                                profileIv.setImageResource(R.drawable.ic_person_gray);
+                                profileIv.setImageResource(R.drawable.ic_person_white);
                             }
 
                         }
@@ -129,4 +148,71 @@ public class MainAdminActivity extends AppCompatActivity {
                 } );
     }
 
-}
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+        switch (menuItem.getItemId()){
+            case R.id.profile:
+                Intent intent = new Intent(MainAdminActivity.this,ProfileEditAdminActivity.class);
+                startActivity(intent);
+                break;
+
+            case R.id.reports:
+                Intent intent1 = new Intent(MainAdminActivity.this,ReportsActivity.class);
+                startActivity(intent1);
+                break;
+
+            case R.id.recordGameFixtures:
+                Intent intent2 = new Intent(MainAdminActivity.this, RecordGameFixturesActivity.class);
+                startActivity(intent2);
+                break;
+
+            case R.id.gameFixtures:
+                Intent intent3 = new Intent(MainAdminActivity.this, GameFixturesActivity.class);
+                startActivity(intent3);
+                break;
+
+            case R.id.leagueTable:
+                Intent intent4 = new Intent(MainAdminActivity.this,LeagueTableActivity.class);
+                startActivity(intent4);
+                break;
+
+            case R.id.updateLeagueTable:
+                Intent intent5 = new Intent(MainAdminActivity.this,UpdateLeagueTableActivity.class);
+                startActivity(intent5);
+                break;
+
+            case R.id.livestreamGames:
+                Intent intent6 = new Intent(MainAdminActivity.this, LivestreamGamesActivity.class);
+                startActivity(intent6);
+                break;
+
+         /*   case R.id.receive_Game_Notification:
+                Intent intent7 = new Intent(MainAdminActivity.this,);
+                startActivity(intent7);
+                break;
+         */
+            case R.id.help:
+                Intent intent8 = new Intent(MainAdminActivity.this, HelpActivity.class);
+                startActivity(intent8);
+                break;
+
+            case R.id.About_Us:
+                Intent intent9 = new Intent(MainAdminActivity.this,AboutUsActivity.class);
+                startActivity(intent9);
+                break;
+
+            case R.id.Exit:
+                //make offline
+                //sign out
+                //go to login activity
+                makeMeOffline();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
+    }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/profile"
+            android:title="Profile"
+            android:icon="@drawable/ic_edit_white"/>
+
+        <item
+            android:id="@+id/reports"
+            android:title="Reports"
+            android:icon="@drawable/ic_reports_gray"/>
+
+        <item
+            android:id="@+id/gameFixtures"
+            android:title="Game Fixtures"
+            android:icon="@drawable/ic_calendar_month_gray"/>
+
+        <item
+            android:id="@+id/leagueTable"
+            android:title="League Table"
+            android:icon="@drawable/ic_attendance_gray"/>
+
+        <item
+            android:id="@+id/livestreamGames"
+            android:title="Livestream Games"
+            android:icon="@drawable/ic_video_library_gray"/>
+
+    </group>
+
+    <item android:title="Extras">
+
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/receive_Game_Notification"
+                    android:icon="@drawable/ic_settings_white"
+                    android:title="Receive Game Notifications" />
+
+                <item
+                    android:id="@+id/help"
+                    android:icon="@drawable/ic_help_outline_gray"
+                    android:title="Help" />
+
+                <item
+                    android:id="@+id/About_Us"
+                    android:icon="@drawable/ic_info_gray"
+                    android:title="About Us" />
+
+            </group>
+        </menu>
+
+    </item>
+
+    <item android:title="logout">
+
+        <menu>
+
+            <item
+                android:id="@+id/Exit"
+                android:icon="@drawable/ic_logout_red"
+                android:title="Exit" />
+
+        </menu>
+
+    </item>
+
+</menu>

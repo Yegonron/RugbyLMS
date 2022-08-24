@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:src="@drawable/logo"
-        android:contentDescription="@string/logo" />
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo" />
 
     <Button
         android:id="@+id/signupBtn"

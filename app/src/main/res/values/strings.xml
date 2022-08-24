@@ -2,4 +2,6 @@
     <string name="app_name">RUGBYLMS</string>
     <string name="backbutton">BackButton</string>
     <string name="logo">Logo</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
