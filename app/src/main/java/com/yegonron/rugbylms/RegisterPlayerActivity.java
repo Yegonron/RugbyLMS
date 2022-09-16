@@ -1,15 +1,20 @@
 package com.yegonron.rugbylms;
 
 import android.Manifest;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,6 +36,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -38,7 +44,16 @@ import java.util.Objects;
 public class RegisterPlayerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, positionEt, bootSizeEt, kitSizeEt, emailEt, passwordEt, cPasswordEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, emailEt, passwordEt, cPasswordEt;
+
+    final String[] teams = {"Leos", "KCB", "Oilers"};
+    final String[] positions = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
+    final String[] kitSizes = {"XS", "S", "M", "L", "XL", "XXL"};
+    final String[] bootSizes = {"4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5",
+            "10", "10.5", "11", "11.5", "12", "13", "14", "15", "16", "17"};
+
+    AutoCompleteTextView teamNameTv, positionTv, bootSizeTv, kitSizeTv;
+    ArrayAdapter<String> adapterItems;
 
     //permission constants
     private static final int CAMERA_REQUEST_CODE = 200;
@@ -52,6 +67,8 @@ public class RegisterPlayerActivity extends AppCompatActivity {
     private String[] storagePermissions;
     //image picked uri
     private Uri image_uri;
+
+    DatePickerDialog.OnDateSetListener setListener;
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
@@ -72,9 +89,9 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         lastNameEt = findViewById(R.id.lastNameEt);
         dateOfBirthEt = findViewById(R.id.dateOfBirthEt);
         phoneEt = findViewById(R.id.phoneEt);
-        positionEt = findViewById(R.id.positionEt);
-        bootSizeEt = findViewById(R.id.bootSizeEt);
-        kitSizeEt = findViewById(R.id.kitSizeEt);
+        positionTv = findViewById(R.id.positionTv);
+        bootSizeTv = findViewById(R.id.bootSizeTv);
+        kitSizeTv = findViewById(R.id.kitSizeTv);
         emailEt = findViewById(R.id.emailEt);
         passwordEt = findViewById(R.id.passwordEt);
         cPasswordEt = findViewById(R.id.cPasswordEt);
@@ -102,149 +119,200 @@ public class RegisterPlayerActivity extends AppCompatActivity {
 
         noAccountPlayerTv.setOnClickListener(v -> startActivity(new Intent(RegisterPlayerActivity.this, SignUpActivity.class)));
 
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, teams);
+        teamNameTv.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, positions);
+        positionTv.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, kitSizes);
+        kitSizeTv.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, bootSizes);
+        bootSizeTv.setAdapter(adapterItems);
+
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        dateOfBirthEt.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    RegisterPlayerActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, setListener, year, month, day);
+
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
+
+        });
+
+        setListener = (datePicker, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = day + "/" + month1 + "/" + year1;
+            dateOfBirthEt.setText(date);
+
+        };
     }
-    private String surName, firstName, lastName, dateOfBirth, phoneNo, position, bootSize, kitSize, email, password;
+
+    private String surName, firstName, lastName, dateOfBirth, phoneNo, teamName, position, bootSize, kitSize, email, password;
 
     private void inputData() {
         //input data
-        surName = surNameEt.getText ( ).toString ( ).trim ( );
-        firstName = firstNameEt.getText ( ).toString ( ).trim ( );
-        lastName = lastNameEt.getText ( ).toString ( ).trim ( );
-        dateOfBirth = dateOfBirthEt.getText ( ).toString ( ).trim ( );
-        phoneNo = phoneEt.getText ( ).toString ( ).trim ( );
-        position = positionEt.getText ( ).toString ( ).trim ( );
-        bootSize = bootSizeEt.getText ( ).toString ( ).trim ( );
-        kitSize = kitSizeEt.getText ( ).toString ( ).trim ( );
-        email = emailEt.getText ( ).toString ( ).trim ( );
-        password = passwordEt.getText ( ).toString ( ).trim ( );
+        surName = surNameEt.getText().toString().trim();
+        firstName = firstNameEt.getText().toString().trim();
+        lastName = lastNameEt.getText().toString().trim();
+        dateOfBirth = dateOfBirthEt.getText().toString().trim();
+        phoneNo = phoneEt.getText().toString().trim();
+        teamName = teamNameTv.getText().toString().trim();
+        position = positionTv.getText().toString().trim();
+        bootSize = bootSizeTv.getText().toString().trim();
+        kitSize = kitSizeTv.getText().toString().trim();
+        email = emailEt.getText().toString().trim();
+        password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
 
         //validate data
 
-        if (TextUtils.isEmpty ( surName )) {
-            Toast.makeText ( this , "Enter surname..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(surName)) {
+            Toast.makeText(this, "Enter surname...", Toast.LENGTH_SHORT).show();
         }
-        if (TextUtils.isEmpty ( firstName )) {
-            Toast.makeText ( this , "Enter firstname..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(firstName)) {
+            Toast.makeText(this, "Enter firstname...", Toast.LENGTH_SHORT).show();
         }
-        if (TextUtils.isEmpty ( lastName )) {
-            Toast.makeText ( this , "Enter lastname..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(lastName)) {
+            Toast.makeText(this, "Enter lastname...", Toast.LENGTH_SHORT).show();
         }
-        if (TextUtils.isEmpty ( phoneNo )) {
-            Toast.makeText ( this , "Enter phone number..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(dateOfBirth)) {
+            Toast.makeText(this, "Enter date of birth...", Toast.LENGTH_SHORT).show();
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher ( email ).matches ( )) {
-            Toast.makeText ( this , "Invalid email pattern..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(phoneNo)) {
+            Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
         }
-        if (password.length ( ) < 6) {
-            Toast.makeText ( this , "Password should be at least 6 characters long..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(teamName)) {
+            Toast.makeText(this, "Enter team name...", Toast.LENGTH_SHORT).show();
         }
-        if (!password.equals (confirmPassword)) {
-            Toast.makeText ( this , "Password doesn't match..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(position)) {
+            Toast.makeText(this, "Enter position...", Toast.LENGTH_SHORT).show();
+        }
+        if (TextUtils.isEmpty(bootSize)) {
+            Toast.makeText(this, "Enter boot size...", Toast.LENGTH_SHORT).show();
+        }
+        if (TextUtils.isEmpty(kitSize)) {
+            Toast.makeText(this, "Enter kit size...", Toast.LENGTH_SHORT).show();
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Invalid email pattern...", Toast.LENGTH_SHORT).show();
+        }
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password should be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+        }
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Password doesn't match...", Toast.LENGTH_SHORT).show();
         }
 
-        createAccount ( );
+        createAccount();
     }
 
     private void createAccount() {
-        progressDialog.setMessage ( "Creating account..." );
-        progressDialog.show ( );
+        progressDialog.setMessage("Creating account...");
+        progressDialog.show();
 
         //create account
-        firebaseAuth.createUserWithEmailAndPassword ( email , password ).addOnSuccessListener (authResult -> {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             //account created
-            saveFirebaseData ( );
-        }).addOnFailureListener (e -> {
+            saveFirebaseData();
+        }).addOnFailureListener(e -> {
             // failed creating account
-            progressDialog.dismiss ( );
-            Toast.makeText ( RegisterPlayerActivity.this , "" + e.getMessage ( ) , Toast.LENGTH_SHORT ).show ( );
+            progressDialog.dismiss();
+            Toast.makeText(RegisterPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
     private void saveFirebaseData() {
-        progressDialog.setMessage ( "Saving Account info..." );
+        progressDialog.setMessage("Saving Account info...");
 
-        final String timestamp = "" + System.currentTimeMillis ( );
+        final String timestamp = "" + System.currentTimeMillis();
 
         if (image_uri == null) {
             //save info without image
 
             //setup data to save
-            HashMap< String, Object > hashMap = new HashMap <> ( );
-            hashMap.put ( "uid" , "" + firebaseAuth.getUid ( ) );
-            hashMap.put ( "email" , "" + email );
-            hashMap.put ( "surname" , "" + surName );
-            hashMap.put ( "firstname" , "" + firstName );
-            hashMap.put ( "lastname" , "" + lastName );
-            hashMap.put ( "dateofbirth" , "" + dateOfBirth );
-            hashMap.put ( "phone" , "" + phoneNo );
-            hashMap.put ( "position" , "" + position );
-            hashMap.put ( "bootsize" , "" + bootSize );
-            hashMap.put ( "kitsize" , "" + kitSize );
-            hashMap.put ( "timestamp" , "" + timestamp );
-            hashMap.put ( "accountType" , "Player" );
-            hashMap.put ( "online" , "true" );
-            hashMap.put ( "profileImage" , "" );
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("uid", "" + firebaseAuth.getUid());
+            hashMap.put("email", "" + email);
+            hashMap.put("surname", "" + surName);
+            hashMap.put("firstname", "" + firstName);
+            hashMap.put("lastname", "" + lastName);
+            hashMap.put("dateofbirth", "" + dateOfBirth);
+            hashMap.put("phone", "" + phoneNo);
+            hashMap.put("teamName", "" + teamName);
+            hashMap.put("position", "" + position);
+            hashMap.put("bootsize", "" + bootSize);
+            hashMap.put("kitsize", "" + kitSize);
+            hashMap.put("timestamp", "" + timestamp);
+            hashMap.put("accountType", "Player");
+            hashMap.put("online", "true");
+            hashMap.put("profileImage", "");
 
             // save to db
 
-            DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
-            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue ( hashMap ).addOnSuccessListener (unused -> {
-                // db updated
-                progressDialog.dismiss ();
-                startActivity ( new Intent ( RegisterPlayerActivity.this, MainPlayerActivity.class ) );
-                finish();
-            })
-                    .addOnFailureListener (e -> {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
+                        // db updated
+                        progressDialog.dismiss();
+                        startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
                         // failed updating db
-                        progressDialog.dismiss ();
-                        startActivity ( new Intent ( RegisterPlayerActivity.this, MainPlayerActivity.class ) );
+                        progressDialog.dismiss();
+                        startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
                         finish();
                     });
         } else {
             //save info with image
 
             // name and path of image
-            String filepathAndName = "profile_images/" + "" + firebaseAuth.getUid ();
+            String filepathAndName = "profile_images/" + "" + firebaseAuth.getUid();
             //upload image
-            StorageReference storageReference = FirebaseStorage.getInstance ().getReference (filepathAndName);
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filepathAndName);
             storageReference.putFile(image_uri)
-                    .addOnSuccessListener (taskSnapshot -> {
+                    .addOnSuccessListener(taskSnapshot -> {
                         // get url of uploaded image
-                        Task<Uri> uriTask = taskSnapshot.getStorage ().getDownloadUrl ();
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                         //noinspection StatementWithEmptyBody
-                        while (! uriTask.isSuccessful ());
-                        Uri downloadImageUri = uriTask.getResult ();
+                        while (!uriTask.isSuccessful()) ;
+                        Uri downloadImageUri = uriTask.getResult();
 
-                        if (uriTask.isSuccessful ()){
+                        if (uriTask.isSuccessful()) {
 
                             //setup data to save
-                            HashMap < String, Object > hashMap = new HashMap <> ( );
-                            hashMap.put ( "uid" , "" + firebaseAuth.getUid ( ) );
-                            hashMap.put ( "email" , "" + email );
-                            hashMap.put ( "surname" , "" + surName );
-                            hashMap.put ( "firstname" , "" + firstName );
-                            hashMap.put ( "lastname" , "" + lastName );
-                            hashMap.put ( "dateofbirth" , "" + dateOfBirth );
-                            hashMap.put ( "phone" , "" + phoneNo );
-                            hashMap.put ( "position" , "" + position );
-                            hashMap.put ( "bootsize" , "" + bootSize );
-                            hashMap.put ( "kitsize" , "" + kitSize );
-                            hashMap.put ( "timestamp" , "" + timestamp );
-                            hashMap.put ( "accountType" , "Player" );
-                            hashMap.put ( "online" , "true" );
-                            hashMap.put ( "profileImage" , ""+downloadImageUri );
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("uid", "" + firebaseAuth.getUid());
+                            hashMap.put("email", "" + email);
+                            hashMap.put("surname", "" + surName);
+                            hashMap.put("firstname", "" + firstName);
+                            hashMap.put("lastname", "" + lastName);
+                            hashMap.put("dateofbirth", "" + dateOfBirth);
+                            hashMap.put("phone", "" + phoneNo);
+                            hashMap.put("teamName", "" + teamName);
+                            hashMap.put("position", "" + position);
+                            hashMap.put("bootsize", "" + bootSize);
+                            hashMap.put("kitsize", "" + kitSize);
+                            hashMap.put("timestamp", "" + timestamp);
+                            hashMap.put("accountType", "Player");
+                            hashMap.put("online", "true");
+                            hashMap.put("profileImage", "" + downloadImageUri);
 
                             // save to db
 
-                            DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
-                            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue ( hashMap ).addOnSuccessListener (unused -> {
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
                                         // db updated
                                         progressDialog.dismiss();
                                         startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
                                         finish();
                                     })
-                                    .addOnFailureListener (e -> {
+                                    .addOnFailureListener(e -> {
                                         // failed updating db
                                         progressDialog.dismiss();
                                         startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
@@ -252,9 +320,9 @@ public class RegisterPlayerActivity extends AppCompatActivity {
                                     });
                         }
                     })
-                    .addOnFailureListener (e -> {
-                        progressDialog.dismiss ();
-                        Toast.makeText ( RegisterPlayerActivity.this,""+e.getMessage (),Toast.LENGTH_SHORT ).show ();
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         }
     }
@@ -317,18 +385,19 @@ public class RegisterPlayerActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkStoragePermission(){
+    private boolean checkStoragePermission() {
 
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 (PackageManager.PERMISSION_GRANTED);
     }
 
-    private void requestStoragePermission(){
-        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE );
+    private void requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE);
 
 
     }
-    private boolean checkCameraPermission(){
+
+    private boolean checkCameraPermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
                 (PackageManager.PERMISSION_GRANTED);
 
@@ -338,8 +407,8 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         return result && result1;
     }
 
-    private void requestCameraPermission(){
-        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE );
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE);
 
 
     }
@@ -387,15 +456,14 @@ public class RegisterPlayerActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode==RESULT_OK){
-            if (requestCode == IMAGE_PICK_GALLERY_CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
 
                 image_uri = Objects.requireNonNull(data).getData();
 
                 profileIv.setImageURI(image_uri);
 
-            }
-            else if (requestCode == IMAGE_PICK_CAMERA_CODE){
+            } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 profileIv.setImageURI(image_uri);
             }
         }

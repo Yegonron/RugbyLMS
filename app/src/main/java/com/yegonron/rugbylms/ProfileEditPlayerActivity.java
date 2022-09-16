@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -40,7 +42,16 @@ import java.util.Objects;
 public class ProfileEditPlayerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, positionEt, bootSizeEt, kitSizeEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt;
+
+    final String[] teams = {"Leos", "KCB", "Oilers"};
+    final String[] positions = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
+    final String[] kitSizes = {"XS", "S", "M", "L", "XL", "XXL"};
+    final String[] bootSizes = {"4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5",
+            "10", "10.5", "11", "11.5", "12", "13", "14", "15", "16", "17"};
+
+    AutoCompleteTextView teamNameTv, positionTv, bootSizeTv, kitSizeTv;
+    ArrayAdapter<String> adapterItems;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 300;
@@ -66,9 +77,9 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         lastNameEt = findViewById(R.id.lastNameEt);
         dateOfBirthEt = findViewById(R.id.dateOfBirthEt);
         phoneEt = findViewById(R.id.phoneEt);
-        positionEt = findViewById(R.id.positionEt);
-        bootSizeEt = findViewById(R.id.bootSizeEt);
-        kitSizeEt = findViewById(R.id.kitSizeEt);
+        positionTv = findViewById(R.id.positionTv);
+        bootSizeTv = findViewById(R.id.bootSizeTv);
+        kitSizeTv = findViewById(R.id.kitSizeTv);
 
         profileIv = findViewById(R.id.profileIv);
         Button updateBtn = findViewById(R.id.updateBtn);
@@ -88,18 +99,31 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, teams);
+        teamNameTv.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, positions);
+        positionTv.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, kitSizes);
+        kitSizeTv.setAdapter(adapterItems);
+
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, bootSizes);
+        bootSizeTv.setAdapter(adapterItems);
+
     }
+
     private String surName, firstName, lastName, dateOfBirth, phone, position, bootSize, kitSize;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
-        firstName = firstNameEt.getText ( ).toString ( ).trim ( );
-        lastName = lastNameEt.getText ( ).toString ( ).trim ( );
-        dateOfBirth = dateOfBirthEt.getText ( ).toString ( ).trim ( );
+        firstName = firstNameEt.getText().toString().trim();
+        lastName = lastNameEt.getText().toString().trim();
+        dateOfBirth = dateOfBirthEt.getText().toString().trim();
         phone = phoneEt.getText().toString().trim();
-        position = positionEt.getText().toString().trim();
-        bootSize = bootSizeEt.getText().toString().trim();
-        kitSize = kitSizeEt.getText().toString().trim();
+        position = positionTv.getText().toString().trim();
+        bootSize = bootSizeTv.getText().toString().trim();
+        kitSize = kitSizeTv.getText().toString().trim();
 
         updateProfile();
     }
@@ -108,11 +132,11 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         progressDialog.setMessage("Updating profile...");
         progressDialog.show();
 
-        if(image_uri == null){
+        if (image_uri == null) {
             HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put ( "surname" , "" + surName );
-            hashMap.put ( "firstname" , "" + firstName );
-            hashMap.put ( "lastname" , "" + lastName );
+            hashMap.put("surname", "" + surName);
+            hashMap.put("firstname", "" + firstName);
+            hashMap.put("lastname", "" + lastName);
             hashMap.put("dateofbirth", "" + dateOfBirth);
             hashMap.put("phone", "" + phone);
             hashMap.put("position", "" + position);
@@ -123,15 +147,15 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
                     .addOnSuccessListener(unused -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditPlayerActivity.this,"Profile updated...",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditPlayerActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditPlayerActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     });
-        }else{
-            String filePathAndName = "profile_images/"+""+ firebaseAuth.getUid();
+        } else {
+            String filePathAndName = "profile_images/" + "" + firebaseAuth.getUid();
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
             storageReference.putFile(image_uri)
@@ -139,17 +163,17 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
 
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                         //noinspection StatementWithEmptyBody
-                        while (!uriTask.isSuccessful());
+                        while (!uriTask.isSuccessful()) ;
                         Uri downloadImageUri = uriTask.getResult();
 
-                        if(uriTask.isSuccessful()){
+                        if (uriTask.isSuccessful()) {
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put ( "surname" , "" + surName );
-                            hashMap.put ( "firstname" , "" + firstName );
-                            hashMap.put ( "lastname" , "" + lastName );
+                            hashMap.put("surname", "" + surName);
+                            hashMap.put("firstname", "" + firstName);
+                            hashMap.put("lastname", "" + lastName);
                             hashMap.put("dateofbirth", "" + dateOfBirth);
-                            hashMap.put("phone", ""+ phone);
-                            hashMap.put ( "profileImage" , "" + downloadImageUri );
+                            hashMap.put("phone", "" + phone);
+                            hashMap.put("profileImage", "" + downloadImageUri);
                             hashMap.put("position", "" + position);
                             hashMap.put("bootsize", "" + bootSize);
                             hashMap.put("kitsize", "" + kitSize);
@@ -169,7 +193,7 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                     })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditPlayerActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     });
         }
@@ -177,11 +201,10 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if(user == null) {
+        if (user == null) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
-        }
-        else{
+        } else {
             loadMyInfo();
         }
     }
@@ -198,9 +221,9 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             String lastname = "" + ds.child("lastname").getValue();
                             String dateofbirth = "" + ds.child("dateofbirth").getValue();
                             String phone = "" + ds.child("phone").getValue();
-                            String position =  "" + ds.child("position").getValue();
-                            String bootsize =  "" + ds.child("bootsize").getValue();
-                            String kitsize =  "" + ds.child("kitsize").getValue();
+                            String position = "" + ds.child("position").getValue();
+                            String bootsize = "" + ds.child("bootsize").getValue();
+                            String kitsize = "" + ds.child("kitsize").getValue();
                             String profileImage = "" + ds.child("profileImage").getValue();
 
                             surNameEt.setText(surname);
@@ -208,9 +231,9 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             lastNameEt.setText(lastname);
                             dateOfBirthEt.setText(dateofbirth);
                             phoneEt.setText(phone);
-                            positionEt.setText(position);
-                            bootSizeEt.setText(bootsize);
-                            kitSizeEt.setText(kitsize);
+                            positionTv.setText(position);
+                            bootSizeTv.setText(bootsize);
+                            kitSizeTv.setText(kitsize);
 
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);
@@ -249,18 +272,22 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                     }
                 }).show();
     }
+
     private void requestStoragePermission() {
         ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
 
     }
+
     private void requestCameraPermission() {
         ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
 
     }
+
     private boolean checksStoragePermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
 
     }
+
     private boolean checkCameraPermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
 
@@ -268,12 +295,14 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         return result && result1;
 
     }
+
     private void pickFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
 
     }
+
     private void pickFromCamera() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Images.Media.TITLE, "Image Title");

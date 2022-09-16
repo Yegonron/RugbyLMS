@@ -1,7 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
+<?xml version="1.0" encoding="UTF-8"?>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -27,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text=" Edit Admin "
-            android:textColor="@color/green"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -48,99 +47,127 @@
                 android:layout_height="100dp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_person_white"
+                android:background="@drawable/profile"
                 tools:ignore="NotSibling" />
 
-            <EditText
-                android:id="@+id/surNameEt"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/surNameTf"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/profileIv"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_person_gray"
-                android:drawableLeft="@drawable/ic_person_gray"
-                android:drawablePadding="5dp"
-                android:hint="Surname"
-                android:inputType="textPersonName"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/gray01" />
+                android:hint="SurName"
+                android:padding="5dp"
+                android:textColorHint="@color/gray01">
 
-            <EditText
-                android:id="@+id/firstNameEt"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/surNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawableLeft="@drawable/ic_person_gray"
+                    android:drawablePadding="5dp"
+                    android:inputType="textPersonName"
+                    android:padding="5dp"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/firstNameTf"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/surNameEt"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_below="@id/surNameTf"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_person_gray"
-                android:drawableLeft="@drawable/ic_person_gray"
-                android:drawablePadding="5dp"
                 android:hint="First Name"
-                android:inputType="textPersonName"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/gray01" />
+                android:padding="5dp"
+                android:textColorHint="@color/gray01">
 
-            <EditText
-                android:id="@+id/lastNameEt"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/firstNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawableLeft="@drawable/ic_person_gray"
+                    android:drawablePadding="5dp"
+                    android:inputType="textPersonName"
+                    android:padding="5dp"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/lastNameTf"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/firstNameEt"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_below="@id/firstNameTf"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_person_gray"
-                android:drawableLeft="@drawable/ic_person_gray"
-                android:drawablePadding="5dp"
                 android:hint="Last Name"
-                android:inputType="textPersonName"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/gray01" />
+                android:padding="5dp"
+                android:textColorHint="@color/gray01">
 
-            <EditText
-                android:id="@+id/phoneEt"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/lastNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawableLeft="@drawable/ic_person_gray"
+                    android:drawablePadding="5dp"
+                    android:inputType="textPersonName"
+                    android:padding="5dp"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phoneTf"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/lastNameEt"
-                android:layout_marginStart="5dp"
-                android:layout_marginLeft="5dp"
+                android:layout_below="@id/lastNameTf"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="5dp"
-                android:layout_marginRight="5dp"
+                android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:drawableStart="@drawable/ic_phone_gray"
-                android:drawableLeft="@drawable/ic_phone_gray"
-                android:drawablePadding="5dp"
-                android:hint="Phone Number"
-                android:inputType="phone"
-                android:padding="10dp"
-                android:textColor="@color/colorPrimary"
-                android:textColorHint="@color/gray01" />
+                android:hint="phone"
+                android:textColorHint="@color/gray01">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phoneEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_phone_gray"
+                    android:drawableLeft="@drawable/ic_phone_gray"
+                    android:drawablePadding="5dp"
+                    android:inputType="phone"
+                    android:padding="5dp"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/updateBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/phoneEt"
+                android:layout_below="@id/phoneTf"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="@color/black"
                 android:minWidth="120dp"
                 android:text="Update"
