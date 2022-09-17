@@ -11,6 +11,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.ArrayAdapter;
@@ -39,6 +40,8 @@ import com.google.firebase.storage.StorageReference;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("deprecation")
 public class RegisterPlayerActivity extends AppCompatActivity {
@@ -98,6 +101,8 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         passwordEt = findViewById(R.id.passwordEt);
         cPasswordEt = findViewById(R.id.cPasswordEt);
 
+        phoneEt.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait...");
@@ -155,7 +160,17 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         };
     }
 
-    private String surName, firstName, lastName, dateOfBirth, phoneNo, userName, teamName, position, bootSize, kitSize, email, password;
+    private String surName;
+    private String firstName;
+    private String lastName;
+    private String dateOfBirth;
+    private String phoneNo;
+    private String userName;
+    private String teamName;
+    private String position;
+    private String bootSize;
+    private String kitSize;
+    private String email;
 
     private void inputData() {
         //input data
@@ -170,55 +185,78 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         bootSize = bootSizeTv.getText().toString().trim();
         kitSize = kitSizeTv.getText().toString().trim();
         email = emailEt.getText().toString().trim();
-        password = passwordEt.getText().toString().trim();
+        String password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
 
         //validate data
 
         if (TextUtils.isEmpty(surName)) {
             Toast.makeText(this, "Enter surname...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(firstName)) {
             Toast.makeText(this, "Enter first name...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(lastName)) {
             Toast.makeText(this, "Enter last name...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(dateOfBirth)) {
             Toast.makeText(this, "Enter date of birth...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(phoneNo)) {
             Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (phoneNo.length() < 10) {
+            Toast.makeText(this, "Phone number too short...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (phoneNo.length() > 10) {
+            Toast.makeText(this, "Phone number too long...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(teamName)) {
             Toast.makeText(this, "Enter team name...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(position)) {
             Toast.makeText(this, "Enter player's position...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(bootSize)) {
             Toast.makeText(this, "Enter boot size...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(kitSize)) {
             Toast.makeText(this, "Enter kit size...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Invalid email pattern...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (password.length() < 6) {
             Toast.makeText(this, "Password should be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (isValidPassword(password)) {
+            Toast.makeText(RegisterPlayerActivity.this, " ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(RegisterPlayerActivity.this, "Password should contain at least one capital letter, one number and one symbol ", Toast.LENGTH_LONG).show();
+            return;
         }
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Password doesn't match...", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        createAccount();
-    }
-
-    private void createAccount() {
         progressDialog.setMessage("Creating account...");
         progressDialog.show();
 
@@ -233,6 +271,18 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             progressDialog.dismiss();
             Toast.makeText(RegisterPlayerActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    public boolean isValidPassword(final String password) {
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 
     private void saveFirebaseData() {
@@ -274,7 +324,6 @@ public class RegisterPlayerActivity extends AppCompatActivity {
                     .addOnFailureListener(e -> {
                         // failed updating db
                         progressDialog.dismiss();
-                        startActivity(new Intent(RegisterPlayerActivity.this, RegisterPlayerActivity.class));
                         finish();
                     });
         } else {
@@ -325,7 +374,6 @@ public class RegisterPlayerActivity extends AppCompatActivity {
                                     .addOnFailureListener(e -> {
                                         // failed updating db
                                         progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterPlayerActivity.this, RegisterPlayerActivity.class));
                                         finish();
                                     });
                         }

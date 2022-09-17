@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.widget.Button;
@@ -33,6 +34,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterCoachActivity extends AppCompatActivity {
 
@@ -75,6 +78,8 @@ public class RegisterCoachActivity extends AppCompatActivity {
         passwordEt = findViewById(R.id.passwordEt);
         cPasswordEt = findViewById(R.id.cPasswordEt);
 
+        phoneEt.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
+
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please Wait...");
@@ -100,7 +105,12 @@ public class RegisterCoachActivity extends AppCompatActivity {
 
     }
 
-    private String surName, firstName, lastName, phoneNo, userName, email, password;
+    private String surName;
+    private String firstName;
+    private String lastName;
+    private String phoneNo;
+    private String userName;
+    private String email;
 
     private void inputData() {
         //input data
@@ -110,40 +120,58 @@ public class RegisterCoachActivity extends AppCompatActivity {
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         email = emailEt.getText().toString().trim();
-        password = passwordEt.getText().toString().trim();
+        String password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
 
         //validate data
 
         if (TextUtils.isEmpty(surName)) {
             Toast.makeText(this, "Enter surname...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(firstName)) {
-            Toast.makeText(this, "Enter firstname...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter first name...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(this, "Enter lastname...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter last name...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(phoneNo)) {
             Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (phoneNo.length() < 10) {
+            Toast.makeText(this, "Phone number too short...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (phoneNo.length() > 10) {
+            Toast.makeText(this, "Phone number too long...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Invalid email pattern...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (password.length() < 6) {
             Toast.makeText(this, "Password should be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (isValidPassword(password)) {
+            Toast.makeText(RegisterCoachActivity.this, " ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(RegisterCoachActivity.this, "Password should contain at least one capital letter, one number and one symbol ", Toast.LENGTH_LONG).show();
+            return;
         }
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Password doesn't match...", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        createAccount();
-    }
-
-    private void createAccount() {
         progressDialog.setMessage("Creating account...");
         progressDialog.show();
 
@@ -158,6 +186,18 @@ public class RegisterCoachActivity extends AppCompatActivity {
             progressDialog.dismiss();
             Toast.makeText(RegisterCoachActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    public boolean isValidPassword(final String password) {
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 
     private void saveFirebaseData() {
@@ -186,17 +226,16 @@ public class RegisterCoachActivity extends AppCompatActivity {
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
-                        // db updated
-                        progressDialog.dismiss();
-                        startActivity(new Intent(RegisterCoachActivity.this, LoginActivity.class));
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        // failed updating db
-                        progressDialog.dismiss();
-                        startActivity(new Intent(RegisterCoachActivity.this, RegisterCoachActivity.class));
-                        finish();
-                    });
+                // db updated
+                progressDialog.dismiss();
+                startActivity(new Intent(RegisterCoachActivity.this, LoginActivity.class));
+                finish();
+            }).addOnFailureListener(e -> {
+                // failed updating db
+                progressDialog.dismiss();
+                finish();
+
+            });
         } else {
             //save info with image
 
@@ -204,51 +243,47 @@ public class RegisterCoachActivity extends AppCompatActivity {
             String filepathAndName = "profile_images/" + "" + firebaseAuth.getUid();
             //upload image
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filepathAndName);
-            storageReference.putFile(image_uri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        // get url of uploaded image
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        //noinspection StatementWithEmptyBody
-                        while (!uriTask.isSuccessful()) ;
-                        Uri downloadImageUri = uriTask.getResult();
+            storageReference.putFile(image_uri).addOnSuccessListener(taskSnapshot -> {
+                // get url of uploaded image
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                //noinspection StatementWithEmptyBody
+                while (!uriTask.isSuccessful()) ;
+                Uri downloadImageUri = uriTask.getResult();
 
-                        if (uriTask.isSuccessful()) {
+                if (uriTask.isSuccessful()) {
 
-                            //setup data to save
-                            HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("uid", "" + firebaseAuth.getUid());
-                            hashMap.put("email", "" + email);
-                            hashMap.put("surname", "" + surName);
-                            hashMap.put("firstname", "" + firstName);
-                            hashMap.put("lastname", "" + lastName);
-                            hashMap.put("phone", "" + phoneNo);
-                            hashMap.put("username", "" + userName);
-                            hashMap.put("timestamp", "" + timestamp);
-                            hashMap.put("accountType", "Coach");
-                            hashMap.put("online", "true");
-                            hashMap.put("profileImage", "" + downloadImageUri);
+                    //setup data to save
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("uid", "" + firebaseAuth.getUid());
+                    hashMap.put("email", "" + email);
+                    hashMap.put("surname", "" + surName);
+                    hashMap.put("firstname", "" + firstName);
+                    hashMap.put("lastname", "" + lastName);
+                    hashMap.put("phone", "" + phoneNo);
+                    hashMap.put("username", "" + userName);
+                    hashMap.put("timestamp", "" + timestamp);
+                    hashMap.put("accountType", "Coach");
+                    hashMap.put("online", "true");
+                    hashMap.put("profileImage", "" + downloadImageUri);
 
-                            // save to db
+                    // save to db
 
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-                            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
-                                        // db updated
-                                        progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterCoachActivity.this, LoginActivity.class));
-                                        finish();
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        // failed updating db
-                                        progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterCoachActivity.this, RegisterCoachActivity.class));
-                                        finish();
-                                    });
-                        }
-                    })
-                    .addOnFailureListener(e -> {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                    ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
+                        // db updated
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterCoachActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegisterCoachActivity.this, LoginActivity.class));
+                        finish();
+                    }).addOnFailureListener(e -> {
+                        // failed updating db
+                        progressDialog.dismiss();
+                        finish();
                     });
+                }
+            }).addOnFailureListener(e -> {
+                progressDialog.dismiss();
+                Toast.makeText(RegisterCoachActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
         }
     }
 
@@ -257,36 +292,34 @@ public class RegisterCoachActivity extends AppCompatActivity {
         String[] options = {"Camera", "Gallery"};
         //dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Pick Image")
-                .setItems(options, (dialog, which) -> {
-                    if (which == 0) {
-                        //camera clicked
-                        if (checkCameraPermission()) {
-                            //camera permissions allowed
-                            pickFromCamera();
+        builder.setTitle("Pick Image").setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                //camera clicked
+                if (checkCameraPermission()) {
+                    //camera permissions allowed
+                    pickFromCamera();
 
-                        } else {
-                            //not allowed, request
-                            requestCameraPermission();
+                } else {
+                    //not allowed, request
+                    requestCameraPermission();
 
-                        }
+                }
 
-                    } else {
-                        //gallery clicked
-                        if (checkStoragePermission()) {
-                            //storage permissions allowed
-                            pickFromGallery();
+            } else {
+                //gallery clicked
+                if (checkStoragePermission()) {
+                    //storage permissions allowed
+                    pickFromGallery();
 
-                        } else {
-                            //not allowed, request
-                            requestStoragePermission();
+                } else {
+                    //not allowed, request
+                    requestStoragePermission();
 
-                        }
+                }
 
-                    }
+            }
 
-                })
-                .show();
+        }).show();
 
     }
 
@@ -314,8 +347,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
 
     private boolean checkStoragePermission() {
 
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                (PackageManager.PERMISSION_GRANTED);
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
     }
 
     private void requestStoragePermission() {
@@ -325,11 +357,9 @@ public class RegisterCoachActivity extends AppCompatActivity {
     }
 
     private boolean checkCameraPermission() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
-                (PackageManager.PERMISSION_GRANTED);
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
 
-        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
 
         return result && result1;
     }

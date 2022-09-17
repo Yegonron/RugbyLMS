@@ -66,6 +66,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         lastNameEt = findViewById(R.id.lastNameEt);
         userNameEt = findViewById(R.id.userNameEt);
 
+
         profileIv = findViewById(R.id.profileIv);
         Button updateBtn = findViewById(R.id.updateBtn);
         ImageButton backBtn = findViewById(R.id.backBtn);

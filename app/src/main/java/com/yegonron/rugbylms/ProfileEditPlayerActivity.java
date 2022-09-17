@@ -12,6 +12,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -88,6 +89,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         positionTv = findViewById(R.id.positionTv);
         bootSizeTv = findViewById(R.id.bootSizeTv);
         kitSizeTv = findViewById(R.id.kitSizeTv);
+
+        phoneEt.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
         profileIv = findViewById(R.id.profileIv);
         Button updateBtn = findViewById(R.id.updateBtn);
@@ -208,10 +211,11 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             hashMap.put("phone", "" + phone);
                             hashMap.put("username", "" + userName);
                             hashMap.put("teamname", "" + teamName);
-                            hashMap.put("profileImage", "" + downloadImageUri);
                             hashMap.put("position", "" + position);
                             hashMap.put("bootsize", "" + bootSize);
                             hashMap.put("kitsize", "" + kitSize);
+                            hashMap.put("profileImage", "" + downloadImageUri);
+
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
                             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)

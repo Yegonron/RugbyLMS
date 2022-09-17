@@ -33,6 +33,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterFanActivity extends AppCompatActivity {
 
@@ -99,7 +101,11 @@ public class RegisterFanActivity extends AppCompatActivity {
 
     }
 
-    private String surName, firstName, lastName, userName, email, password;
+    private String surName;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String email;
 
     private void inputData() {
         //input data
@@ -108,37 +114,46 @@ public class RegisterFanActivity extends AppCompatActivity {
         lastName = lastNameEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         email = emailEt.getText().toString().trim();
-        password = passwordEt.getText().toString().trim();
+        String password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
 
         //validate data
 
         if (TextUtils.isEmpty(surName)) {
             Toast.makeText(this, "Enter surname...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(firstName)) {
             Toast.makeText(this, "Enter firstname...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(lastName)) {
             Toast.makeText(this, "Enter lastname...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (TextUtils.isEmpty(surName)) {
             Toast.makeText(this, "Enter userName...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Toast.makeText(this, "Invalid email pattern...", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (password.length() < 6) {
             Toast.makeText(this, "Password should be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (isValidPassword(password)) {
+            Toast.makeText(RegisterFanActivity.this, " ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(RegisterFanActivity.this, "Password should contain at least one capital letter, one number and one symbol ", Toast.LENGTH_LONG).show();
+            return;
         }
         if (!password.equals(confirmPassword)) {
             Toast.makeText(this, "Password doesn't match...", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        createAccount();
-    }
-
-    private void createAccount() {
         progressDialog.setMessage("Creating account...");
         progressDialog.show();
 
@@ -153,6 +168,18 @@ public class RegisterFanActivity extends AppCompatActivity {
             progressDialog.dismiss();
             Toast.makeText(RegisterFanActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
+    }
+
+    public boolean isValidPassword(final String password) {
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 
     private void saveFirebaseData() {

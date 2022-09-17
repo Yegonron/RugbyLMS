@@ -27,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
         coachBtn.setOnClickListener(v -> startActivity(new Intent(SignUpActivity.this, RegisterCoachActivity.class)));
         managerBtn.setOnClickListener(v -> startActivity(new Intent(SignUpActivity.this, RegisterManagerActivity.class)));
         adminBtn.setOnClickListener(v -> startActivity(new Intent(SignUpActivity.this, RegisterAdminActivity.class)));
-        noSignupTv.setOnClickListener(v -> startActivity(new Intent(SignUpActivity.this, MainActivity.class)));
+        noSignupTv.setOnClickListener(v -> startActivity(new Intent(SignUpActivity.this, LoginActivity.class)));
+
     }
 }

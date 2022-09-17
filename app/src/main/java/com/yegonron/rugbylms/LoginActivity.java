@@ -68,6 +68,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter password...", Toast.LENGTH_SHORT).show();
             return;
         }
+
         progressDialog.setMessage("Logging In...");
         progressDialog.show();
 
