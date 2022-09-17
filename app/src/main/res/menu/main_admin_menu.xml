@@ -1,77 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/profile"
             android:icon="@drawable/ic_edit_white"
-            android:title="Profile" />
+            android:title="Profile"
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/reports"
             android:icon="@drawable/ic_reports_gray"
-            android:title="Reports" />
+            android:title="Reports"
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/recordGameFixtures"
             android:icon="@drawable/ic_record_game_fixtures_gray"
-            android:title="Record Game Fixtures" />
+            android:title="Record Game Fixtures"
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/gameFixtures"
             android:icon="@drawable/ic_calendar_month_gray"
-            android:title="Game Fixtures" />
+            android:title="Game Fixtures"
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/updateLeagueTable"
             android:icon="@drawable/ic_update_league_table_gray"
-            android:title="Update League Table" />
+            android:title="Update League Table"
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/leagueTable"
             android:icon="@drawable/ic_attendance_gray"
-            android:title="League Table" />
+            android:title="League Table"
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/livestreamGames"
             android:icon="@drawable/ic_video_library_gray"
-            android:title="Livestream Games" />
+            android:title="Livestream Games"
+            tools:ignore="HardcodedText" />
 
     </group>
 
-        <item android:title="Extras">
+    <item
+        android:title="Extras"
+        tools:ignore="HardcodedText">
 
-            <menu>
-                <group android:checkableBehavior="single">
+        <menu>
+            <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/receive_Game_Notification"
                     android:icon="@drawable/ic_settings_white"
-                    android:title="Receive Game Notifications" />
+                    android:textOff="No"
+                    android:textOn="Yes"
+                    android:title="Game Notifications"
+                    app:actionLayout="@layout/switch_item"
+                    tools:ignore="HardcodedText" />
 
                 <item
                     android:id="@+id/help"
                     android:icon="@drawable/ic_help_outline_gray"
-                    android:title="Help" />
+                    android:title="Help"
+                    tools:ignore="HardcodedText" />
 
                 <item
                     android:id="@+id/About_Us"
                     android:icon="@drawable/ic_info_gray"
-                    android:title="About Us" />
+                    android:title="About Us"
+                    tools:ignore="HardcodedText" />
 
-                </group>
-            </menu>
+            </group>
+        </menu>
 
-        </item>
+    </item>
 
-    <item android:title="logout">
+    <item
+        android:title="logout"
+        tools:ignore="HardcodedText">
 
         <menu>
 
             <item
                 android:id="@+id/Exit"
                 android:icon="@drawable/ic_logout_red"
-                android:title="Exit" />
+                android:title="Exit"
+                tools:ignore="HardcodedText" />
 
         </menu>
 

@@ -41,12 +41,12 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate ( savedInstanceState );
-        setContentView ( R.layout.activity_main_manager );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_manager);
 
-        nameTv = findViewById ( R.id.nameTv );
-        emailTv = findViewById ( R.id.emailTv );
-        phoneTv = findViewById ( R.id.phoneTv );
+        nameTv = findViewById(R.id.nameTv);
+        emailTv = findViewById(R.id.emailTv);
+        phoneTv = findViewById(R.id.phoneTv);
         profileIv = findViewById(R.id.profileIv);
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -56,27 +56,26 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
         setSupportActionBar(toolbar);
 
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.navigation_drawer_open , R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        firebaseAuth = FirebaseAuth.getInstance ();
-        progressDialog = new ProgressDialog ( this );
-        progressDialog.setTitle ( "Please Wait" );
-        progressDialog.setCanceledOnTouchOutside ( false );
+        firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please Wait");
+        progressDialog.setCanceledOnTouchOutside(false);
         checkUser();
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
 
-        }
-        else{
+        } else {
             super.onBackPressed();
 
         }
@@ -84,56 +83,56 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
 
     private void makeMeOffline() {
         // after logging out, make user offline
-        progressDialog.setMessage ( "Logging out user..." );
+        progressDialog.setMessage("Logging out user...");
 
-        HashMap<String, Object> hashMap = new HashMap <> (  );
-        hashMap.put("online","false");
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("online", "false");
 
         //update value to db
-        DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
-                .addOnSuccessListener (unused -> {
+                .addOnSuccessListener(unused -> {
                     // update successfully
-                    firebaseAuth.signOut ();
-                    checkUser ();
+                    firebaseAuth.signOut();
+                    checkUser();
                 })
-                .addOnFailureListener (e -> {
+                .addOnFailureListener(e -> {
                     //failed updating
-                    progressDialog.dismiss ();
-                    Toast.makeText ( MainManagerActivity.this , ""+e.getMessage () , Toast.LENGTH_SHORT ).show ( );
+                    progressDialog.dismiss();
+                    Toast.makeText(MainManagerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void checkUser() {
-        FirebaseUser user= firebaseAuth.getCurrentUser ();
-        if (user==null){
-            startActivity ( new Intent ( MainManagerActivity.this, LoginActivity.class ) );
-            finish ();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(MainManagerActivity.this, LoginActivity.class));
+            finish();
         } else {
             loadMyInfo();
         }
     }
 
     private void loadMyInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
-        ref.orderByChild ( "uid" ).equalTo ( firebaseAuth.getUid () )
-                .addValueEventListener ( new ValueEventListener( ) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds: dataSnapshot.getChildren ()){
-                            String name = ""+ds.child ( "surname" ).getValue ()+" "+ds.child ( "firstname" ).getValue ()+" "+ds.child ( "lastname" ).getValue ();
-                            String email = ""+ds.child ( "email" ).getValue ();
-                            String phone = ""+ds.child ( "phone" ).getValue ();
-                            String profileImage = ""+ds.child ( "profileImage" ).getValue ();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String name = "" + ds.child("surname").getValue() + " " + ds.child("firstname").getValue() + " " + ds.child("lastname").getValue();
+                            String email = "" + ds.child("email").getValue();
+                            String phone = "" + ds.child("phone").getValue();
+                            String profileImage = "" + ds.child("profileImage").getValue();
 
-                            nameTv.setText (name);
+                            nameTv.setText(name);
                             emailTv.setText(email);
                             phoneTv.setText(phone);
+
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.ic_person_white).into(profileIv);
 
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
                                 profileIv.setImageResource(R.drawable.ic_person_white);
                             }
 
@@ -144,19 +143,19 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                } );
+                });
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.profile:
-                Intent intent = new Intent(MainManagerActivity.this,ProfileEditManagerActivity.class);
+                Intent intent = new Intent(MainManagerActivity.this, ProfileEditManagerActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.reports:
-                Intent intent1 = new Intent(MainManagerActivity.this,ReportsActivity.class);
+                Intent intent1 = new Intent(MainManagerActivity.this, ReportsActivity.class);
                 startActivity(intent1);
                 break;
 
@@ -166,7 +165,7 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
                 break;
 
             case R.id.leagueTable:
-                Intent intent3 = new Intent(MainManagerActivity.this,LeagueTableActivity.class);
+                Intent intent3 = new Intent(MainManagerActivity.this, LeagueTableActivity.class);
                 startActivity(intent3);
                 break;
 
@@ -186,7 +185,7 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
                 break;
 
             case R.id.About_Us:
-                Intent intent7 = new Intent(MainManagerActivity.this,AboutUsActivity.class);
+                Intent intent7 = new Intent(MainManagerActivity.this, AboutUsActivity.class);
                 startActivity(intent7);
                 break;
 

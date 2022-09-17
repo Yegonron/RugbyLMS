@@ -61,7 +61,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:hint="SurName"
+                android:hint="Surname"
                 android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
@@ -190,7 +190,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/teamNameTf"
+                android:id="@+id/userNameTf"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -200,21 +200,48 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:hint="Team Name"
+                android:hint="User Name"
                 android:textColorHint="@color/gray01">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/teamNameEt"
+                    android:id="@+id/userNameEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_phone_gray"
-                    android:drawableLeft="@drawable/ic_phone_gray"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawableLeft="@drawable/ic_person_gray"
                     android:drawablePadding="5dp"
                     android:inputType="text"
                     android:padding="5dp"
                     android:textColor="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/teamNameTf"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/userNameTf"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/shape_rect02"
+                android:hint="Team Name"
+                android:textColorHint="@color/gray01">
+
+                <AutoCompleteTextView
+                    android:id="@+id/teamNameTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_team_gray"
+                    android:drawableLeft="@drawable/ic_team_gray"
+                    android:drawablePadding="5dp"
+                    android:inputType="none"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/positionTf"
@@ -227,7 +254,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:hint="Position"
+                android:hint="Player Position"
                 android:textColorHint="@color/gray01">
 
                 <AutoCompleteTextView

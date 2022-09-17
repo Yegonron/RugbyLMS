@@ -60,7 +60,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:hint="SurName"
+                android:hint="Surname"
                 android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
@@ -144,7 +144,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
-                android:hint="phone"
+                android:hint="Phone"
                 android:textColorHint="@color/gray01">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -160,11 +160,38 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/userNameTf"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phoneTf"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@drawable/shape_rect02"
+                android:hint="User Name"
+                android:textColorHint="@color/gray01">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userNameEt"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_person_gray"
+                    android:drawableLeft="@drawable/ic_person_gray"
+                    android:drawablePadding="5dp"
+                    android:inputType="text"
+                    android:padding="5dp"
+                    android:textColor="@color/black" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
             <Button
                 android:id="@+id/updateBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/phoneTf"
+                android:layout_below="@id/userNameTf"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:backgroundTint="@color/black"

@@ -39,7 +39,7 @@ import java.util.Objects;
 public class ProfileEditCoachActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, phoneEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 300;
@@ -64,6 +64,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
         phoneEt = findViewById(R.id.phoneEt);
+        userNameEt = findViewById(R.id.userNameEt);
 
         profileIv = findViewById(R.id.profileIv);
         Button updateBtn = findViewById(R.id.updateBtn);
@@ -84,13 +85,14 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         checkUser();
 
     }
-    private String surName, firstName, lastName, phone;
+    private String surName, firstName, lastName, phone, userName;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
         firstName = firstNameEt.getText ( ).toString ( ).trim ( );
         lastName = lastNameEt.getText ( ).toString ( ).trim ( );
         phone = phoneEt.getText().toString().trim();
+        userName = userNameEt.getText ( ).toString ( ).trim ( );
 
         updateProfile();
     }
@@ -105,6 +107,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
             hashMap.put ( "firstname" , "" + firstName );
             hashMap.put ( "lastname" , "" + lastName );
             hashMap.put("phone", "" + phone);
+            hashMap.put ( "username" , "" + userName );
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
@@ -135,6 +138,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             hashMap.put ( "firstname" , "" + firstName );
                             hashMap.put ( "lastname" , "" + lastName );
                             hashMap.put("phone",""+ phone);
+                            hashMap.put ( "username" , "" + userName );
                             hashMap.put ( "profileImage" , ""+ downloadImageUri );
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
@@ -180,12 +184,14 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
                             String phone = "" + ds.child("phone").getValue();
+                            String username = "" + ds.child("username").getValue();
                             String profileImage = "" + ds.child("profileImage").getValue();
 
                             surNameEt.setText(surname);
                             firstNameEt.setText(firstname);
                             lastNameEt.setText(lastname);
                             phoneEt.setText(phone);
+                            userNameEt.setText(username);
 
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);

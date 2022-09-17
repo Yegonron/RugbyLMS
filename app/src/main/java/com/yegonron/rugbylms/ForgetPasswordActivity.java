@@ -28,36 +28,36 @@ public class ForgetPasswordActivity extends AppCompatActivity {
         emailEt = findViewById(R.id.emailEt);
         Button recoverBtn = findViewById(R.id.recoverBtn);
 
-        firebaseAuth = FirebaseAuth.getInstance ();
-        progressDialog = new ProgressDialog ( this );
-        progressDialog.setTitle ( "Please wait" );
-        progressDialog.setCanceledOnTouchOutside ( false );
+        firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please wait");
+        progressDialog.setCanceledOnTouchOutside(false);
 
         backBtn.setOnClickListener(v -> onBackPressed());
 
-        recoverBtn.setOnClickListener (view -> recoverPassword());
+        recoverBtn.setOnClickListener(view -> recoverPassword());
     }
 
     private void recoverPassword() {
         String email = emailEt.getText().toString().trim();
-        if(!Patterns.EMAIL_ADDRESS.matcher (email).matches ()){
-            Toast.makeText (this  , "Invalid email..." , Toast.LENGTH_SHORT ).show ( );
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Invalid email...", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        progressDialog.setMessage ( "Sending instructions to reset password" );
-        progressDialog.show ();
+        progressDialog.setMessage("Sending instructions to reset password");
+        progressDialog.show();
 
-        firebaseAuth.sendPasswordResetEmail (email)
-                .addOnSuccessListener (aVoid -> {
+        firebaseAuth.sendPasswordResetEmail(email)
+                .addOnSuccessListener(aVoid -> {
                     // instructions sent
-                    progressDialog.dismiss ();
-                    Toast.makeText ( ForgetPasswordActivity.this , "Password reset instructions sent to your email" , Toast.LENGTH_SHORT ).show ( );
+                    progressDialog.dismiss();
+                    Toast.makeText(ForgetPasswordActivity.this, "Password reset instructions sent to your email", Toast.LENGTH_SHORT).show();
                 })
-                .addOnFailureListener (e -> {
+                .addOnFailureListener(e -> {
                     // failed sending instructions
-                    progressDialog.dismiss ();
-                    Toast.makeText ( ForgetPasswordActivity.this , ""+e.getMessage () , Toast.LENGTH_SHORT ).show ( );
+                    progressDialog.dismiss();
+                    Toast.makeText(ForgetPasswordActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
 
     }

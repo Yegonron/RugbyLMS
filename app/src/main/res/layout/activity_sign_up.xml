@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,12 +11,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="70dp"
         android:backgroundTint="@color/black"
         android:minWidth="200dp"
         android:minHeight="100dp"
         android:text="Player"
-        android:textColor="@color/green"
+        android:textColor="@color/white"
         android:textSize="18sp" />
 
     <Button
@@ -30,8 +29,8 @@
         android:minWidth="200dp"
         android:minHeight="100dp"
         android:text="Fan"
-        android:textSize="18sp"
-        android:textColor="@color/green" />
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/coachBtn"
@@ -43,8 +42,8 @@
         android:minWidth="200dp"
         android:minHeight="100dp"
         android:text="Coach"
-        android:textSize="18sp"
-        android:textColor="@color/green" />
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/managerBtn"
@@ -56,8 +55,8 @@
         android:minWidth="200dp"
         android:minHeight="100dp"
         android:text="Manager"
-        android:textSize="18sp"
-        android:textColor="@color/green" />
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/adminBtn"
@@ -69,8 +68,8 @@
         android:minWidth="200dp"
         android:minHeight="100dp"
         android:text="Admin"
-        android:textSize="18sp"
-        android:textColor="@color/green" />
+        android:textColor="@color/white"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/noSignupTv"
@@ -81,7 +80,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginBottom="5dp"

@@ -3,20 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/drawable/ic_person_white.xml" value="0.14" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/drawable/ic_store_gray.xml" value="0.147" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/drawable/ic_team_gray.xml" value="0.147" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_profile_edit_admin.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_profile_edit_coach.xml" value="0.1787037037037037" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_profile_edit_fan.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_profile_edit_manager.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_profile_edit_player.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_register_admin.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_register_coach.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_register_fan.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_register_manager.xml" value="0.20416666666666666" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/activity_register_player.xml" value="0.25" />
-        <entry key="..\:/Users/LENOVO/StudioProjects/RugbyLMS/app/src/main/res/layout/list_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/yegon/AndroidStudioProjects/RUGBYLMS/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.117" />
         <entry key="..\:/Users/yegon/AndroidStudioProjects/RUGBYLMS/app/src/main/res/drawable-v24/ic_person_gray.xml" value="0.1085" />
         <entry key="..\:/Users/yegon/AndroidStudioProjects/RUGBYLMS/app/src/main/res/drawable/ic_attendance_gray.xml" value="0.1" />
@@ -90,6 +76,30 @@
         <entry key="..\:/Users/yegon/AndroidStudioProjects/RUGBYLMS/app/src/main/res/menu/main_manager_menu.xml" value="0.2" />
         <entry key="..\:/Users/yegon/AndroidStudioProjects/RUGBYLMS/app/src/main/res/menu/main_menu.xml" value="0.16111111111111112" />
         <entry key="..\:/Users/yegon/AndroidStudioProjects/RUGBYLMS/app/src/main/res/menu/main_player_menu.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/drawable/ic_back_white.xml" value="0.105" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_about_us.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_forget_password.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_game_fixtures.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_help.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_league_table.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_livestream_games.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_login.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_main_admin.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_main_coach.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_main_fan.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_main_manager.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_main_player.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_profile_edit_admin.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_profile_edit_coach.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_profile_edit_fan.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_profile_edit_manager.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_profile_edit_player.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_register_admin.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_register_coach.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_register_fan.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_register_manager.xml" value="0.2" />
+        <entry key="..\:/Users/yegon/OneDrive/Documents/RugbyLMS/app/src/main/res/layout/activity_register_player.xml" value="0.2" />
       </map>
     </option>
   </component>

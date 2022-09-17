@@ -2,10 +2,13 @@ package com.yegonron.rugbylms;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,6 +38,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -42,7 +46,7 @@ import java.util.Objects;
 public class ProfileEditPlayerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, userNameEt;
 
     final String[] teams = {"Leos", "KCB", "Oilers"};
     final String[] positions = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
@@ -64,6 +68,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
 
     private Uri image_uri;
 
+    DatePickerDialog.OnDateSetListener setListener;
+
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
 
@@ -77,6 +83,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         lastNameEt = findViewById(R.id.lastNameEt);
         dateOfBirthEt = findViewById(R.id.dateOfBirthEt);
         phoneEt = findViewById(R.id.phoneEt);
+        userNameEt = findViewById(R.id.userNameEt);
+        teamNameTv = findViewById(R.id.teamNameTv);
         positionTv = findViewById(R.id.positionTv);
         bootSizeTv = findViewById(R.id.bootSizeTv);
         kitSizeTv = findViewById(R.id.kitSizeTv);
@@ -111,9 +119,30 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, bootSizes);
         bootSizeTv.setAdapter(adapterItems);
 
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        dateOfBirthEt.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    ProfileEditPlayerActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, setListener, year, month, day);
+
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
+
+        });
+
+        setListener = (datePicker, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = day + "/" + month1 + "/" + year1;
+            dateOfBirthEt.setText(date);
+
+        };
+
     }
 
-    private String surName, firstName, lastName, dateOfBirth, phone, position, bootSize, kitSize;
+    private String surName, firstName, lastName, dateOfBirth, phone, userName, teamName, position, bootSize, kitSize;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
@@ -121,6 +150,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
         lastName = lastNameEt.getText().toString().trim();
         dateOfBirth = dateOfBirthEt.getText().toString().trim();
         phone = phoneEt.getText().toString().trim();
+        userName = userNameEt.getText().toString().trim();
+        teamName = teamNameTv.getText().toString().trim();
         position = positionTv.getText().toString().trim();
         bootSize = bootSizeTv.getText().toString().trim();
         kitSize = kitSizeTv.getText().toString().trim();
@@ -139,6 +170,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
             hashMap.put("lastname", "" + lastName);
             hashMap.put("dateofbirth", "" + dateOfBirth);
             hashMap.put("phone", "" + phone);
+            hashMap.put("username", "" + userName);
+            hashMap.put("teamname", "" + teamName);
             hashMap.put("position", "" + position);
             hashMap.put("bootsize", "" + bootSize);
             hashMap.put("kitsize", "" + kitSize);
@@ -173,6 +206,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             hashMap.put("lastname", "" + lastName);
                             hashMap.put("dateofbirth", "" + dateOfBirth);
                             hashMap.put("phone", "" + phone);
+                            hashMap.put("username", "" + userName);
+                            hashMap.put("teamname", "" + teamName);
                             hashMap.put("profileImage", "" + downloadImageUri);
                             hashMap.put("position", "" + position);
                             hashMap.put("bootsize", "" + bootSize);
@@ -221,6 +256,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             String lastname = "" + ds.child("lastname").getValue();
                             String dateofbirth = "" + ds.child("dateofbirth").getValue();
                             String phone = "" + ds.child("phone").getValue();
+                            String username = "" + ds.child("username").getValue();
+                            String teamname = "" + ds.child("teamname").getValue();
                             String position = "" + ds.child("position").getValue();
                             String bootsize = "" + ds.child("bootsize").getValue();
                             String kitsize = "" + ds.child("kitsize").getValue();
@@ -231,6 +268,8 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             lastNameEt.setText(lastname);
                             dateOfBirthEt.setText(dateofbirth);
                             phoneEt.setText(phone);
+                            userNameEt.setText(username);
+                            teamNameTv.setText(teamname);
                             positionTv.setText(position);
                             bootSizeTv.setText(bootsize);
                             kitSizeTv.setText(kitsize);

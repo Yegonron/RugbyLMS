@@ -38,7 +38,7 @@ import java.util.Objects;
 public class RegisterManagerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, emailEt, passwordEt, cPasswordEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt, emailEt, passwordEt, cPasswordEt;
 
     //permission constants
     private static final int CAMERA_REQUEST_CODE = 200;
@@ -71,6 +71,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
         phoneEt = findViewById(R.id.phoneEt);
+        userNameEt = findViewById(R.id.userNameEt);
         emailEt = findViewById(R.id.emailEt);
         passwordEt = findViewById(R.id.passwordEt);
         cPasswordEt = findViewById(R.id.cPasswordEt);
@@ -99,146 +100,155 @@ public class RegisterManagerActivity extends AppCompatActivity {
         noAccountManagerTv.setOnClickListener(v -> startActivity(new Intent(RegisterManagerActivity.this, SignUpActivity.class)));
 
     }
-    private String surName, firstName, lastName, phoneNo, email, password;
+
+    private String surName, firstName, lastName, phoneNo, userName, email, password;
 
     private void inputData() {
         //input data
-        surName = surNameEt.getText ( ).toString ( ).trim ( );
-        firstName = firstNameEt.getText ( ).toString ( ).trim ( );
-        lastName = lastNameEt.getText ( ).toString ( ).trim ( );
-        phoneNo = phoneEt.getText ( ).toString ( ).trim ( );
-        email = emailEt.getText ( ).toString ( ).trim ( );
-        password = passwordEt.getText ( ).toString ( ).trim ( );
+        surName = surNameEt.getText().toString().trim();
+        firstName = firstNameEt.getText().toString().trim();
+        lastName = lastNameEt.getText().toString().trim();
+        phoneNo = phoneEt.getText().toString().trim();
+        userName = userNameEt.getText().toString().trim();
+        email = emailEt.getText().toString().trim();
+        password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
 
         //validate data
 
-        if (TextUtils.isEmpty ( surName )) {
-            Toast.makeText ( this , "Enter surname..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(surName)) {
+            Toast.makeText(this, "Enter surname...", Toast.LENGTH_SHORT).show();
         }
-        if (TextUtils.isEmpty ( firstName )) {
-            Toast.makeText ( this , "Enter firstname..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(firstName)) {
+            Toast.makeText(this, "Enter first name...", Toast.LENGTH_SHORT).show();
         }
-        if (TextUtils.isEmpty ( lastName )) {
-            Toast.makeText ( this , "Enter lastname..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(lastName)) {
+            Toast.makeText(this, "Enter last name...", Toast.LENGTH_SHORT).show();
         }
-        if (TextUtils.isEmpty ( phoneNo )) {
-            Toast.makeText ( this , "Enter phone number..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(phoneNo)) {
+            Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher ( email ).matches ( )) {
-            Toast.makeText ( this , "Invalid email pattern..." , Toast.LENGTH_SHORT ).show ( );
+        if (TextUtils.isEmpty(userName)) {
+            Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
         }
-        if (password.length ( ) < 6) {
-            Toast.makeText ( this , "Password should be at least 6 characters long..." , Toast.LENGTH_SHORT ).show ( );
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Invalid email pattern...", Toast.LENGTH_SHORT).show();
         }
-        if (!password.equals (confirmPassword)) {
-            Toast.makeText ( this , "Password doesn't match..." , Toast.LENGTH_SHORT ).show ( );
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password should be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+        }
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Password doesn't match...", Toast.LENGTH_SHORT).show();
         }
 
-        createAccount ( );
+        createAccount();
     }
 
     private void createAccount() {
-        progressDialog.setMessage ( "Creating account..." );
-        progressDialog.show ( );
+        progressDialog.setMessage("Creating account...");
+        progressDialog.show();
 
         //create account
-        firebaseAuth.createUserWithEmailAndPassword ( email , password ).addOnSuccessListener (authResult -> {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             //account created
-            saveFirebaseData ( );
-        }).addOnFailureListener (e -> {
+            saveFirebaseData();
+            Toast.makeText(RegisterManagerActivity.this, "account created", Toast.LENGTH_SHORT).show();
+
+        }).addOnFailureListener(e -> {
             // failed creating account
-            progressDialog.dismiss ( );
-            Toast.makeText ( RegisterManagerActivity.this , "" + e.getMessage ( ) , Toast.LENGTH_SHORT ).show ( );
+            progressDialog.dismiss();
+            Toast.makeText(RegisterManagerActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
     private void saveFirebaseData() {
-        progressDialog.setMessage ( "Saving Account info..." );
+        progressDialog.setMessage("Saving Account info...");
 
-        final String timestamp = "" + System.currentTimeMillis ( );
+        final String timestamp = "" + System.currentTimeMillis();
 
         if (image_uri == null) {
             //save info without image
 
             //setup data to save
-            HashMap< String, Object > hashMap = new HashMap <> ( );
-            hashMap.put ( "uid" , "" + firebaseAuth.getUid ( ) );
-            hashMap.put ( "email" , "" + email );
-            hashMap.put ( "surname" , "" + surName );
-            hashMap.put ( "firstname" , "" + firstName );
-            hashMap.put ( "lastname" , "" + lastName );
-            hashMap.put ( "phone" , "" + phoneNo );
-            hashMap.put ( "timestamp" , "" + timestamp );
-            hashMap.put ( "accountType" , "Manager" );
-            hashMap.put ( "online" , "true" );
-            hashMap.put ( "profileImage" , "" );
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("uid", "" + firebaseAuth.getUid());
+            hashMap.put("email", "" + email);
+            hashMap.put("surname", "" + surName);
+            hashMap.put("firstname", "" + firstName);
+            hashMap.put("lastname", "" + lastName);
+            hashMap.put("phone", "" + phoneNo);
+            hashMap.put("username", "" + userName);
+            hashMap.put("timestamp", "" + timestamp);
+            hashMap.put("accountType", "Manager");
+            hashMap.put("online", "true");
+            hashMap.put("profileImage", "");
 
             // save to db
 
-            DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
-            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue ( hashMap ).addOnSuccessListener (unused -> {
-                // db updated
-                progressDialog.dismiss ();
-                startActivity ( new Intent ( RegisterManagerActivity.this, MainManagerActivity.class ) );
-                finish();
-            })
-                    .addOnFailureListener (e -> {
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
+                        // db updated
+                        progressDialog.dismiss();
+                        startActivity(new Intent(RegisterManagerActivity.this, LoginActivity.class));
+                        finish();
+                    })
+                    .addOnFailureListener(e -> {
                         // failed updating db
-                        progressDialog.dismiss ();
-                        startActivity ( new Intent ( RegisterManagerActivity.this, MainManagerActivity.class ) );
+                        progressDialog.dismiss();
+                        startActivity(new Intent(RegisterManagerActivity.this, RegisterManagerActivity.class));
                         finish();
                     });
         } else {
             //save info with image
 
             // name and path of image
-            String filepathAndName = "profile_images/" + "" + firebaseAuth.getUid ();
+            String filepathAndName = "profile_images/" + "" + firebaseAuth.getUid();
             //upload image
-            StorageReference storageReference = FirebaseStorage.getInstance ().getReference (filepathAndName);
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filepathAndName);
             storageReference.putFile(image_uri)
-                    .addOnSuccessListener (taskSnapshot -> {
+                    .addOnSuccessListener(taskSnapshot -> {
                         // get url of uploaded image
-                        Task<Uri> uriTask = taskSnapshot.getStorage ().getDownloadUrl ();
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                         //noinspection StatementWithEmptyBody
-                        while (! uriTask.isSuccessful ());
-                        Uri downloadImageUri = uriTask.getResult ();
+                        while (!uriTask.isSuccessful()) ;
+                        Uri downloadImageUri = uriTask.getResult();
 
-                        if (uriTask.isSuccessful ()){
+                        if (uriTask.isSuccessful()) {
 
                             //setup data to save
-                            HashMap < String, Object > hashMap = new HashMap <> ( );
-                            hashMap.put ( "uid" , "" + firebaseAuth.getUid ( ) );
-                            hashMap.put ( "email" , "" + email );
-                            hashMap.put ( "surname" , "" + surName );
-                            hashMap.put ( "firstname" , "" + firstName );
-                            hashMap.put ( "lastname" , "" + lastName );
-                            hashMap.put ( "phone" , "" + phoneNo );
-                            hashMap.put ( "timestamp" , "" + timestamp );
-                            hashMap.put ( "accountType" , "Manager" );
-                            hashMap.put ( "online" , "true" );
-                            hashMap.put ( "profileImage" , ""+downloadImageUri );
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("uid", "" + firebaseAuth.getUid());
+                            hashMap.put("email", "" + email);
+                            hashMap.put("surname", "" + surName);
+                            hashMap.put("firstname", "" + firstName);
+                            hashMap.put("lastname", "" + lastName);
+                            hashMap.put("phone", "" + phoneNo);
+                            hashMap.put("username", "" + userName);
+                            hashMap.put("timestamp", "" + timestamp);
+                            hashMap.put("accountType", "Manager");
+                            hashMap.put("online", "true");
+                            hashMap.put("profileImage", "" + downloadImageUri);
 
                             // save to db
 
-                            DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
-                            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue ( hashMap ).addOnSuccessListener (unused -> {
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
                                         // db updated
                                         progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterManagerActivity.this, MainManagerActivity.class));
+                                        startActivity(new Intent(RegisterManagerActivity.this, LoginActivity.class));
                                         finish();
                                     })
-                                    .addOnFailureListener (e -> {
+                                    .addOnFailureListener(e -> {
                                         // failed updating db
                                         progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterManagerActivity.this, MainManagerActivity.class));
+                                        startActivity(new Intent(RegisterManagerActivity.this, RegisterManagerActivity.class));
                                         finish();
                                     });
                         }
                     })
-                    .addOnFailureListener (e -> {
-                        progressDialog.dismiss ();
-                        Toast.makeText ( RegisterManagerActivity.this,""+e.getMessage (),Toast.LENGTH_SHORT ).show ();
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(RegisterManagerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         }
     }
@@ -301,18 +311,19 @@ public class RegisterManagerActivity extends AppCompatActivity {
 
     }
 
-    private boolean checkStoragePermission(){
+    private boolean checkStoragePermission() {
 
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
                 (PackageManager.PERMISSION_GRANTED);
     }
 
-    private void requestStoragePermission(){
-        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE );
+    private void requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, storagePermissions, STORAGE_REQUEST_CODE);
 
 
     }
-    private boolean checkCameraPermission(){
+
+    private boolean checkCameraPermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
                 (PackageManager.PERMISSION_GRANTED);
 
@@ -322,8 +333,8 @@ public class RegisterManagerActivity extends AppCompatActivity {
         return result && result1;
     }
 
-    private void requestCameraPermission(){
-        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE );
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, cameraPermissions, CAMERA_REQUEST_CODE);
 
 
     }
@@ -370,20 +381,18 @@ public class RegisterManagerActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (resultCode==RESULT_OK){
-            if (requestCode == IMAGE_PICK_GALLERY_CODE){
+        if (resultCode == RESULT_OK) {
+            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
 
                 image_uri = Objects.requireNonNull(data).getData();
 
                 profileIv.setImageURI(image_uri);
 
-            }
-            else if (requestCode == IMAGE_PICK_CAMERA_CODE){
+            } else if (requestCode == IMAGE_PICK_CAMERA_CODE) {
                 profileIv.setImageURI(image_uri);
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
-
 
 
     }

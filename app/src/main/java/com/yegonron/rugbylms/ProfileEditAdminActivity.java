@@ -39,7 +39,7 @@ import java.util.Objects;
 public class ProfileEditAdminActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, phoneEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 300;
@@ -64,6 +64,7 @@ public class ProfileEditAdminActivity extends AppCompatActivity {
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
         phoneEt = findViewById(R.id.phoneEt);
+        userNameEt = findViewById(R.id.userNameEt);
 
         profileIv = findViewById(R.id.profileIv);
 
@@ -85,228 +86,240 @@ public class ProfileEditAdminActivity extends AppCompatActivity {
         checkUser();
 
     }
-    private String surName, firstName, lastName, phone;
+
+    private String surName, firstName, lastName, phone, userName;
 
     private void inputData() {
-            surName = surNameEt.getText().toString().trim();
-            firstName = firstNameEt.getText ( ).toString ( ).trim ( );
-            lastName = lastNameEt.getText ( ).toString ( ).trim ( );
-            phone = phoneEt.getText().toString().trim();
+        surName = surNameEt.getText().toString().trim();
+        firstName = firstNameEt.getText().toString().trim();
+        lastName = lastNameEt.getText().toString().trim();
+        phone = phoneEt.getText().toString().trim();
+        userName = userNameEt.getText().toString().trim();
 
-            updateProfile();
-        }
+        updateProfile();
+    }
 
-        private void updateProfile() {
-            progressDialog.setMessage("Updating profile...");
-            progressDialog.show();
+    private void updateProfile() {
+        progressDialog.setMessage("Updating profile...");
+        progressDialog.show();
 
-            if(image_uri == null){
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put ( "surname" , "" + surName );
-                hashMap.put ( "firstname" , "" + firstName );
-                hashMap.put ( "lastname" , "" + lastName );
-                hashMap.put("phone",""+ phone);
+        if (image_uri == null) {
+            HashMap<String, Object> hashMap = new HashMap<>();
+            hashMap.put("surname", "" + surName);
+            hashMap.put("firstname", "" + firstName);
+            hashMap.put("lastname", "" + lastName);
+            hashMap.put("phone", "" + phone);
+            hashMap.put("username", "" + userName);
 
-                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-                ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
-                        .addOnSuccessListener(unused -> {
-                            progressDialog.dismiss();
-                            Toast.makeText(ProfileEditAdminActivity.this,"Profile updated...",Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> {
-                            progressDialog.dismiss();
-                            Toast.makeText(ProfileEditAdminActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-
-                        });
-            }else{
-                String filePathAndName = "profile_images/"+""+ firebaseAuth.getUid();
-
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
-                storageReference.putFile(image_uri)
-                        .addOnSuccessListener(taskSnapshot -> {
-
-                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                            //noinspection StatementWithEmptyBody
-                            while (!uriTask.isSuccessful());
-                            Uri downloadImageUri = uriTask.getResult();
-
-                            if(uriTask.isSuccessful()){
-                                HashMap<String, Object> hashMap = new HashMap<>();
-                                hashMap.put ( "surname" , "" + surName );
-                                hashMap.put ( "firstname" , "" + firstName );
-                                hashMap.put ( "lastname" , "" + lastName );
-                                hashMap.put("phone","" + phone);
-                                hashMap.put ( "profileImage" , "" + downloadImageUri );
-
-                                DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-                                ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
-                                        .addOnSuccessListener(unused -> {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(ProfileEditAdminActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
-                                        })
-                                        .addOnFailureListener(e -> {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(ProfileEditAdminActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                                        });
-                            }
-                        })
-                        .addOnFailureListener(e -> {
-                            progressDialog.dismiss();
-                            Toast.makeText(ProfileEditAdminActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-
-                        });
-            }
-        }
-
-        private void checkUser() {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-            if(user == null) {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
-            }
-            else{
-                loadMyInfo();
-            }
-        }
-
-        private void loadMyInfo() {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-            ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
-                    .addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                String surname = "" + ds.child("surname").getValue();
-                                String firstname = "" + ds.child("firstname").getValue();
-                                String lastname = "" + ds.child("lastname").getValue();
-                                String phone = "" + ds.child("phone").getValue();
-                                String profileImage = "" + ds.child("profileImage").getValue();
+            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
+                    .addOnSuccessListener(unused -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(ProfileEditAdminActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
+                    })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(ProfileEditAdminActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                                surNameEt.setText(surname);
-                                firstNameEt.setText(firstname);
-                                lastNameEt.setText(lastname);
-                                phoneEt.setText(phone);
+                    });
+        } else {
+            String filePathAndName = "profile_images/" + "" + firebaseAuth.getUid();
 
-                                try {
-                                    Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);
-                                } catch (Exception e) {
-                                    profileIv.setImageResource(R.drawable.ic_person_white);
-                                }
-                            }
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
+            storageReference.putFile(image_uri)
+                    .addOnSuccessListener(taskSnapshot -> {
+
+                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                        //noinspection StatementWithEmptyBody
+                        while (!uriTask.isSuccessful()) ;
+                        Uri downloadImageUri = uriTask.getResult();
+
+                        if (uriTask.isSuccessful()) {
+                            HashMap<String, Object> hashMap = new HashMap<>();
+                            hashMap.put("surname", "" + surName);
+                            hashMap.put("firstname", "" + firstName);
+                            hashMap.put("lastname", "" + lastName);
+                            hashMap.put("phone", "" + phone);
+                            hashMap.put("username", "" + userName);
+                            hashMap.put("profileImage", "" + downloadImageUri);
+
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
+                                    .addOnSuccessListener(unused -> {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(ProfileEditAdminActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        progressDialog.dismiss();
+                                        Toast.makeText(ProfileEditAdminActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                                    });
                         }
+                    })
+                    .addOnFailureListener(e -> {
+                        progressDialog.dismiss();
+                        Toast.makeText(ProfileEditAdminActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
                     });
         }
+    }
 
-        private void showImagePickDialog() {
-            String[] options = {"Camera", "Gallery"};
+    private void checkUser() {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+            finish();
+        } else {
+            loadMyInfo();
+        }
+    }
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Pick Image:")
-                    .setItems(options, (dialog, which) -> {
+    private void loadMyInfo() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String surname = "" + ds.child("surname").getValue();
+                            String firstname = "" + ds.child("firstname").getValue();
+                            String lastname = "" + ds.child("lastname").getValue();
+                            String phone = "" + ds.child("phone").getValue();
+                            String username = "" + ds.child("username").getValue();
+                            String profileImage = "" + ds.child("profileImage").getValue();
 
-                        if (which == 0) {
-                            if (checkCameraPermission()) {
-                                pickFromCamera();
-                            } else {
-                                requestCameraPermission();
-                            }
-                        } else {
-                            if (checksStoragePermission()) {
-                                pickFromGallery();
-                            } else {
-                                requestStoragePermission();
+                            surNameEt.setText(surname);
+                            firstNameEt.setText(firstname);
+                            lastNameEt.setText(lastname);
+                            phoneEt.setText(phone);
+                            userNameEt.setText(username);
+
+                            try {
+                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);
+                            } catch (Exception e) {
+                                profileIv.setImageResource(R.drawable.ic_person_white);
                             }
                         }
-                    }).show();
-        }
-        private void requestStoragePermission() {
-            ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
+                    }
 
-        }
-        private void requestCameraPermission() {
-            ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        }
-        private boolean checksStoragePermission() {
-            return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+                    }
+                });
+    }
 
-        }
-        private boolean checkCameraPermission() {
-            boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+    private void showImagePickDialog() {
+        String[] options = {"Camera", "Gallery"};
 
-            boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
-            return result && result1;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Pick Image:")
+                .setItems(options, (dialog, which) -> {
 
-        }
-        private void pickFromGallery() {
-            Intent intent = new Intent(Intent.ACTION_PICK);
-            intent.setType("image/*");
-            //noinspection deprecation
-            startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
-
-        }
-        private void pickFromCamera() {
-            ContentValues contentValues = new ContentValues();
-            contentValues.put(MediaStore.Images.Media.TITLE, "Image Title");
-            contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Image Description");
-
-            image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
-
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
-            //noinspection deprecation
-            startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
-
-        }
-        @Override
-        public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-            switch (requestCode) {
-                case CAMERA_REQUEST_CODE: {
-                    if (grantResults.length > 0) {
-                        boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                        boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
-                        if (cameraAccepted && storageAccepted) {
+                    if (which == 0) {
+                        if (checkCameraPermission()) {
                             pickFromCamera();
                         } else {
-                            Toast.makeText(this, "Camera permissions are necessary...", Toast.LENGTH_SHORT).show();
+                            requestCameraPermission();
                         }
-                    }
-                }
-                case STORAGE_REQUEST_CODE: {
-                    if (grantResults.length > 0) {
-                        boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
-                        if (storageAccepted) {
+                    } else {
+                        if (checksStoragePermission()) {
                             pickFromGallery();
                         } else {
-                            Toast.makeText(this, "Storage permissions is necessary...", Toast.LENGTH_SHORT).show();
+                            requestStoragePermission();
                         }
+                    }
+                }).show();
+    }
+
+    private void requestStoragePermission() {
+        ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
+
+    }
+
+    private void requestCameraPermission() {
+        ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
+
+    }
+
+    private boolean checksStoragePermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+
+    }
+
+    private boolean checkCameraPermission() {
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
+
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
+        return result && result1;
+
+    }
+
+    private void pickFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        //noinspection deprecation
+        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
+
+    }
+
+    private void pickFromCamera() {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MediaStore.Images.Media.TITLE, "Image Title");
+        contentValues.put(MediaStore.Images.Media.DESCRIPTION, "Image Description");
+
+        image_uri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues);
+
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, image_uri);
+        //noinspection deprecation
+        startActivityForResult(intent, IMAGE_PICK_CAMERA_CODE);
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case CAMERA_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    boolean cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    boolean storageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+                    if (cameraAccepted && storageAccepted) {
+                        pickFromCamera();
+                    } else {
+                        Toast.makeText(this, "Camera permissions are necessary...", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            if (resultCode == RESULT_OK) {
-
-                if (requestCode == IMAGE_PICK_GALLERY_CODE) {
-                    image_uri = Objects.requireNonNull(data).getData();
-
-                    profileIv.setImageURI(image_uri);
-                } else if
-                (requestCode == IMAGE_PICK_CAMERA_CODE) {
-                    profileIv.setImageURI(image_uri);
+            case STORAGE_REQUEST_CODE: {
+                if (grantResults.length > 0) {
+                    boolean storageAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                    if (storageAccepted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "Storage permissions is necessary...", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
-
-            super.onActivityResult(requestCode, resultCode, data);
-
         }
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (resultCode == RESULT_OK) {
+
+            if (requestCode == IMAGE_PICK_GALLERY_CODE) {
+                image_uri = Objects.requireNonNull(data).getData();
+
+                profileIv.setImageURI(image_uri);
+            } else if
+            (requestCode == IMAGE_PICK_CAMERA_CODE) {
+                profileIv.setImageURI(image_uri);
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+    }
 }

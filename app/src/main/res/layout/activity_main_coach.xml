@@ -35,8 +35,8 @@
                 android:id="@+id/nameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/profileIv"
                 android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/profileIv"
                 android:text="Name"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -82,7 +82,9 @@
                 android:padding="10dp"
                 app:navigationIcon="@drawable/ic_menu_white">
 
+
             </androidx.appcompat.widget.Toolbar>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

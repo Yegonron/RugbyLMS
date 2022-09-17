@@ -40,7 +40,7 @@ import java.util.Objects;
 public class ProfileEditFanActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, userNameEt;
 
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 300;
@@ -64,6 +64,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         surNameEt = findViewById(R.id.surNameEt);
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
+        userNameEt = findViewById(R.id.userNameEt);
 
         profileIv = findViewById(R.id.profileIv);
         Button updateBtn = findViewById(R.id.updateBtn);
@@ -84,12 +85,14 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         checkUser();
 
     }
-    private String surName, firstName, lastName;
+
+    private String surName, firstName, lastName, userName;
 
     private void inputData() {
-        surName = surNameEt.getText ( ).toString ( ).trim ( );
-        firstName = firstNameEt.getText ( ).toString ( ).trim ( );
-        lastName = lastNameEt.getText ( ).toString ( ).trim ( );
+        surName = surNameEt.getText().toString().trim();
+        firstName = firstNameEt.getText().toString().trim();
+        lastName = lastNameEt.getText().toString().trim();
+        userName = userNameEt.getText().toString().trim();
 
         updateProfile();
     }
@@ -98,25 +101,26 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         progressDialog.setMessage("Updating profile...");
         progressDialog.show();
 
-        if(image_uri == null){
+        if (image_uri == null) {
             HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put ( "surname" , "" + surName );
-            hashMap.put ( "firstname" , "" + firstName );
-            hashMap.put ( "lastname" , "" + lastName );
+            hashMap.put("surname", "" + surName);
+            hashMap.put("firstname", "" + firstName);
+            hashMap.put("lastname", "" + lastName);
+            hashMap.put("username", "" + userName);
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
                     .addOnSuccessListener(unused -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditFanActivity.this,"Profile updated...",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditFanActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditFanActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditFanActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     });
-        }else{
-            String filePathAndName = "profile_images/"+""+ firebaseAuth.getUid();
+        } else {
+            String filePathAndName = "profile_images/" + "" + firebaseAuth.getUid();
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
             storageReference.putFile(image_uri)
@@ -124,15 +128,16 @@ public class ProfileEditFanActivity extends AppCompatActivity {
 
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                         //noinspection StatementWithEmptyBody
-                        while (!uriTask.isSuccessful());
+                        while (!uriTask.isSuccessful()) ;
                         Uri downloadImageUri = uriTask.getResult();
 
-                        if(uriTask.isSuccessful()){
+                        if (uriTask.isSuccessful()) {
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put ( "surname" , "" + surName );
-                            hashMap.put ( "firstname" , "" + firstName );
-                            hashMap.put ( "lastname" , "" + lastName );
-                            hashMap.put ( "profileImage" , ""+ downloadImageUri );
+                            hashMap.put("surname", "" + surName);
+                            hashMap.put("firstname", "" + firstName);
+                            hashMap.put("lastname", "" + lastName);
+                            hashMap.put("username", "" + userName);
+                            hashMap.put("profileImage", "" + downloadImageUri);
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
                             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
@@ -149,7 +154,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
                     })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditFanActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditFanActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     });
         }
@@ -157,11 +162,10 @@ public class ProfileEditFanActivity extends AppCompatActivity {
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if(user == null) {
+        if (user == null) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
-        }
-        else{
+        } else {
             loadMyInfo();
         }
     }
@@ -176,11 +180,13 @@ public class ProfileEditFanActivity extends AppCompatActivity {
                             String surname = "" + ds.child("surname").getValue();
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
+                            String username = "" + ds.child("username").getValue();
                             String profileImage = "" + ds.child("profileImage").getValue();
 
                             surNameEt.setText(surname);
                             firstNameEt.setText(firstname);
                             lastNameEt.setText(lastname);
+                            userNameEt.setText(username);
 
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);
@@ -219,18 +225,22 @@ public class ProfileEditFanActivity extends AppCompatActivity {
                     }
                 }).show();
     }
+
     private void requestStoragePermission() {
         ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
 
     }
+
     private void requestCameraPermission() {
         ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
 
     }
+
     private boolean checksStoragePermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
 
     }
+
     private boolean checkCameraPermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
 
@@ -245,6 +255,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
 
     }
+
     private void pickFromCamera() {
         ContentValues contentValues = new ContentValues();
         contentValues.put(MediaStore.Images.Media.TITLE, "Image Title");

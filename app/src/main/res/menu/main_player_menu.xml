@@ -1,67 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/profile"
+            android:icon="@drawable/ic_edit_white"
             android:title="Profile"
-            android:icon="@drawable/ic_edit_white"/>
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/attendance"
+            android:icon="@drawable/ic_attendance_gray"
             android:title="Attendance"
-            android:icon="@drawable/ic_attendance_gray"/>
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/gameFixtures"
+            android:icon="@drawable/ic_calendar_month_gray"
             android:title="Game Fixtures"
-            android:icon="@drawable/ic_calendar_month_gray"/>
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/leagueTable"
+            android:icon="@drawable/ic_attendance_gray"
             android:title="League Table"
-            android:icon="@drawable/ic_attendance_gray"/>
+            tools:ignore="HardcodedText" />
 
         <item
             android:id="@+id/livestreamGames"
+            android:icon="@drawable/ic_video_library_gray"
             android:title="Livestream Games"
-            android:icon="@drawable/ic_video_library_gray"/>
+            tools:ignore="HardcodedText" />
 
     </group>
 
-    <item android:title="Extras">
+    <item
+        android:title="Extras"
+        tools:ignore="HardcodedText">
 
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/receive_Game_Notification"
                     android:icon="@drawable/ic_settings_white"
-                    android:title="Receive Game Notifications" />
+                    android:textOff="No"
+                    android:textOn="Yes"
+                    android:title="Game Notifications"
+                    app:actionLayout="@layout/switch_item"
+                    tools:ignore="HardcodedText" />
 
                 <item
                     android:id="@+id/help"
                     android:icon="@drawable/ic_help_outline_gray"
-                    android:title="Help" />
+                    android:title="Help"
+                    tools:ignore="HardcodedText" />
 
                 <item
                     android:id="@+id/About_Us"
                     android:icon="@drawable/ic_info_gray"
-                    android:title="About Us" />
+                    android:title="About Us"
+                    tools:ignore="HardcodedText" />
 
             </group>
         </menu>
 
     </item>
 
-    <item android:title="logout">
+    <item
+        android:title="logout"
+        tools:ignore="HardcodedText">
 
         <menu>
 
             <item
                 android:id="@+id/Exit"
                 android:icon="@drawable/ic_logout_red"
-                android:title="Exit" />
+                android:title="Exit"
+                tools:ignore="HardcodedText" />
 
         </menu>
 

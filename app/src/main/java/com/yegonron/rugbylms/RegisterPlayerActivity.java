@@ -44,7 +44,7 @@ import java.util.Objects;
 public class RegisterPlayerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, emailEt, passwordEt, cPasswordEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, userNameEt, emailEt, passwordEt, cPasswordEt;
 
     final String[] teams = {"Leos", "KCB", "Oilers"};
     final String[] positions = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
@@ -89,6 +89,8 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         lastNameEt = findViewById(R.id.lastNameEt);
         dateOfBirthEt = findViewById(R.id.dateOfBirthEt);
         phoneEt = findViewById(R.id.phoneEt);
+        userNameEt = findViewById(R.id.userNameEt);
+        teamNameTv = findViewById(R.id.teamNameTv);
         positionTv = findViewById(R.id.positionTv);
         bootSizeTv = findViewById(R.id.bootSizeTv);
         kitSizeTv = findViewById(R.id.kitSizeTv);
@@ -153,7 +155,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         };
     }
 
-    private String surName, firstName, lastName, dateOfBirth, phoneNo, teamName, position, bootSize, kitSize, email, password;
+    private String surName, firstName, lastName, dateOfBirth, phoneNo, userName, teamName, position, bootSize, kitSize, email, password;
 
     private void inputData() {
         //input data
@@ -162,6 +164,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         lastName = lastNameEt.getText().toString().trim();
         dateOfBirth = dateOfBirthEt.getText().toString().trim();
         phoneNo = phoneEt.getText().toString().trim();
+        userName = userNameEt.getText().toString().trim();
         teamName = teamNameTv.getText().toString().trim();
         position = positionTv.getText().toString().trim();
         bootSize = bootSizeTv.getText().toString().trim();
@@ -176,10 +179,10 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter surname...", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(firstName)) {
-            Toast.makeText(this, "Enter firstname...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter first name...", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(lastName)) {
-            Toast.makeText(this, "Enter lastname...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter last name...", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(dateOfBirth)) {
             Toast.makeText(this, "Enter date of birth...", Toast.LENGTH_SHORT).show();
@@ -187,11 +190,14 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(phoneNo)) {
             Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
         }
+        if (TextUtils.isEmpty(userName)) {
+            Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
+        }
         if (TextUtils.isEmpty(teamName)) {
             Toast.makeText(this, "Enter team name...", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(position)) {
-            Toast.makeText(this, "Enter position...", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter player's position...", Toast.LENGTH_SHORT).show();
         }
         if (TextUtils.isEmpty(bootSize)) {
             Toast.makeText(this, "Enter boot size...", Toast.LENGTH_SHORT).show();
@@ -220,10 +226,12 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             //account created
             saveFirebaseData();
+            Toast.makeText(RegisterPlayerActivity.this, "account created", Toast.LENGTH_SHORT).show();
+
         }).addOnFailureListener(e -> {
             // failed creating account
             progressDialog.dismiss();
-            Toast.makeText(RegisterPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterPlayerActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -244,6 +252,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             hashMap.put("lastname", "" + lastName);
             hashMap.put("dateofbirth", "" + dateOfBirth);
             hashMap.put("phone", "" + phoneNo);
+            hashMap.put("username", "" + userName);
             hashMap.put("teamName", "" + teamName);
             hashMap.put("position", "" + position);
             hashMap.put("bootsize", "" + bootSize);
@@ -259,13 +268,13 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
                         // db updated
                         progressDialog.dismiss();
-                        startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
+                        startActivity(new Intent(RegisterPlayerActivity.this, LoginActivity.class));
                         finish();
                     })
                     .addOnFailureListener(e -> {
                         // failed updating db
                         progressDialog.dismiss();
-                        startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
+                        startActivity(new Intent(RegisterPlayerActivity.this, RegisterPlayerActivity.class));
                         finish();
                     });
         } else {
@@ -294,6 +303,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
                             hashMap.put("lastname", "" + lastName);
                             hashMap.put("dateofbirth", "" + dateOfBirth);
                             hashMap.put("phone", "" + phoneNo);
+                            hashMap.put("username", "" + userName);
                             hashMap.put("teamName", "" + teamName);
                             hashMap.put("position", "" + position);
                             hashMap.put("bootsize", "" + bootSize);
@@ -309,20 +319,20 @@ public class RegisterPlayerActivity extends AppCompatActivity {
                             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
                                         // db updated
                                         progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
+                                        startActivity(new Intent(RegisterPlayerActivity.this, LoginActivity.class));
                                         finish();
                                     })
                                     .addOnFailureListener(e -> {
                                         // failed updating db
                                         progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterPlayerActivity.this, MainPlayerActivity.class));
+                                        startActivity(new Intent(RegisterPlayerActivity.this, RegisterPlayerActivity.class));
                                         finish();
                                     });
                         }
                     })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterPlayerActivity.this, " " + e.getMessage(), Toast.LENGTH_SHORT).show();
                     });
         }
     }

@@ -41,11 +41,11 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate ( savedInstanceState );
-        setContentView ( R.layout.activity_main_fan );
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main_fan);
 
-        nameTv = findViewById ( R.id.nameTv );
-        emailTv = findViewById ( R.id.emailTv );
+        nameTv = findViewById(R.id.nameTv);
+        emailTv = findViewById(R.id.emailTv);
         profileIv = findViewById(R.id.profileIv);
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -55,27 +55,26 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
         setSupportActionBar(toolbar);
 
         navigationView.bringToFront();
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar, R.string.navigation_drawer_open , R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
 
-        firebaseAuth = FirebaseAuth.getInstance ();
-        progressDialog = new ProgressDialog ( this );
-        progressDialog.setTitle ( "Please Wait" );
-        progressDialog.setCanceledOnTouchOutside ( false );
+        firebaseAuth = FirebaseAuth.getInstance();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please Wait");
+        progressDialog.setCanceledOnTouchOutside(false);
         checkUser();
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
 
-        }
-        else{
+        } else {
             super.onBackPressed();
 
         }
@@ -83,55 +82,54 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
 
     private void makeMeOffline() {
         // after logging out, make user offline
-        progressDialog.setMessage ( "Logging out user..." );
+        progressDialog.setMessage("Logging out user...");
 
-        HashMap<String, Object> hashMap = new HashMap <> (  );
-        hashMap.put("online","false");
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("online", "false");
 
         //update value to db
-        DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
-                .addOnSuccessListener (unused -> {
+                .addOnSuccessListener(unused -> {
                     // update successfully
-                    firebaseAuth.signOut ();
-                    checkUser ();
+                    firebaseAuth.signOut();
+                    checkUser();
                 })
-                .addOnFailureListener (e -> {
+                .addOnFailureListener(e -> {
                     //failed updating
-                    progressDialog.dismiss ();
-                    Toast.makeText ( MainFanActivity.this , ""+e.getMessage () , Toast.LENGTH_SHORT ).show ( );
+                    progressDialog.dismiss();
+                    Toast.makeText(MainFanActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void checkUser() {
-        FirebaseUser user= firebaseAuth.getCurrentUser ();
-        if (user==null){
-            startActivity ( new Intent ( MainFanActivity.this, LoginActivity.class ) );
-            finish ();
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user == null) {
+            startActivity(new Intent(MainFanActivity.this, LoginActivity.class));
+            finish();
         } else {
             loadMyInfo();
         }
     }
 
     private void loadMyInfo() {
-        DatabaseReference ref = FirebaseDatabase.getInstance ().getReference ("Users");
-        ref.orderByChild ( "uid" ).equalTo ( firebaseAuth.getUid () )
-                .addValueEventListener ( new ValueEventListener( ) {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
+                .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds: dataSnapshot.getChildren ()){
-                            String name = ""+ds.child ( "surname" ).getValue ()+" "+ds.child ( "firstname" ).getValue ()+" "+ds.child ( "lastname" ).getValue ();
-                            String email = ""+ds.child ( "email" ).getValue ();
-                            String profileImage = ""+ds.child ( "profileImage" ).getValue ();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String name = "" + ds.child("surname").getValue() + " " + ds.child("firstname").getValue() + " " + ds.child("lastname").getValue();
+                            String email = "" + ds.child("email").getValue();
+                            String profileImage = "" + ds.child("profileImage").getValue();
 
-                            nameTv.setText (name);
+                            nameTv.setText(name);
                             emailTv.setText(email);
 
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.ic_person_white).into(profileIv);
 
-                            }
-                            catch (Exception e){
+                            } catch (Exception e) {
                                 profileIv.setImageResource(R.drawable.ic_person_white);
                             }
 
@@ -142,14 +140,14 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                } );
+                });
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
+        switch (menuItem.getItemId()) {
             case R.id.profile:
-                Intent intent = new Intent(MainFanActivity.this,ProfileEditFanActivity.class);
+                Intent intent = new Intent(MainFanActivity.this, ProfileEditFanActivity.class);
                 startActivity(intent);
                 break;
 
@@ -159,7 +157,7 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
                 break;
 
             case R.id.leagueTable:
-                Intent intent2 = new Intent(MainFanActivity.this,LeagueTableActivity.class);
+                Intent intent2 = new Intent(MainFanActivity.this, LeagueTableActivity.class);
                 startActivity(intent2);
                 break;
 
@@ -179,7 +177,7 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
                 break;
 
             case R.id.About_Us:
-                Intent intent6 = new Intent(MainFanActivity.this,AboutUsActivity.class);
+                Intent intent6 = new Intent(MainFanActivity.this, AboutUsActivity.class);
                 startActivity(intent6);
                 break;
 

@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="League Table"
-            android:textColor="@color/green"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 

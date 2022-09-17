@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RUGBYLMS</string>
+    <string name="app_name">Rugby LMS</string>
     <string name="backbutton">BackButton</string>
     <string name="logo">Logo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -27,7 +27,6 @@ import java.util.Objects;
 public class LoginActivity extends AppCompatActivity {
 
     private EditText emailEt, passwordEt;
-
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
