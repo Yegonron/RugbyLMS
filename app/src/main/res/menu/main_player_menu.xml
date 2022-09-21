@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <group android:checkableBehavior="single">
@@ -44,12 +43,9 @@
         <menu>
             <group android:checkableBehavior="single">
                 <item
-                    android:id="@+id/receive_Game_Notification"
+                    android:id="@+id/settings"
                     android:icon="@drawable/ic_settings_white"
-                    android:textOff="No"
-                    android:textOn="Yes"
-                    android:title="Game Notifications"
-                    app:actionLayout="@layout/switch_item"
+                    android:title="Settings"
                     tools:ignore="HardcodedText" />
 
                 <item

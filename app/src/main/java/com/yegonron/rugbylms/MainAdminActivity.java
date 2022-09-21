@@ -186,11 +186,11 @@ public class MainAdminActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent6);
                 break;
 
-         /*   case R.id.receive_Game_Notification:
-                Intent intent7 = new Intent(MainAdminActivity.this,);
+            case R.id.settings:
+                Intent intent7 = new Intent(MainAdminActivity.this, SettingsActivity.class);
                 startActivity(intent7);
                 break;
-         */
+
             case R.id.help:
                 Intent intent8 = new Intent(MainAdminActivity.this, HelpActivity.class);
                 startActivity(intent8);

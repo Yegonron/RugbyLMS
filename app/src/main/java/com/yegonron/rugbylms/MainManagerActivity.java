@@ -174,11 +174,11 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
                 startActivity(intent4);
                 break;
 
-         /*   case R.id.receive_Game_Notification:
-                Intent intent5 = new Intent(MainManagerActivity.this,);
+            case R.id.settings:
+                Intent intent5 = new Intent(MainManagerActivity.this, SettingsActivity.class);
                 startActivity(intent5);
                 break;
-         */
+
             case R.id.help:
                 Intent intent6 = new Intent(MainManagerActivity.this, HelpActivity.class);
                 startActivity(intent6);

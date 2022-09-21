@@ -174,11 +174,11 @@ public class MainCoachActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent4);
                 break;
 
-         /*   case R.id.receive_Game_Notification:
-                Intent intent5 = new Intent(MainCoachActivity.this,);
+            case R.id.settings:
+                Intent intent5 = new Intent(MainCoachActivity.this, SettingsActivity.class);
                 startActivity(intent5);
                 break;
-         */
+
             case R.id.help:
                 Intent intent6 = new Intent(MainCoachActivity.this, HelpActivity.class);
                 startActivity(intent6);

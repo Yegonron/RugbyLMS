@@ -166,11 +166,11 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
                 startActivity(intent3);
                 break;
 
-         /*   case R.id.receive_Game_Notification:
-                Intent intent4 = new Intent(MainFanActivity.this,);
+            case R.id.settings:
+                Intent intent4 = new Intent(MainFanActivity.this, SettingsActivity.class);
                 startActivity(intent4);
                 break;
-         */
+
             case R.id.help:
                 Intent intent5 = new Intent(MainFanActivity.this, HelpActivity.class);
                 startActivity(intent5);

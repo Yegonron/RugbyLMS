@@ -175,11 +175,11 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent4);
                 break;
 
-         /*   case R.id.receive_Game_Notification:
-                Intent intent5 = new Intent(MainPlayerActivity.this,);
+            case R.id.settings:
+                Intent intent5 = new Intent(MainPlayerActivity.this, SettingsActivity.class);
                 startActivity(intent5);
                 break;
-         */
+
             case R.id.help:
                 Intent intent6 = new Intent(MainPlayerActivity.this, HelpActivity.class);
                 startActivity(intent6);
