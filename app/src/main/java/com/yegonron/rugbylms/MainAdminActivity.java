@@ -156,49 +156,54 @@ public class MainAdminActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent);
                 break;
 
-            case R.id.reports:
-                Intent intent1 = new Intent(MainAdminActivity.this, ReportsActivity.class);
+            case R.id.manage_users:
+                Intent intent1 = new Intent(MainAdminActivity.this, ManageUsersActivity.class);
                 startActivity(intent1);
                 break;
 
-            case R.id.recordGameFixtures:
-                Intent intent2 = new Intent(MainAdminActivity.this, RecordGameFixturesActivity.class);
+            case R.id.reports:
+                Intent intent2 = new Intent(MainAdminActivity.this, ReportsActivity.class);
                 startActivity(intent2);
                 break;
 
-            case R.id.gameFixtures:
-                Intent intent3 = new Intent(MainAdminActivity.this, GameFixturesActivity.class);
+            case R.id.recordGameFixtures:
+                Intent intent3 = new Intent(MainAdminActivity.this, RecordGameFixturesActivity.class);
                 startActivity(intent3);
                 break;
 
-            case R.id.leagueTable:
-                Intent intent4 = new Intent(MainAdminActivity.this, LeagueTableActivity.class);
+            case R.id.gameFixtures:
+                Intent intent4 = new Intent(MainAdminActivity.this, GameFixturesActivity.class);
                 startActivity(intent4);
                 break;
 
-            case R.id.updateLeagueTable:
-                Intent intent5 = new Intent(MainAdminActivity.this, UpdateLeagueTableActivity.class);
+            case R.id.leagueTable:
+                Intent intent5 = new Intent(MainAdminActivity.this, LeagueTableActivity.class);
                 startActivity(intent5);
                 break;
 
-            case R.id.livestreamGames:
-                Intent intent6 = new Intent(MainAdminActivity.this, LivestreamGamesActivity.class);
+            case R.id.updateLeagueTable:
+                Intent intent6 = new Intent(MainAdminActivity.this, UpdateLeagueTableActivity.class);
                 startActivity(intent6);
                 break;
 
-            case R.id.settings:
-                Intent intent7 = new Intent(MainAdminActivity.this, SettingsActivity.class);
+            case R.id.livestreamGames:
+                Intent intent7 = new Intent(MainAdminActivity.this, LivestreamGamesActivity.class);
                 startActivity(intent7);
                 break;
 
-            case R.id.help:
-                Intent intent8 = new Intent(MainAdminActivity.this, HelpActivity.class);
+            case R.id.settings:
+                Intent intent8 = new Intent(MainAdminActivity.this, SettingsActivity.class);
                 startActivity(intent8);
                 break;
 
-            case R.id.About_Us:
-                Intent intent9 = new Intent(MainAdminActivity.this, AboutUsActivity.class);
+            case R.id.help:
+                Intent intent9 = new Intent(MainAdminActivity.this, HelpActivity.class);
                 startActivity(intent9);
+                break;
+
+            case R.id.About_Us:
+                Intent intent10 = new Intent(MainAdminActivity.this, AboutUsActivity.class);
+                startActivity(intent10);
                 break;
 
             case R.id.Exit:

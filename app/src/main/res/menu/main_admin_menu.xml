@@ -11,6 +11,12 @@
             tools:ignore="HardcodedText" />
 
         <item
+            android:id="@+id/manage_users"
+            android:icon="@drawable/ic_manage_user_white"
+            android:title="Manage Users"
+            tools:ignore="HardcodedText" />
+
+        <item
             android:id="@+id/reports"
             android:icon="@drawable/ic_reports_gray"
             android:title="Reports"
