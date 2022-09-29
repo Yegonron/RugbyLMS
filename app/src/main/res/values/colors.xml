@@ -9,4 +9,8 @@
     <color name="green">#71DB77</color>
     <color name="red">#C81609</color>
     <color name="gray01">#c9c9c9</color>
+    <color name="accent">#03DAC5</color>
+    <color name="present">#FF03DAC5</color>
+    <color name="absent">#C81609</color>
+    <color name="normal">#FFFFFF</color>
 </resources>

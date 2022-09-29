@@ -58,12 +58,93 @@
     </androidx.appcompat.widget.SwitchCompat>
 
     <TextView
+        android:id="@+id/changePasswordTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/receive_game_notificationsTv"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="45dp"
+        android:text="Change password:"
+        android:textColor="@color/black"
+        android:textSize="18dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/passwordTf"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/changePasswordTv"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/shape_rect02"
+        android:inputType="textPassword"
+        android:padding="5dp"
+        android:textColorHint="@color/gray01">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_lock_gray"
+            android:drawableLeft="@drawable/ic_lock_gray"
+            android:drawablePadding="5dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="5dp"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!--    <com.google.android.material.textfield.TextInputLayout-->
+    <!--        android:id="@+id/cPasswordTf"-->
+    <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/passwordTf"-->
+    <!--        android:layout_marginStart="10dp"-->
+    <!--        android:layout_marginTop="5dp"-->
+    <!--        android:layout_marginEnd="10dp"-->
+    <!--        android:layout_marginBottom="5dp"-->
+    <!--        android:background="@drawable/shape_rect02"-->
+    <!--        android:hint="Confirm Password"-->
+    <!--        android:inputType="textPassword"-->
+    <!--        android:padding="5dp"-->
+    <!--        android:textColorHint="@color/gray01">-->
+
+    <!--        <com.google.android.material.textfield.TextInputEditText-->
+    <!--            android:id="@+id/cPasswordEt"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:drawableStart="@drawable/ic_lock_gray"-->
+    <!--            android:drawableLeft="@drawable/ic_lock_gray"-->
+    <!--            android:drawablePadding="5dp"-->
+    <!--            android:hint="Confirm Password"-->
+    <!--            android:inputType="textPassword"-->
+    <!--            android:padding="5dp"-->
+    <!--            android:textColor="@color/black" />-->
+
+    <!--    </com.google.android.material.textfield.TextInputLayout>-->
+
+    <Button
+        android:id="@+id/changePasswordBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/passwordTf"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="@color/black"
+        android:minWidth="120dp"
+        android:text="change password"
+        android:textColor="@color/white" />
+
+    <TextView
         android:id="@+id/deleteTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbarRl"
+        android:layout_below="@id/changePasswordBtn"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         android:text="Once account is deleted, it cannot be retrieved:"
@@ -74,9 +155,9 @@
         android:id="@+id/deleteBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/toolbarRl"
+        android:layout_below="@id/deleteTv"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/red"
         android:text="Delete Account" />
 

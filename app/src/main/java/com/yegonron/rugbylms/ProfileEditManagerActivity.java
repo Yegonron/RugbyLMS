@@ -198,9 +198,9 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
                             userNameEt.setText(username);
 
                             try {
-                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);
+                                Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(profileIv);
                             } catch (Exception e) {
-                                profileIv.setImageResource(R.drawable.ic_person_white);
+                                profileIv.setImageResource(R.drawable.profile);
                             }
                         }
                     }

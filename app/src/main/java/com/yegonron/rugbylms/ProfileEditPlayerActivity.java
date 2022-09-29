@@ -279,9 +279,9 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             kitSizeTv.setText(kitsize);
 
                             try {
-                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);
+                                Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(profileIv);
                             } catch (Exception e) {
-                                profileIv.setImageResource(R.drawable.ic_person_white);
+                                profileIv.setImageResource(R.drawable.profile);
                             }
                         }
                     }

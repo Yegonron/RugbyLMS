@@ -88,14 +88,15 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         checkUser();
 
     }
+
     private String surName, firstName, lastName, phone, userName;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
-        firstName = firstNameEt.getText ( ).toString ( ).trim ( );
-        lastName = lastNameEt.getText ( ).toString ( ).trim ( );
+        firstName = firstNameEt.getText().toString().trim();
+        lastName = lastNameEt.getText().toString().trim();
         phone = phoneEt.getText().toString().trim();
-        userName = userNameEt.getText ( ).toString ( ).trim ( );
+        userName = userNameEt.getText().toString().trim();
 
         updateProfile();
     }
@@ -104,27 +105,27 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         progressDialog.setMessage("Updating profile...");
         progressDialog.show();
 
-        if(image_uri == null){
+        if (image_uri == null) {
             HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put ( "surname" , "" + surName );
-            hashMap.put ( "firstname" , "" + firstName );
-            hashMap.put ( "lastname" , "" + lastName );
+            hashMap.put("surname", "" + surName);
+            hashMap.put("firstname", "" + firstName);
+            hashMap.put("lastname", "" + lastName);
             hashMap.put("phone", "" + phone);
-            hashMap.put ( "username" , "" + userName );
+            hashMap.put("username", "" + userName);
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
                     .addOnSuccessListener(unused -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditCoachActivity.this,"Profile updated...",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditCoachActivity.this, "Profile updated...", Toast.LENGTH_SHORT).show();
                     })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditCoachActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditCoachActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     });
-        }else{
-            String filePathAndName = "profile_images/"+""+ firebaseAuth.getUid();
+        } else {
+            String filePathAndName = "profile_images/" + "" + firebaseAuth.getUid();
 
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filePathAndName);
             storageReference.putFile(image_uri)
@@ -132,17 +133,17 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
 
                         Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                         //noinspection StatementWithEmptyBody
-                        while (!uriTask.isSuccessful());
+                        while (!uriTask.isSuccessful()) ;
                         Uri downloadImageUri = uriTask.getResult();
 
-                        if(uriTask.isSuccessful()){
+                        if (uriTask.isSuccessful()) {
                             HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put ( "surname" , "" + surName );
-                            hashMap.put ( "firstname" , "" + firstName );
-                            hashMap.put ( "lastname" , "" + lastName );
-                            hashMap.put("phone",""+ phone);
-                            hashMap.put ( "username" , "" + userName );
-                            hashMap.put ( "profileImage" , ""+ downloadImageUri );
+                            hashMap.put("surname", "" + surName);
+                            hashMap.put("firstname", "" + firstName);
+                            hashMap.put("lastname", "" + lastName);
+                            hashMap.put("phone", "" + phone);
+                            hashMap.put("username", "" + userName);
+                            hashMap.put("profileImage", "" + downloadImageUri);
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
                             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
@@ -159,7 +160,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                     })
                     .addOnFailureListener(e -> {
                         progressDialog.dismiss();
-                        Toast.makeText(ProfileEditCoachActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ProfileEditCoachActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
 
                     });
         }
@@ -167,11 +168,10 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if(user == null) {
+        if (user == null) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
             finish();
-        }
-        else{
+        } else {
             loadMyInfo();
         }
     }
@@ -197,9 +197,9 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             userNameEt.setText(username);
 
                             try {
-                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_store_gray).into(profileIv);
+                                Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(profileIv);
                             } catch (Exception e) {
-                                profileIv.setImageResource(R.drawable.ic_person_white);
+                                profileIv.setImageResource(R.drawable.profile);
                             }
                         }
                     }
@@ -233,18 +233,22 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                     }
                 }).show();
     }
+
     private void requestStoragePermission() {
         ActivityCompat.requestPermissions(this, storagePermission, STORAGE_REQUEST_CODE);
 
     }
+
     private void requestCameraPermission() {
         ActivityCompat.requestPermissions(this, cameraPermission, CAMERA_REQUEST_CODE);
 
     }
+
     private boolean checksStoragePermission() {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
 
     }
+
     private boolean checkCameraPermission() {
         boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
 
@@ -252,6 +256,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         return result && result1;
 
     }
+
     @SuppressWarnings("deprecation")
     private void pickFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -259,6 +264,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE);
 
     }
+
     @SuppressWarnings("deprecation")
     private void pickFromCamera() {
         ContentValues contentValues = new ContentValues();
