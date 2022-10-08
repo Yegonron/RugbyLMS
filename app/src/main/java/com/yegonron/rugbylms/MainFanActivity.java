@@ -146,6 +146,12 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.action_add:
+                Intent postIntent = new Intent(this, PostActivity.class);
+                startActivity(postIntent);
+                // on clicking log out, log the user out
+                break;
+
             case R.id.profile:
                 Intent intent = new Intent(MainFanActivity.this, ProfileEditFanActivity.class);
                 startActivity(intent);

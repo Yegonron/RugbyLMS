@@ -112,6 +112,9 @@
             android:name=".ManageUsersActivity"
             android:exported="false" />
         <activity
+            android:name=".PostActivity"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreenActivity"
             android:exported="true">
 

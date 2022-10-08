@@ -24,8 +24,8 @@ import java.util.regex.Pattern;
 
 public class ManageUsersActivity extends AppCompatActivity {
 
-    private EditText createEmailEt, createPasswordEt, enterEmailEt;
-    private Button createUserBtn, deleteUserBtn;
+    private EditText createEmailEt;
+    private EditText createPasswordEt;
     final String[] accountTypes = {"Player", "Fan", "Coach", "Manager", "Admin"};
 
     AutoCompleteTextView accountTypeTv;
@@ -40,13 +40,13 @@ public class ManageUsersActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manage_users);
 
         ImageButton backBtn = findViewById(R.id.backBtn);
-        createUserBtn = findViewById(R.id.createUserBtn);
+        Button createUserBtn = findViewById(R.id.createUserBtn);
         createEmailEt = findViewById(R.id.createEmailEt);
         createPasswordEt = findViewById(R.id.createPasswordEt);
         accountTypeTv = findViewById(R.id.accountTypeTv);
 
-        enterEmailEt = findViewById(R.id.enterEmailEt);
-        deleteUserBtn = findViewById(R.id.deleteUserBtn);
+        EditText enterEmailEt = findViewById(R.id.enterEmailEt);
+        Button deleteUserBtn = findViewById(R.id.deleteUserBtn);
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -177,26 +177,4 @@ public class ManageUsersActivity extends AppCompatActivity {
 
                 });
     }
-//
-//    private void deleteUser() {
-//        ProgressDialog progressDialog = new ProgressDialog(this);
-//        progressDialog.setTitle("Please wait...");
-//        progressDialog.setMessage("Account being deleted");
-//        progressDialog.setCancelable(false);
-//        progressDialog.show();
-//
-//        FirebaseDatabase.getInstance()
-//                .getReference()
-//                .child("Users")
-//                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-//                .setValue(null)
-//                .addOnSuccessListener(avoid -> FirebaseAuth.getInstance().getCurrentUser().delete()
-//                        .addOnCompleteListener(task -> {
-//                            if (task.isSuccessful()) {
-//                                progressDialog.dismiss();
-//
-//                            }
-//                        }));
-//
-//    }
 }

@@ -38,9 +38,7 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
         backBtn.setOnClickListener(v -> onBackPressed());
 
         fab = findViewById(R.id.fab_main);
-        fab.setOnClickListener(v -> {
-            showDialog();
-        });
+        fab.setOnClickListener(v -> showDialog());
 
         loadData();
 
@@ -103,7 +101,7 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
 
     private void showDialog() {
         MyDialog dialog = new MyDialog();
-        dialog.show(getSupportFragmentManager(), MyDialog.TEAM_ADD_DIALOG);
+        dialog.show();
         dialog.setListener(this::addTeam);
 
     }
@@ -133,7 +131,7 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
 
     private void showUpdateDialog(int position) {
         MyDialog dialog = new MyDialog();
-        dialog.show(getSupportFragmentManager(), MyDialog.TEAM_UPDATE_DIALOG);
+        dialog.show();
         dialog.setListener((teamName, season) -> updateTeam(position, teamName, season));
     }
 

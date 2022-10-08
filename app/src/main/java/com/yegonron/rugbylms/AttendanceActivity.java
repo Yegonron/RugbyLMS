@@ -21,7 +21,6 @@ public class AttendanceActivity extends AppCompatActivity {
     Toolbar toolbar;
     private String teamName;
     private String season;
-    private int position;
     private int tid;
     private TextView subtitle;
 
@@ -39,7 +38,7 @@ public class AttendanceActivity extends AppCompatActivity {
         Intent intent = getIntent();
         teamName = intent.getStringExtra("teamName");
         season = intent.getStringExtra("season");
-        position = intent.getIntExtra("position", -1);
+        int position = intent.getIntExtra("position", -1);
         tid = (int) intent.getLongExtra("tid", -1);
 
         dbHelper = new DbHelper(this);
@@ -179,7 +178,7 @@ public class AttendanceActivity extends AppCompatActivity {
 
     private void showAddPlayerDialog() {
         MyDialog dialog = new MyDialog();
-        dialog.show(getSupportFragmentManager(), MyDialog.PLAYER_ADD_DIALOG);
+        dialog.show();
         dialog.setListener(this::addPlayer);
     }
 
@@ -208,12 +207,12 @@ public class AttendanceActivity extends AppCompatActivity {
 
     private void showUpdatePlayerDialog(int position) {
         MyDialog dialog = new MyDialog(attendanceItems.get(position).getRoll(), attendanceItems.get(position).getName());
-        dialog.show(getSupportFragmentManager(), MyDialog.PLAYER_UPDATE_DIALOG);
-        dialog.setListener((roll_string, name) -> updatePlayer(position, roll_string, name));
+        dialog.show();
+        dialog.setListener((roll_string, name) -> updatePlayer(position, name));
 
     }
 
-    private void updatePlayer(int position, String roll_string, String name) {
+    private void updatePlayer(int position, String name) {
         dbHelper.updatePlayer(attendanceItems.get(position).getPid(), name);
         attendanceItems.get(position).setName(name);
         adapter.notifyItemChanged(position);

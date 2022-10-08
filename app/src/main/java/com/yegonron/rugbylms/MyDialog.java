@@ -6,7 +6,6 @@ import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +14,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.FragmentManager;
 
 public class MyDialog extends DialogFragment {
     public static final String TEAM_ADD_DIALOG = "addTeam";
@@ -28,20 +26,17 @@ public class MyDialog extends DialogFragment {
     private String name;
 
 
-    @SuppressLint("ValidFragment")
-    public MyDialog(int roll, String name) {
-
-        this.roll = roll;
-        this.name = name;
-    }
-
     public MyDialog() {
 
     }
 
-    //DELETE
-    public void show(FragmentManager supportFragmentManager, String playerAddDialog) {
+    @SuppressLint("ValidFragment")
+    public MyDialog(int roll, String name) {
 
+
+    }
+
+    public void show() {
     }
 
     public interface OnClickListener {
@@ -69,7 +64,7 @@ public class MyDialog extends DialogFragment {
     private Dialog getUpdatePlayerDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 
         TextView title = view.findViewById(R.id.titleDialog);
@@ -105,7 +100,7 @@ public class MyDialog extends DialogFragment {
 
     private Dialog getUpdateTeamDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 
         TextView title = view.findViewById(R.id.titleDialog);
@@ -136,7 +131,7 @@ public class MyDialog extends DialogFragment {
 
     private Dialog getAddPlayerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 
         TextView title = view.findViewById(R.id.titleDialog);
@@ -166,7 +161,7 @@ public class MyDialog extends DialogFragment {
 
     private Dialog getAddTeamDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog, null);
+        View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 
         TextView title = view.findViewById(R.id.titleDialog);

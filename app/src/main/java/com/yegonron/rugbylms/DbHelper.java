@@ -110,19 +110,19 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    int deleteTeam(long tid) {
+    void deleteTeam(long tid) {
         SQLiteDatabase database = this.getReadableDatabase();
-        return database.delete(TEAM_TABLE_NAME, T_ID + "=?", new String[]{String.valueOf(tid)});
+        database.delete(TEAM_TABLE_NAME, T_ID + "=?", new String[]{String.valueOf(tid)});
 
     }
 
-    long updateTeam(long tid, String teamName, String season) {
+    void updateTeam(long tid, String teamName, String season) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(TEAM_NAME_KEY, teamName);
         values.put(SEASON_NAME_KEY, season);
 
-        return database.update(TEAM_TABLE_NAME, values, T_ID + "=?", new String[]{String.valueOf(tid)});
+        database.update(TEAM_TABLE_NAME, values, T_ID + "=?", new String[]{String.valueOf(tid)});
 
     }
 
@@ -143,17 +143,17 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    int deletePlayer(long pid) {
+    void deletePlayer(long pid) {
         SQLiteDatabase database = this.getReadableDatabase();
-        return database.delete(PLAYER_TABLE_NAME, P_ID + "=?", new String[]{String.valueOf(pid)});
+        database.delete(PLAYER_TABLE_NAME, P_ID + "=?", new String[]{String.valueOf(pid)});
     }
 
-    long updatePlayer(long pid, String name) {
+    void updatePlayer(long pid, String name) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(PLAYER_NAME_KEY, name);
 
-        return database.update(PLAYER_TABLE_NAME, values, P_ID + "=?", new String[]{String.valueOf(pid)});
+        database.update(PLAYER_TABLE_NAME, values, P_ID + "=?", new String[]{String.valueOf(pid)});
 
     }
 
@@ -169,13 +169,13 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    long updateStatus(long pid, String date, String status) {
+    void updateStatus(long pid, String date, String status) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(STATUS_KEY, status);
         String whereClause = DATE_KEY + "='" + date + "' AND "+ P_ID + "=" + pid;
 
-        return database.update(STATUS_TABLE_NAME, values, whereClause, null);
+        database.update(STATUS_TABLE_NAME, values, whereClause, null);
 
     }
 

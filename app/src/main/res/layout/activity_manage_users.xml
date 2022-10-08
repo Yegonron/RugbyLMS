@@ -32,21 +32,31 @@
     </RelativeLayout>
 
     <ScrollView
+        android:id="@+id/createUserSv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp">
+        android:layout_marginTop="80dp">
 
         <RelativeLayout
+            android:id="@+id/createUserRl"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/layoutstyle"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/newUserTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
                 android:text="Create New User Here:"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -138,6 +148,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/accountTypeTf"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/black"
                 android:minWidth="120dp"
                 android:text="Create User"
@@ -145,15 +156,37 @@
                 android:textSize="18sp" />
 
 
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <ScrollView
+        android:id="@+id/deleteUserSv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/createUserSv"
+        android:layout_marginTop="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/createUserRl"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/layoutstyle"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/deleteUserTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/createUserBtn"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="Delete User Here:"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -190,8 +223,10 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/enterEmailTf"
                 android:layout_centerHorizontal="true"
+                android:layout_marginBottom="20dp"
                 android:backgroundTint="@color/black"
                 android:minWidth="120dp"
+                android:minHeight="48dp"
                 android:text="Delete User"
                 android:textColor="@color/white"
                 android:textSize="18sp" />

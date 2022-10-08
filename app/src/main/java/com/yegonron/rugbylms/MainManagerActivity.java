@@ -149,6 +149,12 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.action_add:
+                Intent postIntent = new Intent(this, PostActivity.class);
+                startActivity(postIntent);
+                // on clicking log out, log the user out
+                break;
+
             case R.id.profile:
                 Intent intent = new Intent(MainManagerActivity.this, ProfileEditManagerActivity.class);
                 startActivity(intent);
