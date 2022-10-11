@@ -1,6 +1,5 @@
 package com.yegonron.rugbylms;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,13 +36,13 @@ import java.util.Objects;
 
 public class SinglePostActivity extends AppCompatActivity {
 
-    private ImageView singelImage;
+    private ImageView singleImage;
     private TextView singleTitle;
     private TextView singleDesc;
     String post_key = null;
     private DatabaseReference mDatabase, commentRef, mDatabaseUsers;
     private Button deleteBtn;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth firebaseAuth;
     private FirebaseUser mCurrentUser;
 
     EditText makeComment;
@@ -57,7 +57,7 @@ public class SinglePostActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_single_post);
 
-        singelImage = findViewById(R.id.singleImageview);
+        singleImage = findViewById(R.id.singleImageview);
         singleTitle = findViewById(R.id.singleTitle);
         singleDesc = findViewById(R.id.singleDesc);
 
@@ -80,26 +80,31 @@ public class SinglePostActivity extends AppCompatActivity {
         //Initialize the database reference/node where you will be storing posts
         commentRef = FirebaseDatabase.getInstance().getReference().child("Comments").child(post_key);
         //Initialize an instance of  Firebase Authentication
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         //Initialize the instance of the firebase user
-        mCurrentUser = mAuth.getCurrentUser();
+        mCurrentUser = firebaseAuth.getCurrentUser();
         //Get currently logged in user
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
-
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Posts");
 
         deleteBtn = findViewById(R.id.deleteBtn);
-        mAuth = FirebaseAuth.getInstance();
+        firebaseAuth = FirebaseAuth.getInstance();
         deleteBtn.setVisibility(View.INVISIBLE);
+
         deleteBtn.setOnClickListener(view -> {
 
-            mDatabase.child(post_key).removeValue();
+            AlertDialog.Builder dialog = new AlertDialog.Builder(SinglePostActivity.this);
+            dialog.setTitle("Are you sure?");
+            dialog.setMessage("Deleting this post will completely remove it" +
+                    " from the system and you won't be able to access it.");
+            dialog.setPositiveButton("Delete", (dialogInterface, i) -> mDatabase.child(post_key).removeValue());
 
-            Intent mainintent = new Intent(SinglePostActivity.this, MainAdminActivity.class);
-            startActivity(mainintent);
+            dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
+            AlertDialog alertDialog = dialog.create();
+            alertDialog.show();
+
         });
-
 
         mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
             @Override
@@ -111,8 +116,8 @@ public class SinglePostActivity extends AppCompatActivity {
 
                 singleTitle.setText(post_title);
                 singleDesc.setText(post_desc);
-                Picasso.get().load(post_image).into(singelImage);
-                if (Objects.requireNonNull(mAuth.getCurrentUser()).getUid().equals(post_uid)) {
+                Picasso.get().load(post_image).into(singleImage);
+                if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid().equals(post_uid)) {
 
                     deleteBtn.setVisibility(View.VISIBLE);
                 }
@@ -123,6 +128,7 @@ public class SinglePostActivity extends AppCompatActivity {
 
             }
         });
+
         postComment.setOnClickListener(v -> {
             //Lis
             Toast.makeText(SinglePostActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
@@ -148,7 +154,7 @@ public class SinglePostActivity extends AppCompatActivity {
                         newComment.child("time").setValue(saveCurrentTime);
                         newComment.child("date").setValue(saveCurrentDate);
                         newComment.child("profileImage").setValue(dataSnapshot.child("profileImage").getValue());
-                        newComment.child("userName").setValue(dataSnapshot.child("userName").getValue());
+                        newComment.child("username").setValue(dataSnapshot.child("username").getValue());
                     }
 
                     @Override
@@ -167,7 +173,7 @@ public class SinglePostActivity extends AppCompatActivity {
         //
         super.onStart();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
             //if user is logged in populate the Ui With card views
             updateUI();
@@ -183,7 +189,8 @@ public class SinglePostActivity extends AppCompatActivity {
         // Create and initialize and instance of Recycler Options passing in your model class and
         //Create a snap shot of your model
         FirebaseRecyclerOptions<CommentModel> options = new FirebaseRecyclerOptions.Builder<CommentModel>().
-                setQuery(query, snapshot -> new CommentModel(Objects.requireNonNull(snapshot.child("userName").getValue()).toString(),
+                setQuery(query, snapshot -> new CommentModel(
+                        Objects.requireNonNull(snapshot.child("username").getValue()).toString(),
                         Objects.requireNonNull(snapshot.child("profileImage").getValue()).toString(),
                         Objects.requireNonNull(snapshot.child("comment").getValue()).toString(),
                         Objects.requireNonNull(snapshot.child("time").getValue()).toString(),
@@ -194,7 +201,6 @@ public class SinglePostActivity extends AppCompatActivity {
         //Then implement the methods onCreateViewHolder and onBindViewHolder
         //Complete all the steps in the AtticViewHolder before proceeding to  the methods onCreateViewHolder, and onBindViewHolder
         adapter = new FirebaseRecyclerAdapter<CommentModel, commentModelViewHolder>(options) {
-
 
             @Override
             protected void onBindViewHolder(@NonNull commentModelViewHolder holder, int i, @NonNull CommentModel model) {
@@ -224,15 +230,13 @@ public class SinglePostActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
-
             adapter.stopListening();
 
         }
 
     }
-
 
     public static class commentModelViewHolder extends RecyclerView.ViewHolder {
         //Declare the view objects in the card view
@@ -246,7 +250,7 @@ public class SinglePostActivity extends AppCompatActivity {
         //Declare a string variable to hold  the user ID of currently logged in user
         String currentUserID;
         //Declare an instance of firebase authentication
-        FirebaseAuth mAuth;
+        FirebaseAuth firebaseAuth;
         //Declare a database reference where you are saving  the likes
         DatabaseReference likesRef;
 

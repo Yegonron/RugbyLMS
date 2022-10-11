@@ -1,26 +1,17 @@
 package com.yegonron.rugbylms;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
-import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -35,21 +26,7 @@ import com.google.firebase.storage.StorageReference;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class PostActivity extends AppCompatActivity implements FetchAddressTask.onTaskCompleted {
-
-    //Views
-    private TextView mLocationTextView;
-
-    //location classes
-    private Location mLastLocation;
-    private FusedLocationProviderClient mFusedLocationClient;
-    private boolean mTrackingLocation;
-    private LocationCallback mLocationCallBack;
-    // Constants
-    private static final int REQUEST_LOCATION_PERMISSION = 1;
-    private static final String TRACKING_LOCATION_KEY = "tracking location";
-    private final boolean isContinue = false;
-    private final boolean isGPS = false;
+public class PostActivity extends AppCompatActivity {
 
     // Declare the view objects
     private ImageButton imageBtn;
@@ -71,27 +48,14 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
     private Uri uri = null;
 
     @Override
-    protected void onStart() {
-        getLocation();
-        super.onStart();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post);
-
-        // mLocationTextView = findViewById(R.id.textview_location);
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         // initializing  view objects
         Button postBtn = findViewById(R.id.postBtn);
         textDesc = findViewById(R.id.textDesc);
         textTitle = findViewById(R.id.textTitle);
-        mLocationTextView = findViewById(R.id.location);
-
-        ImageButton backBtn = findViewById(R.id.backBtn);
-        backBtn.setOnClickListener(v -> onBackPressed());
 
         //Initialize the storage reference
         mStorageRef = FirebaseStorage.getInstance().getReference();
@@ -99,9 +63,9 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
         databaseRef = FirebaseDatabase.getInstance().getReference().child("Posts");
         //Initialize an instance of  Firebase Authentication
         //Declare an Instance of firebase authentication
-        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //Initialize the instance of the firebase user
-        mCurrentUser = firebaseAuth.getCurrentUser();
+        mCurrentUser = mAuth.getCurrentUser();
         //Get currently logged in user
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         // initialize the image button
@@ -113,7 +77,8 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
             startActivityForResult(galleryIntent, GALLERY_REQUEST_CODE);
         });
 
-        //getLocation();
+        ImageButton backBtn = findViewById(R.id.backBtn);
+        backBtn.setOnClickListener(v -> onBackPressed());
 
         // posting to Firebase
         postBtn.setOnClickListener(view -> {
@@ -122,9 +87,8 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
             //get title and desc from the edit texts
             final String PostTitle = textTitle.getText().toString().trim();
             final String PostDesc = textDesc.getText().toString().trim();
-            final String mLocation = mLocationTextView.getText().toString().trim();
-            //get the date and time of the post
 
+            //get the date and time of the post
             Calendar calendar = Calendar.getInstance();
             SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
             final String saveCurrentDate = currentDate.format(calendar.getTime());
@@ -164,13 +128,13 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
                                         newPost.child("uid").setValue(mCurrentUser.getUid());
                                         newPost.child("time").setValue(saveCurrentTime);
                                         newPost.child("date").setValue(saveCurrentDate);
-                                        newPost.child("location").setValue(mLocation);
+
                                         //get the profile photo and display name of the person posting
                                         newPost.child("profileImage").setValue(dataSnapshot.child("profileImage").getValue());
                                         newPost.child("username").setValue(dataSnapshot.child("username").getValue()).addOnCompleteListener(task -> {
                                             if (task.isSuccessful()) {
                                                 //launch the main activity after posting
-                                                Intent intent = new Intent(PostActivity.this, MainAdminActivity.class);
+                                                Intent intent = new Intent(PostActivity.this, MainPlayerActivity.class);
                                                 startActivity(intent);
                                             }
                                         });
@@ -187,41 +151,6 @@ public class PostActivity extends AppCompatActivity implements FetchAddressTask.
                 });
             }
         });
-    }
-
-    private void getLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION_PERMISSION);
-        } else {
-            Log.d("TAG", "getLocation: permissions granted");
-        }
-        mFusedLocationClient.getLastLocation().addOnSuccessListener(location -> {
-            // Start the reverse geocode AsyncTask
-            new FetchAddressTask(PostActivity.this, PostActivity.this).execute(location);
-        });
-        mLocationTextView.setText(getString(R.string.address_text, getString(R.string.loading), System.currentTimeMillis()));
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_LOCATION_PERMISSION) {// If the permission is granted, get the location,
-            // otherwise, show a Toast
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                getLocation();
-            } else {
-                Toast.makeText(this, "location permission denied", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onTaskCompleted(String result) {
-        //update ui
-        // mLocationTextView.setVisibility(true);
-        mLocationTextView.setText(getString(R.string.address_text, result, System.currentTimeMillis()));
-
-
     }
 
     @Override

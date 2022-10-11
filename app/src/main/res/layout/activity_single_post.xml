@@ -128,7 +128,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="4dp"
-
                         android:fontFamily="serif"
                         android:gravity="end"
                         android:text="UserName"

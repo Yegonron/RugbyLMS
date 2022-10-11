@@ -18,89 +18,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RUGBYLMS">
-        <activity
-            android:name=".RecordPlayerAttendanceActivity"
-            android:exported="false" />
-        <activity
-            android:name=".UpdateLeagueTableActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RecordGameFixturesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ReportsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".HelpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LivestreamGamesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LeagueTableActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GameFixturesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PlayerAttendanceActivity"
-            android:exported="false" />
+
         <activity
             android:name=".AboutUsActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileEditPlayerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileEditManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileEditFanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileEditCoachActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ProfileEditAdminActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SettingsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainPlayerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainManagerActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainFanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainCoachActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainAdminActivity"
+            android:name=".AttendanceActivity"
             android:exported="false" />
         <activity
             android:name=".ForgetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterAdminActivity"
+            android:name=".GameFixturesActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterManagerActivity"
+            android:name=".HelpActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterCoachActivity"
+            android:name=".LeagueTableActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterFanActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterPlayerActivity"
+            android:name=".LivestreamGamesActivity"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"
@@ -109,11 +47,87 @@
             android:name=".MainActivity"
             android:exported="false" />
         <activity
+            android:name=".MainAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainCoachActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainFanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainPlayerActivity"
+            android:exported="false" />
+        <activity
             android:name=".ManageUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PlayerAttendanceActivity"
             android:exported="false" />
         <activity
             android:name=".PostActivity"
             android:exported="false" />
+        <activity
+            android:name=".ProfileEditAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEditCoachActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEditFanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEditManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEditPlayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecordGameFixturesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecordPlayerAttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterAdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterCoachActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterFanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterManagerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RegisterPlayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SheetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SheetListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SinglePostActivity"
+            android:exported="true" />
+        <activity
+            android:name=".UpdateLeagueTableActivity"
+            android:exported="true" />
+
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true">

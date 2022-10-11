@@ -37,7 +37,6 @@ public class SettingsActivity extends AppCompatActivity {
         Button deleteBtn = findViewById(R.id.deleteBtn);
 
         passwordEt = findViewById(R.id.passwordEt);
-//        cPasswordEt = findViewById(R.id.cPasswordEt);
 
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
@@ -68,7 +67,6 @@ public class SettingsActivity extends AppCompatActivity {
     private void changeUserPassword() {
         //input data
         String password = passwordEt.getText().toString().trim();
-//        String confirmPassword = cPasswordEt.getText().toString().trim();
 
         //validate data
 
@@ -84,7 +82,6 @@ public class SettingsActivity extends AppCompatActivity {
                         Log.d(TAG, "User password updated.");
                     }
                 });
-
 
     }
 

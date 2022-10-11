@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 
 public class MyDialog extends DialogFragment {
@@ -61,6 +63,7 @@ public class MyDialog extends DialogFragment {
         return dialog;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getUpdatePlayerDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -98,6 +101,7 @@ public class MyDialog extends DialogFragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getUpdateTeamDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
@@ -129,6 +133,7 @@ public class MyDialog extends DialogFragment {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getAddPlayerDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
@@ -159,6 +164,7 @@ public class MyDialog extends DialogFragment {
         return builder.create();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getAddTeamDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog, null);

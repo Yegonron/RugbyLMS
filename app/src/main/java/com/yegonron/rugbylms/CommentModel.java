@@ -5,7 +5,6 @@ public class CommentModel {
     //create a constructor
 
     public CommentModel(String userName, String profileImage, String comment, String time, String date) {
-
         this.comment = comment;
         this.userName = userName;
         this.profileImage = profileImage;
@@ -46,7 +45,6 @@ public class CommentModel {
     public String getComment() {
         return comment;
     }
-
 
     public String getProfileImage() {
         return profileImage;

@@ -2,10 +2,10 @@ package com.yegonron.rugbylms;
 
 public class Post {
     //declare the variable
-    private String title, desc, postImage, userName, profileImage, time, date, location;
+    private String title, desc, postImage, userName, profileImage, time, date;
     //create a constructor
 
-    public Post(String title, String desc, String postImage, String userName, String profileImage, String time, String date, String location) {
+    public Post(String title, String desc, String postImage, String userName, String profileImage, String time, String date) {
         this.title = title;
         this.desc = desc;
         this.postImage = postImage;
@@ -13,7 +13,6 @@ public class Post {
         this.profileImage = profileImage;
         this.time = time;
         this.date = date;
-        this.location = location;
     }
 
     //requires an empty constructor
@@ -78,10 +77,5 @@ public class Post {
     public String getDate() {
         return date;
     }
-
-    public String getLocation() {
-        return location;
-    }
-
 
 }

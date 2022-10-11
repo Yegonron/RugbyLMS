@@ -71,7 +71,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="@color/black">
 
             <androidx.appcompat.widget.Toolbar
@@ -80,10 +80,9 @@
                 android:layout_height="60dp"
                 android:padding="10dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                app:logo="@mipmap/ic_launcher"
                 app:navigationIcon="@drawable/ic_menu_white"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:titleTextAppearance="@style/app_title"
+                app:titleTextAppearance="@string/app_name"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

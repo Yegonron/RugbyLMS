@@ -61,7 +61,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_mail_outline_gray"
-                android:drawableLeft="@drawable/ic_mail_outline_gray"
                 android:drawablePadding="5dp"
                 android:inputType="textEmailAddress"
                 android:padding="5dp"
@@ -89,7 +88,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_lock_gray"
-                android:drawableLeft="@drawable/ic_lock_gray"
                 android:drawablePadding="5dp"
                 android:inputType="textPassword"
                 android:padding="5dp"
@@ -104,7 +102,6 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/passwordTf"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:layout_marginStart="5dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
@@ -134,7 +131,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="20dp"
-            android:text="No account? Sign Up"
+            android:text="No account ? Sign Up"
             android:textColor="@color/black" />
 
     </RelativeLayout>
