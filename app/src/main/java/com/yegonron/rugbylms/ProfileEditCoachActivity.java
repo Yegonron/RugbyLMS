@@ -10,6 +10,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -42,6 +44,11 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
     private ImageView profileIv;
     private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt;
 
+    final String[] teams = {"Leos", "KCB", "Oilers"};
+
+    AutoCompleteTextView teamNameTv;
+    ArrayAdapter<String> adapterItems;
+
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 300;
 
@@ -66,6 +73,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         lastNameEt = findViewById(R.id.lastNameEt);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
+        teamNameTv = findViewById(R.id.teamNameTv);
 
         phoneEt.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
@@ -87,9 +95,12 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, teams);
+        teamNameTv.setAdapter(adapterItems);
+
     }
 
-    private String surName, firstName, lastName, phone, userName;
+    private String surName, firstName, lastName, phone, userName, teamName;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
@@ -97,6 +108,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         lastName = lastNameEt.getText().toString().trim();
         phone = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
+        teamName = teamNameTv.getText().toString().trim();
 
         updateProfile();
     }
@@ -112,6 +124,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
             hashMap.put("lastname", "" + lastName);
             hashMap.put("phone", "" + phone);
             hashMap.put("username", "" + userName);
+            hashMap.put("teamname", "" + teamName);
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
@@ -143,6 +156,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             hashMap.put("lastname", "" + lastName);
                             hashMap.put("phone", "" + phone);
                             hashMap.put("username", "" + userName);
+                            hashMap.put("teamname", "" + teamName);
                             hashMap.put("profileImage", "" + downloadImageUri);
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
@@ -188,6 +202,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             String lastname = "" + ds.child("lastname").getValue();
                             String phone = "" + ds.child("phone").getValue();
                             String username = "" + ds.child("username").getValue();
+                            String teamname = "" + ds.child("teamname").getValue();
                             String profileImage = "" + ds.child("profileImage").getValue();
 
                             surNameEt.setText(surname);
@@ -195,6 +210,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             lastNameEt.setText(lastname);
                             phoneEt.setText(phone);
                             userNameEt.setText(username);
+                            teamNameTv.setText(teamname);
 
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(profileIv);

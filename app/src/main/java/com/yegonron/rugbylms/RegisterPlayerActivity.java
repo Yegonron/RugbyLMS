@@ -43,7 +43,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("deprecation")
+
 public class RegisterPlayerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
@@ -303,7 +303,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             hashMap.put("dateofbirth", "" + dateOfBirth);
             hashMap.put("phone", "" + phoneNo);
             hashMap.put("username", "" + userName);
-            hashMap.put("teamName", "" + teamName);
+            hashMap.put("teamname", "" + teamName);
             hashMap.put("position", "" + position);
             hashMap.put("bootsize", "" + bootSize);
             hashMap.put("kitsize", "" + kitSize);
@@ -353,7 +353,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
                             hashMap.put("dateofbirth", "" + dateOfBirth);
                             hashMap.put("phone", "" + phoneNo);
                             hashMap.put("username", "" + userName);
-                            hashMap.put("teamName", "" + teamName);
+                            hashMap.put("teamname", "" + teamName);
                             hashMap.put("position", "" + position);
                             hashMap.put("bootsize", "" + bootSize);
                             hashMap.put("kitsize", "" + kitSize);

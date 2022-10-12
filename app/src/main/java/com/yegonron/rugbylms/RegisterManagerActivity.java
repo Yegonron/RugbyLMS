@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -37,11 +39,16 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("ALL")
+
 public class RegisterManagerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
     private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt, emailEt, passwordEt, cPasswordEt;
+
+    final String[] teams = {"Leos", "KCB", "Oilers"};
+
+    AutoCompleteTextView teamNameTv;
+    ArrayAdapter<String> adapterItems;
 
     //permission constants
     private static final int CAMERA_REQUEST_CODE = 200;
@@ -75,6 +82,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
         lastNameEt = findViewById(R.id.lastNameEt);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
+        teamNameTv = findViewById(R.id.teamNameTv);
         emailEt = findViewById(R.id.emailEt);
         passwordEt = findViewById(R.id.passwordEt);
         cPasswordEt = findViewById(R.id.cPasswordEt);
@@ -104,9 +112,12 @@ public class RegisterManagerActivity extends AppCompatActivity {
 
         noAccountManagerTv.setOnClickListener(v -> startActivity(new Intent(RegisterManagerActivity.this, SignUpActivity.class)));
 
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, teams);
+        teamNameTv.setAdapter(adapterItems);
+
     }
 
-    private String surName, firstName, lastName, phoneNo, userName, email, password;
+    private String surName, firstName, lastName, phoneNo, userName, teamName, email, password;
 
     private void inputData() {
         //input data
@@ -115,6 +126,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
         lastName = lastNameEt.getText().toString().trim();
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
+        teamName = teamNameTv.getText().toString().trim();
         email = emailEt.getText().toString().trim();
         password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
@@ -147,6 +159,10 @@ public class RegisterManagerActivity extends AppCompatActivity {
         }
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(teamName)) {
+            Toast.makeText(this, "Enter team name...", Toast.LENGTH_SHORT).show();
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -213,6 +229,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
             hashMap.put("lastname", "" + lastName);
             hashMap.put("phone", "" + phoneNo);
             hashMap.put("username", "" + userName);
+            hashMap.put("teamname", "" + teamName);
             hashMap.put("timestamp", "" + timestamp);
             hashMap.put("accountType", "Manager");
             hashMap.put("online", "true");
@@ -256,6 +273,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
                     hashMap.put("lastname", "" + lastName);
                     hashMap.put("phone", "" + phoneNo);
                     hashMap.put("username", "" + userName);
+                    hashMap.put("teamname", "" + teamName);
                     hashMap.put("timestamp", "" + timestamp);
                     hashMap.put("accountType", "Manager");
                     hashMap.put("online", "true");

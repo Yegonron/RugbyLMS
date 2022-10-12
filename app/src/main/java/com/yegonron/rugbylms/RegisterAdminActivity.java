@@ -37,7 +37,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@SuppressWarnings("deprecation")
 public class RegisterAdminActivity extends AppCompatActivity {
 
     private ImageView profileIv;

@@ -43,7 +43,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Objects;
 
-@SuppressWarnings("ALL")
 public class ProfileEditPlayerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
