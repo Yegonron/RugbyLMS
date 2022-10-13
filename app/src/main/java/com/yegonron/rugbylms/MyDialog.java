@@ -32,9 +32,9 @@ public class MyDialog extends DialogFragment {
 
     }
 
+
     @SuppressLint("ValidFragment")
     public MyDialog(int roll, String name) {
-
 
     }
 

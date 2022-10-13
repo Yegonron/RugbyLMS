@@ -272,7 +272,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="Not a Fan? Return to signup"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 

@@ -296,7 +296,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="Not an admin? Return to signup"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 
