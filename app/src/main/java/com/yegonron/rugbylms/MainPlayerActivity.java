@@ -96,7 +96,7 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
         checkUser();
 
@@ -123,14 +123,7 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
         Query query = FirebaseDatabase.getInstance().getReference().child("Posts");
         // Create and initialize and instance of Recycler Options passing in your model class and
         //Create a snap shot of your model
-        FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>().setQuery(query, snapshot -> new Post(
-                Objects.requireNonNull(snapshot.child("title").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("desc").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("postImage").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("username").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("profileImage").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("time").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("date").getValue()).toString())).build();
+        FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>().setQuery(query, snapshot -> new Post(Objects.requireNonNull(snapshot.child("title").getValue()).toString(), Objects.requireNonNull(snapshot.child("desc").getValue()).toString(), Objects.requireNonNull(snapshot.child("postImage").getValue()).toString(), Objects.requireNonNull(snapshot.child("username").getValue()).toString(), Objects.requireNonNull(snapshot.child("profileImage").getValue()).toString(), Objects.requireNonNull(snapshot.child("time").getValue()).toString(), Objects.requireNonNull(snapshot.child("date").getValue()).toString())).build();
         // crate a fire base adapter passing in the model, an a View holder
         // Create a  new ViewHolder as a public inner class that extends RecyclerView.Holder, outside the create , start and update the Ui methods.
         //Then implement the methods onCreateViewHolder and onBindViewHolder
@@ -252,17 +245,15 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
 
         //update value to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
-                .addOnSuccessListener(unused -> {
-                    // update successfully
-                    firebaseAuth.signOut();
-                    checkUser();
-                })
-                .addOnFailureListener(e -> {
-                    //failed updating
-                    progressDialog.dismiss();
-                    Toast.makeText(MainPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                });
+        ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap).addOnSuccessListener(unused -> {
+            // update successfully
+            firebaseAuth.signOut();
+            checkUser();
+        }).addOnFailureListener(e -> {
+            //failed updating
+            progressDialog.dismiss();
+            Toast.makeText(MainPlayerActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void checkUser() {
@@ -277,35 +268,34 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
 
     private void loadMyInfo() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            String name = "" + ds.child("surname").getValue() + " " + ds.child("firstname").getValue() + " " + ds.child("lastname").getValue();
-                            String email = "" + ds.child("email").getValue();
-                            String phone = "" + ds.child("phone").getValue();
-                            String profileImage = "" + ds.child("profileImage").getValue();
+        ref.orderByChild("uid").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    String name = "" + ds.child("surname").getValue() + " " + ds.child("firstname").getValue() + " " + ds.child("lastname").getValue();
+                    String email = "" + ds.child("email").getValue();
+                    String phone = "" + ds.child("countryCode").getValue() + " " + ds.child("phone").getValue();
+                    String profileImage = "" + ds.child("profileImage").getValue();
 
-                            nameTv.setText(name);
-                            emailTv.setText(email);
-                            phoneTv.setText(phone);
+                    nameTv.setText(name);
+                    emailTv.setText(email);
+                    phoneTv.setText("+" + phone);
 
-                            try {
-                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_person_white).into(profileIv);
+                    try {
+                        Picasso.get().load(profileImage).placeholder(R.drawable.ic_person_white).into(profileIv);
 
-                            } catch (Exception e) {
-                                profileIv.setImageResource(R.drawable.ic_person_white);
-                            }
-
-                        }
+                    } catch (Exception e) {
+                        profileIv.setImageResource(R.drawable.ic_person_white);
                     }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            }
 
-                    }
-                });
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public class PostViewHolder extends RecyclerView.ViewHolder {

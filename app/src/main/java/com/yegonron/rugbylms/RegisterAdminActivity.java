@@ -31,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.hbb20.CountryCodePicker;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -58,6 +59,8 @@ public class RegisterAdminActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
+    private CountryCodePicker ccp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class RegisterAdminActivity extends AppCompatActivity {
         surNameEt = findViewById(R.id.surNameEt);
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
         emailEt = findViewById(R.id.emailEt);
@@ -82,7 +86,7 @@ public class RegisterAdminActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait...");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
         // permissions
@@ -108,6 +112,8 @@ public class RegisterAdminActivity extends AppCompatActivity {
     private String surName;
     private String firstName;
     private String lastName;
+    private String code;
+    private String country;
     private String phoneNo;
     private String userName;
     private String email;
@@ -117,12 +123,13 @@ public class RegisterAdminActivity extends AppCompatActivity {
         surName = surNameEt.getText().toString().trim();
         firstName = firstNameEt.getText().toString().trim();
         lastName = lastNameEt.getText().toString().trim();
+        code = ccp.getSelectedCountryCode();
+        country = ccp.getSelectedCountryEnglishName();
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         email = emailEt.getText().toString().trim();
         String password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
-
 
         //validate data
 
@@ -142,14 +149,14 @@ public class RegisterAdminActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (phoneNo.length() < 10) {
-            Toast.makeText(this, "Phone number too short...", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (phoneNo.length() > 10) {
-            Toast.makeText(this, "Phone number too long...", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (phoneNo.length() < 8) {
+//            Toast.makeText(this, "Phone number too short...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (phoneNo.length() > 8) {
+//            Toast.makeText(this, "Phone number too long...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
             return;
@@ -180,12 +187,12 @@ public class RegisterAdminActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             //account created
             saveFirebaseData();
-            Toast.makeText(RegisterAdminActivity.this, "account created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterAdminActivity.this, "Account created", Toast.LENGTH_SHORT).show();
 
         }).addOnFailureListener(e -> {
             // failed creating account
             progressDialog.dismiss();
-            Toast.makeText(RegisterAdminActivity.this, "" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterAdminActivity.this, "Failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -216,6 +223,7 @@ public class RegisterAdminActivity extends AppCompatActivity {
             hashMap.put("surname", "" + surName);
             hashMap.put("firstname", "" + firstName);
             hashMap.put("lastname", "" + lastName);
+            hashMap.put("countryCode", "" + code);
             hashMap.put("phone", "" + phoneNo);
             hashMap.put("username", "" + userName);
             hashMap.put("timestamp", "" + timestamp);
@@ -260,6 +268,7 @@ public class RegisterAdminActivity extends AppCompatActivity {
                     hashMap.put("surname", "" + surName);
                     hashMap.put("firstname", "" + firstName);
                     hashMap.put("lastname", "" + lastName);
+                    hashMap.put("countryCode", "" + code);
                     hashMap.put("phone", "" + phoneNo);
                     hashMap.put("username", "" + userName);
                     hashMap.put("timestamp", "" + timestamp);

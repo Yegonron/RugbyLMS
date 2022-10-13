@@ -19,7 +19,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
 
     private OnItemClickListener onItemClickListener;
 
-    public  interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onClick(int position);
 
     }
@@ -42,22 +42,23 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.TeamViewHolder
             super(itemView);
             teamName = itemView.findViewById(R.id.teamNameTv);
             season = itemView.findViewById(R.id.seasonTv);
-            itemView.setOnClickListener(v -> onItemClickListener.onClick(getAdapterPosition()));
+            itemView.setOnClickListener(v -> onItemClickListener.onClick(getBindingAdapterPosition()));
             itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            menu.add(getAdapterPosition(),0,0,"EDIT");
-            menu.add(getAdapterPosition(),1,0,"DELETE");
+            menu.add(getBindingAdapterPosition(), 0, 0, "EDIT");
+            menu.add(getBindingAdapterPosition(), 1, 0, "DELETE");
 
         }
     }
+
     @NonNull
     @Override
     public TeamViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.team_item, parent, false);
 
         return new TeamViewHolder(itemView, onItemClickListener);
     }

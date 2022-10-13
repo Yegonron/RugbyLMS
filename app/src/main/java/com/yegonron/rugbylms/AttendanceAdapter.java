@@ -22,7 +22,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
 
     private OnItemClickListener onItemClickListener;
 
-    public  interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onClick(int position);
 
     }
@@ -36,7 +36,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
         this.context = context;
     }
 
-    public static class AttendanceViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
+    public static class AttendanceViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         final TextView roll;
         final TextView name;
         final TextView status;
@@ -48,22 +48,23 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
             name = itemView.findViewById(R.id.name);
             status = itemView.findViewById(R.id.status);
             cardView = itemView.findViewById(R.id.cardView);
-            itemView.setOnClickListener(v -> onItemClickListener.onClick(getAdapterPosition()));
+            itemView.setOnClickListener(v -> onItemClickListener.onClick(getBindingAdapterPosition()));
             itemView.setOnCreateContextMenuListener(this);
         }
 
         @Override
         public void onCreateContextMenu(ContextMenu menu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
-            menu.add(getAdapterPosition(),0,0,"Edit");
-            menu.add(getAdapterPosition(),1,0,"Delete");
+            menu.add(getBindingAdapterPosition(), 0, 0, "Edit");
+            menu.add(getBindingAdapterPosition(), 1, 0, "Delete");
 
         }
     }
+
     @NonNull
     @Override
     public AttendanceViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.attendance_item,parent,false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.attendance_item, parent, false);
 
         return new AttendanceViewHolder(itemView, onItemClickListener);
     }
@@ -71,7 +72,7 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
     @Override
     public void onBindViewHolder(@NonNull AttendanceViewHolder holder, int position) {
 
-        holder.roll.setText(attendanceItems.get(position).getRoll()+"");
+        holder.roll.setText(attendanceItems.get(position).getRoll() + "");
         holder.name.setText(attendanceItems.get(position).getName());
         holder.status.setText(attendanceItems.get(position).getStatus());
         holder.cardView.setCardBackgroundColor(getColor(position));
@@ -80,12 +81,12 @@ public class AttendanceAdapter extends RecyclerView.Adapter<AttendanceAdapter.At
     private int getColor(int position) {
         String status = attendanceItems.get(position).getStatus();
         if (status.equals("P"))
-            return Color.parseColor("#"+Integer.toHexString(ContextCompat.getColor(context,R.color.present)));
+            return Color.parseColor("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.present)));
 
-        else if(status.equals("A"))
-            return Color.parseColor("#"+Integer.toHexString(ContextCompat.getColor(context,R.color.absent)));
+        else if (status.equals("A"))
+            return Color.parseColor("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.absent)));
 
-        return Color.parseColor("#"+Integer.toHexString(ContextCompat.getColor(context,R.color.normal)));
+        return Color.parseColor("#" + Integer.toHexString(ContextCompat.getColor(context, R.color.normal)));
 
     }
 

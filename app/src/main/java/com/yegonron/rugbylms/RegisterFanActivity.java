@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.hbb20.CountryCodePicker;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -78,7 +79,7 @@ public class RegisterFanActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait...");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
         // permissions
@@ -161,12 +162,12 @@ public class RegisterFanActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             //account created
             saveFirebaseData();
-            Toast.makeText(RegisterFanActivity.this, "account created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterFanActivity.this, "Account created", Toast.LENGTH_SHORT).show();
 
         }).addOnFailureListener(e -> {
             // failed creating account
             progressDialog.dismiss();
-            Toast.makeText(RegisterFanActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterFanActivity.this, "Failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 

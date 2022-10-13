@@ -45,12 +45,9 @@ public class ManageUsersActivity extends AppCompatActivity {
         createPasswordEt = findViewById(R.id.createPasswordEt);
         accountTypeTv = findViewById(R.id.accountTypeTv);
 
-        EditText enterEmailEt = findViewById(R.id.enterEmailEt);
-        Button deleteUserBtn = findViewById(R.id.deleteUserBtn);
-
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait...");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
         backBtn.setOnClickListener(v -> onBackPressed());
@@ -63,37 +60,10 @@ public class ManageUsersActivity extends AppCompatActivity {
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, accountTypes);
         accountTypeTv.setAdapter(adapterItems);
 
-
-//        deleteUserBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                AlertDialog.Builder dialog = new AlertDialog.Builder(ManageUsersActivity.this);
-//                dialog.setTitle("Are you sure?");
-//                dialog.setMessage("Deleting this account will result in completely removing the account from the system");
-//                dialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        deleteUser();
-//                    }
-//                });
-//
-//                dialog.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                    }
-//                });
-//                AlertDialog alertDialog = dialog.create();
-//                alertDialog.show();
-//            }
-//        });
-
     }
 
     private String createEmail;
     private String accountType;
-
-    private String enterEmail;
 
     private void inputData() {
         createEmail = createEmailEt.getText().toString().trim();
@@ -128,12 +98,12 @@ public class ManageUsersActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(createEmail, password).addOnSuccessListener(authResult -> {
             //account created
             saveFirebaseData();
-            Toast.makeText(ManageUsersActivity.this, "account created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ManageUsersActivity.this, "Account created", Toast.LENGTH_SHORT).show();
 
         }).addOnFailureListener(e -> {
             // failed creating account
             progressDialog.dismiss();
-            Toast.makeText(ManageUsersActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(ManageUsersActivity.this, "Failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
     }
@@ -168,12 +138,12 @@ public class ManageUsersActivity extends AppCompatActivity {
         ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
                     // db updated
                     progressDialog.dismiss();
-                   // Toast.makeText(ManageUsersActivity.this, "", Toast.LENGTH_SHORT).show();
+
                 })
                 .addOnFailureListener(e -> {
                     // failed updating db
                     progressDialog.dismiss();
-                   // Toast.makeText(ManageUsersActivity.this, "", Toast.LENGTH_SHORT).show();
+
 
                 });
     }

@@ -1,8 +1,7 @@
 package com.yegonron.rugbylms;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
-import android.app.DialogFragment;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -16,6 +15,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
+
+import java.util.Objects;
 
 public class MyDialog extends DialogFragment {
     public static final String TEAM_ADD_DIALOG = "addTeam";
@@ -32,8 +34,6 @@ public class MyDialog extends DialogFragment {
 
     }
 
-
-    @SuppressLint("ValidFragment")
     public MyDialog(int roll, String name) {
 
     }
@@ -54,10 +54,22 @@ public class MyDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         Dialog dialog = null;
-        if (getTag().equals(TEAM_ADD_DIALOG)) dialog = getAddTeamDialog();
-        if (getTag().equals(TEAM_UPDATE_DIALOG)) dialog = getUpdateTeamDialog();
-        if (getTag().equals(PLAYER_ADD_DIALOG)) dialog = getAddPlayerDialog();
-        if (getTag().equals(PLAYER_UPDATE_DIALOG)) dialog = getUpdatePlayerDialog();
+        if (Objects.requireNonNull(getTag()).equals(TEAM_ADD_DIALOG))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog = getAddTeamDialog();
+            }
+        if (Objects.requireNonNull(getTag()).equals(TEAM_UPDATE_DIALOG))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog = getUpdateTeamDialog();
+            }
+        if (Objects.requireNonNull(getTag()).equals(PLAYER_ADD_DIALOG))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog = getAddPlayerDialog();
+            }
+        if (Objects.requireNonNull(getTag()).equals(PLAYER_UPDATE_DIALOG))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                dialog = getUpdatePlayerDialog();
+            }
         assert dialog != null;
         dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         return dialog;
@@ -66,7 +78,7 @@ public class MyDialog extends DialogFragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getUpdatePlayerDialog() {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 
@@ -103,7 +115,7 @@ public class MyDialog extends DialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getUpdateTeamDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 
@@ -135,7 +147,7 @@ public class MyDialog extends DialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getAddPlayerDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 
@@ -166,7 +178,7 @@ public class MyDialog extends DialogFragment {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private Dialog getAddTeamDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         View view = getLayoutInflater().inflate(R.layout.dialog, null);
         builder.setView(view);
 

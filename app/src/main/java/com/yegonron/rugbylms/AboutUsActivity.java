@@ -52,12 +52,7 @@ public class AboutUsActivity extends AppCompatActivity {
         copyright.setTitle(copyrightString);
         // copyright.setIcon(R.mipmap.ic_launcher);
         copyright.setGravity(Gravity.CENTER);
-        copyright.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(AboutUsActivity.this, copyrightString, Toast.LENGTH_SHORT).show();
-            }
-        });
+        copyright.setOnClickListener(v -> Toast.makeText(AboutUsActivity.this, copyrightString, Toast.LENGTH_SHORT).show());
         return copyright;
 
     }

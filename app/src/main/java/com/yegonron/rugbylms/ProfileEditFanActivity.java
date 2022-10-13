@@ -36,7 +36,6 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Objects;
 
-@SuppressWarnings("deprecation")
 public class ProfileEditFanActivity extends AppCompatActivity {
 
     private ImageView profileIv;
@@ -79,7 +78,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please wait");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();

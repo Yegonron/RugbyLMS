@@ -13,7 +13,7 @@ public class LivestreamGamesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_livestream_games);
 
         ImageButton backBtn = findViewById(R.id.backBtn);
-
         backBtn.setOnClickListener(v -> onBackPressed());
+
     }
 }

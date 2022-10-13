@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?><!--suppress ALL -->
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green"
+    android:background="@color/black"
     tools:context=".RecordGameFixturesActivity">
 
     <RelativeLayout
+        android:id="@+id/toolbarRl"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="@color/black"
         android:padding="10dp">
 
@@ -17,6 +17,7 @@
             android:id="@+id/backBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_centerVertical="true"
             android:background="@null"
             android:contentDescription="@string/backbutton"
             android:src="@drawable/ic_back_white" />
@@ -25,12 +26,127 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="Record Game Fixtures"
+            android:layout_centerVertical="true"
+            android:text="Game Fixtures "
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
     </RelativeLayout>
 
+    <ScrollView
+        android:id="@+id/recordGameFixturesSv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/layoutstyle"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/receive_game_notificationsTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:fontFamily="serif"
+                android:text="Record Game Fixture:"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/fixtureTitleEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/receive_game_notificationsTv"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_styles"
+                android:hint="Fixture Title"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/homeTeamEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fixtureTitleEt"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_styles"
+                android:hint="Home Team"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/awayTeamEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/homeTeamEt"
+                android:layout_margin="10dp"
+                android:background="@drawable/edit_text_styles"
+                android:hint="Away Team"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/fixtureVenueEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/awayTeamEt"
+                android:layout_margin="10dp"
+                android:background="@drawable/edit_text_styles"
+                android:hint="Fixture Venue"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/fixtureTimeEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fixtureVenueEt"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_styles"
+                android:hint="Fixture Time"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/recordGameFixtureBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fixtureTimeEt"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="10dp"
+                android:backgroundTint="@color/green"
+                android:minWidth="120dp"
+                android:text="Record Fixture"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </RelativeLayout>

@@ -34,6 +34,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.hbb20.CountryCodePicker;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
@@ -64,6 +65,8 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
     private FirebaseAuth firebaseAuth;
 
+    private CountryCodePicker ccp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +75,7 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
         surNameEt = findViewById(R.id.surNameEt);
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
         teamNameTv = findViewById(R.id.teamNameTv);
@@ -90,7 +94,7 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
         storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please wait");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -101,12 +105,13 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
 
     }
 
-    private String surName, firstName, lastName, phone, userName, teamName;
+    private String surName, firstName, lastName,code, phone, userName, teamName;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
         firstName = firstNameEt.getText().toString().trim();
         lastName = lastNameEt.getText().toString().trim();
+        code = ccp.getSelectedCountryCode();
         phone = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         teamName = teamNameTv.getText().toString().trim();
@@ -123,6 +128,7 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
             hashMap.put("surname", "" + surName);
             hashMap.put("firstname", "" + firstName);
             hashMap.put("lastname", "" + lastName);
+            hashMap.put("countryCode", "" + code);
             hashMap.put("phone", "" + phone);
             hashMap.put("username", "" + userName);
             hashMap.put("teamname", "" + teamName);
@@ -155,6 +161,7 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
                             hashMap.put("surname", "" + surName);
                             hashMap.put("firstname", "" + firstName);
                             hashMap.put("lastname", "" + lastName);
+                            hashMap.put("countryCode", "" + code);
                             hashMap.put("phone", "" + phone);
                             hashMap.put("username", "" + userName);
                             hashMap.put("teamname", "" + teamName);
@@ -201,6 +208,7 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
                             String surname = "" + ds.child("surname").getValue();
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
+                            String code = "" + ds.child("countryCode").getValue().toString();
                             String phone = "" + ds.child("phone").getValue();
                             String username = "" + ds.child("username").getValue();
                             String teamname = "" + ds.child("teamname").getValue();
@@ -209,6 +217,7 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
                             surNameEt.setText(surname);
                             firstNameEt.setText(firstname);
                             lastNameEt.setText(lastname);
+                            ccp.setCountryForPhoneCode(Integer.parseInt(code));
                             phoneEt.setText(phone);
                             userNameEt.setText(username);
                             teamNameTv.setText(teamname);

@@ -13,7 +13,6 @@ public class ReportsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_reports);
 
         ImageButton backBtn = findViewById(R.id.backBtn);
-
         backBtn.setOnClickListener(v -> onBackPressed());
     }
 }

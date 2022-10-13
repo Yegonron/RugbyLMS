@@ -96,7 +96,7 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
         checkUser();
 
@@ -284,12 +284,12 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
                         for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             String name = "" + ds.child("surname").getValue() + " " + ds.child("firstname").getValue() + " " + ds.child("lastname").getValue();
                             String email = "" + ds.child("email").getValue();
-                            String phone = "" + ds.child("phone").getValue();
+                            String phone = "" + ds.child("countryCode").getValue() + " " + ds.child("phone").getValue();
                             String profileImage = "" + ds.child("profileImage").getValue();
 
                             nameTv.setText(name);
                             emailTv.setText(email);
-                            phoneTv.setText(phone);
+                            phoneTv.setText("+" + phone);
 
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.ic_person_white).into(profileIv);

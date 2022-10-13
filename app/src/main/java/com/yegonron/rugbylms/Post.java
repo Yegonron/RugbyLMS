@@ -17,6 +17,7 @@ public class Post {
 
     //requires an empty constructor
     public Post() {
+
     }
 
     // setters

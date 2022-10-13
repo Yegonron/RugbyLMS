@@ -13,7 +13,6 @@ public class PlayerAttendanceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player_attendance);
 
         ImageButton backBtn = findViewById(R.id.backBtn);
-
         backBtn.setOnClickListener(v -> onBackPressed());
 
 

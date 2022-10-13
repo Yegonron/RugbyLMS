@@ -33,6 +33,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.hbb20.CountryCodePicker;
 
 import java.util.HashMap;
 import java.util.Objects;
@@ -66,6 +67,8 @@ public class RegisterManagerActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
+    private CountryCodePicker ccp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +83,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
         surNameEt = findViewById(R.id.surNameEt);
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
+        ccp = (CountryCodePicker) findViewById(R.id.ccp);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
         teamNameTv = findViewById(R.id.teamNameTv);
@@ -91,7 +95,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait...");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
         // permissions
@@ -117,18 +121,28 @@ public class RegisterManagerActivity extends AppCompatActivity {
 
     }
 
-    private String surName, firstName, lastName, phoneNo, userName, teamName, email, password;
+    private String surName;
+    private String firstName;
+    private String lastName;
+    private String code;
+    private String country;
+    private String phoneNo;
+    private String userName;
+    private String teamName;
+    private String email;
 
     private void inputData() {
         //input data
         surName = surNameEt.getText().toString().trim();
         firstName = firstNameEt.getText().toString().trim();
         lastName = lastNameEt.getText().toString().trim();
+        code = ccp.getSelectedCountryCode();
+        country = ccp.getSelectedCountryEnglishName();
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         teamName = teamNameTv.getText().toString().trim();
         email = emailEt.getText().toString().trim();
-        password = passwordEt.getText().toString().trim();
+        String password = passwordEt.getText().toString().trim();
         String confirmPassword = cPasswordEt.getText().toString().trim();
 
         //validate data
@@ -149,14 +163,14 @@ public class RegisterManagerActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (phoneNo.length() < 10) {
-            Toast.makeText(this, "Phone number too short...", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (phoneNo.length() > 10) {
-            Toast.makeText(this, "Phone number too long...", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (phoneNo.length() < 9) {
+//            Toast.makeText(this, "Phone number too short...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        if (phoneNo.length() > 9) {
+//            Toast.makeText(this, "Phone number too long...", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
             return;
@@ -191,12 +205,12 @@ public class RegisterManagerActivity extends AppCompatActivity {
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnSuccessListener(authResult -> {
             //account created
             saveFirebaseData();
-            Toast.makeText(RegisterManagerActivity.this, "account created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterManagerActivity.this, "Account created", Toast.LENGTH_SHORT).show();
 
         }).addOnFailureListener(e -> {
             // failed creating account
             progressDialog.dismiss();
-            Toast.makeText(RegisterManagerActivity.this, "failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterManagerActivity.this, "Failed creating account" + e.getMessage(), Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -227,6 +241,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
             hashMap.put("surname", "" + surName);
             hashMap.put("firstname", "" + firstName);
             hashMap.put("lastname", "" + lastName);
+            hashMap.put("countryCode", "" + code);
             hashMap.put("phone", "" + phoneNo);
             hashMap.put("username", "" + userName);
             hashMap.put("teamname", "" + teamName);
@@ -271,6 +286,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
                     hashMap.put("surname", "" + surName);
                     hashMap.put("firstname", "" + firstName);
                     hashMap.put("lastname", "" + lastName);
+                    hashMap.put("countryCode", "" + code);
                     hashMap.put("phone", "" + phoneNo);
                     hashMap.put("username", "" + userName);
                     hashMap.put("teamname", "" + teamName);

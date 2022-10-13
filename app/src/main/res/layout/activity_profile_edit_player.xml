@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,7 +36,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp">
+        android:layout_marginTop="60dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -182,44 +183,61 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneTf"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <LinearLayout
+                android:id="@+id/phoneNoLl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/dateOfBirthTf"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/shape_rect02"
-                android:hint="Phone (07********)"
-                android:textColorHint="@color/gray01">
+                android:layout_below="@id/lastNameTf">
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/phoneEt"
+                <com.hbb20.CountryCodePicker
+                    android:id="@+id/ccp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/shape_rect02"
+                    android:padding="3dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/phoneTf"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_phone_gray"
-                    android:drawablePadding="5dp"
-                    android:inputType="phone"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/shape_rect02"
+                    android:hint="Phone"
                     android:padding="5dp"
-                    android:textColor="@color/black" />
+                    android:textColorHint="@color/gray01"
+                    app:layout_constraintStart_toEndOf="@+id/ccp">
 
-            </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/phoneEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="5dp"
+                        android:inputType="phone"
+                        android:padding="5dp"
+                        android:textColor="@color/black" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/userNameTf"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/phoneTf"
+                android:layout_below="@id/phoneNoLl"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
                 android:hint="User Name"
+                android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -246,6 +264,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
                 android:hint="Team Name"
+                android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
                 <AutoCompleteTextView
@@ -272,6 +291,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
                 android:hint="Player Position"
+                android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
                 <AutoCompleteTextView
@@ -288,7 +308,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bootSizeTf"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="165dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/positionTf"
                 android:layout_marginStart="10dp"
@@ -297,13 +317,13 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
                 android:hint="Boot Size"
+                android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
                 <AutoCompleteTextView
                     android:id="@+id/bootSizeTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_one_gray"
                     android:drawablePadding="3dp"
                     android:inputType="none"
                     android:textColor="@color/black" />
@@ -313,23 +333,23 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/kitSizeTf"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="165dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/positionTf"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toEndOf="@id/bootSizeTf"
+                android:layout_toRightOf="@id/bootSizeTf"
                 android:background="@drawable/shape_rect02"
                 android:hint="Kit Size"
+                android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
                 <AutoCompleteTextView
                     android:id="@+id/kitSizeTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableStart="@drawable/ic_one_gray"
                     android:drawablePadding="3dp"
                     android:inputType="none"
                     android:textColor="@color/black" />

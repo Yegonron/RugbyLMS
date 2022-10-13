@@ -1,5 +1,7 @@
 package com.yegonron.rugbylms;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -45,6 +47,8 @@ public class SinglePostActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser mCurrentUser;
 
+    private ProgressDialog progressDialog;
+
     EditText makeComment;
     private FirebaseRecyclerAdapter adapter;
     String currentUserID = null;
@@ -63,6 +67,10 @@ public class SinglePostActivity extends AppCompatActivity {
 
         ImageButton backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Please wait..");
+        progressDialog.setCanceledOnTouchOutside(false);
 
         //initialize recyclerview
         recyclerView = findViewById(R.id.comment_recycler);
@@ -104,6 +112,11 @@ public class SinglePostActivity extends AppCompatActivity {
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
 
+//            Intent intent = new Intent(SinglePostActivity.this, PostActivity.class);
+//            startActivity(intent);
+
+            //            checkUserType();
+
         });
 
         mDatabase.child(post_key).addValueEventListener(new ValueEventListener() {
@@ -120,6 +133,8 @@ public class SinglePostActivity extends AppCompatActivity {
                 if (Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid().equals(post_uid)) {
 
                     deleteBtn.setVisibility(View.VISIBLE);
+
+
                 }
             }
 
@@ -131,7 +146,7 @@ public class SinglePostActivity extends AppCompatActivity {
 
         postComment.setOnClickListener(v -> {
             //Lis
-            Toast.makeText(SinglePostActivity.this, "POSTING...", Toast.LENGTH_LONG).show();
+            Toast.makeText(SinglePostActivity.this, "Posting...", Toast.LENGTH_LONG).show();
             //get the comment from the edit texts
             final String comment = makeComment.getText().toString().trim();
             //get the date and time of the post
@@ -291,6 +306,58 @@ public class SinglePostActivity extends AppCompatActivity {
         public void setDate(String date) {
             commentDate.setText(date);
         }
+
+    }
+
+    private void checkUserType() {
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            String accountType = "" + ds.child("accountType").getValue();
+                            switch (accountType) {
+                                case "Player":
+                                    progressDialog.dismiss();
+                                    //user is player
+                                    startActivity(new Intent(SinglePostActivity.this, MainPlayerActivity.class));
+                                    finish();
+                                    break;
+                                case "Coach":
+                                    progressDialog.dismiss();
+                                    //user is coach
+                                    startActivity(new Intent(SinglePostActivity.this, MainCoachActivity.class));
+                                    finish();
+                                    break;
+                                case "Fan":
+                                    progressDialog.dismiss();
+                                    //user is fan
+                                    startActivity(new Intent(SinglePostActivity.this, MainFanActivity.class));
+                                    finish();
+                                    break;
+                                case "Manager":
+                                    progressDialog.dismiss();
+                                    //user is manager
+                                    startActivity(new Intent(SinglePostActivity.this, MainManagerActivity.class));
+                                    finish();
+                                    break;
+                                case "Admin":
+                                    progressDialog.dismiss();
+                                    //user is admin
+                                    startActivity(new Intent(SinglePostActivity.this, MainAdminActivity.class));
+                                    finish();
+                                    break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
 
     }
 }

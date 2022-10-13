@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseAuth;
 public class ForgetPasswordActivity extends AppCompatActivity {
 
     private EditText emailEt;
-
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
@@ -30,7 +29,7 @@ public class ForgetPasswordActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please wait");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
         backBtn.setOnClickListener(v -> onBackPressed());

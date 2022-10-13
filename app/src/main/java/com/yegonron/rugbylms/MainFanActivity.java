@@ -95,7 +95,7 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
 
         firebaseAuth = FirebaseAuth.getInstance();
         progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Please Wait");
+        progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
         checkUser();
 

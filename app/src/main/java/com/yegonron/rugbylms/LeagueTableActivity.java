@@ -13,7 +13,6 @@ public class LeagueTableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_league_table);
 
         ImageButton backBtn = findViewById(R.id.backBtn);
-
         backBtn.setOnClickListener(v -> onBackPressed());
     }
 }
