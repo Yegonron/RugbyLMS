@@ -76,7 +76,7 @@ public class SinglePostActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.comment_recycler);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         //Reverse  the layout so as to display the most recent post at the top
-        // linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
 
@@ -111,11 +111,6 @@ public class SinglePostActivity extends AppCompatActivity {
             dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
-
-//            Intent intent = new Intent(SinglePostActivity.this, PostActivity.class);
-//            startActivity(intent);
-
-            //            checkUserType();
 
         });
 
@@ -164,8 +159,8 @@ public class SinglePostActivity extends AppCompatActivity {
                 mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        newComment.child("comment").setValue(comment);
                         newComment.child("uid").setValue(mCurrentUser.getUid());
+                        newComment.child("comment").setValue(comment);
                         newComment.child("time").setValue(saveCurrentTime);
                         newComment.child("date").setValue(saveCurrentDate);
                         newComment.child("profileImage").setValue(dataSnapshot.child("profileImage").getValue());
@@ -205,7 +200,6 @@ public class SinglePostActivity extends AppCompatActivity {
         //Create a snap shot of your model
         FirebaseRecyclerOptions<CommentModel> options = new FirebaseRecyclerOptions.Builder<CommentModel>().
                 setQuery(query, snapshot -> new CommentModel(
-                        Objects.requireNonNull(snapshot.child("username").getValue()).toString(),
                         Objects.requireNonNull(snapshot.child("profileImage").getValue()).toString(),
                         Objects.requireNonNull(snapshot.child("comment").getValue()).toString(),
                         Objects.requireNonNull(snapshot.child("time").getValue()).toString(),
@@ -219,7 +213,6 @@ public class SinglePostActivity extends AppCompatActivity {
 
             @Override
             protected void onBindViewHolder(@NonNull commentModelViewHolder holder, int i, @NonNull CommentModel model) {
-                holder.setUserName(model.getUserName());
                 holder.setProfileImage(model.getProfileImage());
                 holder.setTime(model.getTime());
                 holder.setDate(model.getDate());
@@ -256,25 +249,16 @@ public class SinglePostActivity extends AppCompatActivity {
     public static class commentModelViewHolder extends RecyclerView.ViewHolder {
         //Declare the view objects in the card view
 
-        public final TextView commenterName;
         public final ImageView commenterimage;
         public final TextView commentTime;
         public final TextView commentDate;
         public final TextView the_comment;
-
-        //Declare a string variable to hold  the user ID of currently logged in user
-        String currentUserID;
-        //Declare an instance of firebase authentication
-        FirebaseAuth firebaseAuth;
-        //Declare a database reference where you are saving  the likes
-        DatabaseReference likesRef;
 
         //create constructor matching super
         public commentModelViewHolder(@NonNull View itemView) {
             super(itemView);
             //Initialize the card view item objects
 
-            commenterName = itemView.findViewById(R.id.commenterName);
             commenterimage = itemView.findViewById(R.id.commenterImage);
             commentTime = itemView.findViewById(R.id.commentTime);
             commentDate = itemView.findViewById(R.id.commentDate);
@@ -286,12 +270,6 @@ public class SinglePostActivity extends AppCompatActivity {
         public void setComment(String comment) {
 
             the_comment.setText(comment);
-        }
-
-
-        public void setUserName(String userName) {
-
-            commenterName.setText(userName);
         }
 
         public void setProfileImage(String profileImage) {
@@ -309,55 +287,4 @@ public class SinglePostActivity extends AppCompatActivity {
 
     }
 
-    private void checkUserType() {
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            String accountType = "" + ds.child("accountType").getValue();
-                            switch (accountType) {
-                                case "Player":
-                                    progressDialog.dismiss();
-                                    //user is player
-                                    startActivity(new Intent(SinglePostActivity.this, MainPlayerActivity.class));
-                                    finish();
-                                    break;
-                                case "Coach":
-                                    progressDialog.dismiss();
-                                    //user is coach
-                                    startActivity(new Intent(SinglePostActivity.this, MainCoachActivity.class));
-                                    finish();
-                                    break;
-                                case "Fan":
-                                    progressDialog.dismiss();
-                                    //user is fan
-                                    startActivity(new Intent(SinglePostActivity.this, MainFanActivity.class));
-                                    finish();
-                                    break;
-                                case "Manager":
-                                    progressDialog.dismiss();
-                                    //user is manager
-                                    startActivity(new Intent(SinglePostActivity.this, MainManagerActivity.class));
-                                    finish();
-                                    break;
-                                case "Admin":
-                                    progressDialog.dismiss();
-                                    //user is admin
-                                    startActivity(new Intent(SinglePostActivity.this, MainAdminActivity.class));
-                                    finish();
-                                    break;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
-    }
 }

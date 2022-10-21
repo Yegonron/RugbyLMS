@@ -1,6 +1,6 @@
 package com.yegonron.rugbylms;
 
-public class Fixtures {
+public class FixturesModel {
 
     //declare the variable
     private String fixtureTitle;
@@ -12,7 +12,7 @@ public class Fixtures {
     private String time;
 
     //create a constructor
-    public Fixtures(String fixtureTitle, String homeTeam, String awayTeam, String fixtureVenue, String fixtureTime, String time, String date) {
+    public FixturesModel(String fixtureTitle, String homeTeam, String awayTeam, String fixtureVenue, String fixtureTime, String time, String date) {
         this.fixtureTitle = fixtureTitle;
         this.homeTeam = homeTeam;
         this.awayTeam = awayTeam;
@@ -24,7 +24,7 @@ public class Fixtures {
     }
 
     //requires an empty constructor
-    public Fixtures() {
+    public FixturesModel() {
 
 
     }

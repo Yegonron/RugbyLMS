@@ -63,7 +63,7 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
         //Initialize the storage reference
         mStorageRef = FirebaseStorage.getInstance().getReference();
         //Initialize the database reference/node where you will be storing posts
-        databaseRef = FirebaseDatabase.getInstance().getReference().child("Fixtures");
+        databaseRef = FirebaseDatabase.getInstance().getReference().child("FixturesModel");
         //Initialize an instance of  Firebase Authentication
         //Declare an Instance of firebase authentication
         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();

@@ -44,7 +44,7 @@ public class GameFixturesActivity extends AppCompatActivity {
         //initialize recyclerview
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        //Reverse  the layout so as to display the most recent Fixtures at the top
+        //Reverse  the layout so as to display the most recent FixturesModel at the top
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
@@ -73,11 +73,11 @@ public class GameFixturesActivity extends AppCompatActivity {
 
     private void updateFixturesUI(FirebaseUser currentUser) {
 
-        //create and initialize an instance of Query that retrieves all Fixtures uploaded
-        Query query = FirebaseDatabase.getInstance().getReference().child("Fixtures");
+        //create and initialize an instance of Query that retrieves all FixturesModel uploaded
+        Query query = FirebaseDatabase.getInstance().getReference().child("FixturesModel");
         // Create and initialize and instance of Recycler Options passing in your model class and
         //Create a snap shot of your model
-        FirebaseRecyclerOptions<Fixtures> options = new FirebaseRecyclerOptions.Builder<Fixtures>().setQuery(query, snapshot -> new Fixtures(
+        FirebaseRecyclerOptions<FixturesModel> options = new FirebaseRecyclerOptions.Builder<FixturesModel>().setQuery(query, snapshot -> new FixturesModel(
                 Objects.requireNonNull(snapshot.child("fixtureTitle").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("homeTeam").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("awayTeam").getValue()).toString(),
@@ -89,7 +89,7 @@ public class GameFixturesActivity extends AppCompatActivity {
         // Create a  new ViewHolder as a public inner class that extends RecyclerView.Holder, outside the create , start and update the Ui methods.
         //Then implement the methods onCreateViewHolder and onBindViewHolder
         //Complete all the steps in the FixturesViewHolder before proceeding to  the methods onCreateViewHolder, and onBindViewHolder
-        adapter = new FirebaseRecyclerAdapter<Fixtures, GameFixturesActivity.FixturesViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<FixturesModel, GameFixturesActivity.FixturesViewHolder>(options) {
 
             @NonNull
             @Override
@@ -100,8 +100,8 @@ public class GameFixturesActivity extends AppCompatActivity {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull GameFixturesActivity.FixturesViewHolder holder, int position, @NonNull Fixtures model) {
-                // very important for you to get the Fixtures key since we will use this to set likes and delete a o particular Fixtures
+            protected void onBindViewHolder(@NonNull GameFixturesActivity.FixturesViewHolder holder, int position, @NonNull FixturesModel model) {
+                // very important for you to get the FixturesModel key since we will use this to set likes and delete a o particular FixturesModel
                 final String fixture_key = getRef(position).getKey();
                 //populate the card views with data
                 holder.setFixtureTitle(model.getFixtureTitle());

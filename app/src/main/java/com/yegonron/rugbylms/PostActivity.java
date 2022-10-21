@@ -131,10 +131,10 @@ public class PostActivity extends AppCompatActivity {
                                 mDatabaseUsers.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        newPost.child("uid").setValue(mCurrentUser.getUid());
                                         newPost.child("title").setValue(PostTitle);
                                         newPost.child("desc").setValue(PostDesc);
                                         newPost.child("postImage").setValue(imageUrl);
-                                        newPost.child("uid").setValue(mCurrentUser.getUid());
                                         newPost.child("time").setValue(saveCurrentTime);
                                         newPost.child("date").setValue(saveCurrentDate);
 

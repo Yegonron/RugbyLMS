@@ -54,7 +54,7 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String DROP_GAME_TABLE = " DROP TABLE IF EXISTS " + GAME_TABLE_NAME;
     private static final String SELECT_GAME_TABLE = " SELECT * FROM " + GAME_TABLE_NAME;
 
-    //Fixtures Table
+    //FixturesModel Table
     private static final String FIXTURES_TABLE_NAME = "FIXTURES_TABLE";
     public static final String F_ID = "_FID";
     public static final String FIXTURES_NAME_KEY = "FIXTURES_NAME";

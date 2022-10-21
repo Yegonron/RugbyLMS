@@ -123,12 +123,12 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
         Query query = FirebaseDatabase.getInstance().getReference().child("Posts");
         // Create and initialize and instance of Recycler Options passing in your model class and
         //Create a snap shot of your model
-        FirebaseRecyclerOptions<Post> options = new FirebaseRecyclerOptions.Builder<Post>().setQuery(query, snapshot -> new Post(Objects.requireNonNull(snapshot.child("title").getValue()).toString(), Objects.requireNonNull(snapshot.child("desc").getValue()).toString(), Objects.requireNonNull(snapshot.child("postImage").getValue()).toString(), Objects.requireNonNull(snapshot.child("username").getValue()).toString(), Objects.requireNonNull(snapshot.child("profileImage").getValue()).toString(), Objects.requireNonNull(snapshot.child("time").getValue()).toString(), Objects.requireNonNull(snapshot.child("date").getValue()).toString())).build();
+        FirebaseRecyclerOptions<PostModel> options = new FirebaseRecyclerOptions.Builder<PostModel>().setQuery(query, snapshot -> new PostModel(Objects.requireNonNull(snapshot.child("title").getValue()).toString(), Objects.requireNonNull(snapshot.child("desc").getValue()).toString(), Objects.requireNonNull(snapshot.child("postImage").getValue()).toString(), Objects.requireNonNull(snapshot.child("username").getValue()).toString(), Objects.requireNonNull(snapshot.child("profileImage").getValue()).toString(), Objects.requireNonNull(snapshot.child("time").getValue()).toString(), Objects.requireNonNull(snapshot.child("date").getValue()).toString())).build();
         // crate a fire base adapter passing in the model, an a View holder
         // Create a  new ViewHolder as a public inner class that extends RecyclerView.Holder, outside the create , start and update the Ui methods.
         //Then implement the methods onCreateViewHolder and onBindViewHolder
         //Complete all the steps in the PostViewHolder before proceeding to  the methods onCreateViewHolder, and onBindViewHolder
-        adapter = new FirebaseRecyclerAdapter<Post, MainPlayerActivity.PostViewHolder>(options) {
+        adapter = new FirebaseRecyclerAdapter<PostModel, MainPlayerActivity.PostViewHolder>(options) {
 
             @NonNull
             @Override
@@ -139,7 +139,7 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull MainPlayerActivity.PostViewHolder holder, int position, @NonNull Post model) {
+            protected void onBindViewHolder(@NonNull MainPlayerActivity.PostViewHolder holder, int position, @NonNull PostModel model) {
                 // very important for you to get the post key since we will use this to set likes and delete a o particular post
                 final String post_key = getRef(position).getKey();
                 //populate the card views with data
@@ -262,11 +262,11 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
             startActivity(new Intent(MainPlayerActivity.this, LoginActivity.class));
             finish();
         } else {
-            loadMyInfo();
+            loadUserInfo();
         }
     }
 
-    private void loadMyInfo() {
+    private void loadUserInfo() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.orderByChild("uid").equalTo(firebaseAuth.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
@@ -353,7 +353,6 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
         }
 
         public void setPostImage(Context ctx, String postImage) {
-
             Picasso.get().load(postImage).into(post_image);
         }
 
@@ -362,7 +361,7 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
             postUserName.setText(userName);
         }
 
-        public void setProfileImage(Context context, String profileImage) {
+        public void setProfileImage(Context cxt, String profileImage) {
             Picasso.get().load(profileImage).into(user_image);
 
         }

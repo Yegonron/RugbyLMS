@@ -41,9 +41,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="10dp"
             android:background="@drawable/layoutstyle"
             android:orientation="vertical">
@@ -54,22 +54,21 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="10dp"
                 android:fontFamily="serif"
                 android:text="Register"
                 android:textColor="@color/black"
                 android:textSize="32sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileIv"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_below="@id/registerTv"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="3dp"
                 android:background="@drawable/add_profile"
                 android:contentDescription="TODO"
                 tools:ignore="NotSibling" />
@@ -167,8 +166,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
-                    android:padding="3dp"
-                    android:background="@drawable/shape_rect02" />
+                    android:background="@drawable/shape_rect02"
+                    android:padding="3dp" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/phoneTf"
@@ -224,6 +223,7 @@
                     android:textColor="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/teamNameTf"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"

@@ -1,7 +1,6 @@
 package com.yegonron.rugbylms;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -70,7 +69,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
         //Get currently logged in user
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Fixtures");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("FixturesModel");
 
         deleteBtn = findViewById(R.id.deleteBtn);
         updateBtn = findViewById(R.id.updateBtn);
@@ -89,9 +88,6 @@ public class SingleFixtureActivity extends AppCompatActivity {
             dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
-
-//            Intent intent = new Intent(SingleFixtureActivity.this, GameFixturesActivity.class);
-//            startActivity(intent);
 
         });
 

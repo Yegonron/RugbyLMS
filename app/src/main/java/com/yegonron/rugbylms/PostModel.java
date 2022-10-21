@@ -1,11 +1,11 @@
 package com.yegonron.rugbylms;
 
-public class Post {
+public class PostModel {
     //declare the variable
     private String title, desc, postImage, userName, profileImage, time, date;
     //create a constructor
 
-    public Post(String title, String desc, String postImage, String userName, String profileImage, String time, String date) {
+    public PostModel(String title, String desc, String postImage, String userName, String profileImage, String time, String date) {
         this.title = title;
         this.desc = desc;
         this.postImage = postImage;
@@ -16,7 +16,7 @@ public class Post {
     }
 
     //requires an empty constructor
-    public Post() {
+    public PostModel() {
 
     }
 

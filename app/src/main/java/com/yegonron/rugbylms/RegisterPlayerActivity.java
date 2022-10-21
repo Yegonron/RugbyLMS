@@ -218,14 +218,6 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             Toast.makeText(this, "Enter phone number...", Toast.LENGTH_SHORT).show();
             return;
         }
-//        if (phoneNo.length() < 9) {
-//            Toast.makeText(this, "Phone number too short...", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//        if (phoneNo.length() > 9) {
-//            Toast.makeText(this, "Phone number too long...", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
         if (TextUtils.isEmpty(userName)) {
             Toast.makeText(this, "Enter username...", Toast.LENGTH_SHORT).show();
             return;

@@ -1,12 +1,11 @@
 package com.yegonron.rugbylms;
 
 public class CommentModel {
-    private String userName, profileImage, comment, time, date;
+    private String profileImage, comment, time, date;
     //create a constructor
 
-    public CommentModel(String userName, String profileImage, String comment, String time, String date) {
+    public CommentModel(String profileImage, String comment, String time, String date) {
         this.comment = comment;
-        this.userName = userName;
         this.profileImage = profileImage;
         this.time = time;
         this.date = date;
@@ -19,10 +18,6 @@ public class CommentModel {
     // setters
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public void setComment(String comment) {
@@ -38,9 +33,6 @@ public class CommentModel {
     }
 
     //getters
-    public String getUserName() {
-        return userName;
-    }
 
     public String getComment() {
         return comment;
