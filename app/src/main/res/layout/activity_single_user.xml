@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="310dp"
         android:layout_below="@id/toolbarRl"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         android:background="#000000"
         android:orientation="vertical">
 

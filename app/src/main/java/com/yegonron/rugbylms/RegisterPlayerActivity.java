@@ -14,9 +14,11 @@ import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -38,12 +40,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.hbb20.CountryCodePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 
 public class RegisterPlayerActivity extends AppCompatActivity {
 
@@ -53,8 +56,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
     final String[] teams = {"Leos", "KCB", "Oilers"};
     final String[] positions = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
     final String[] kitSizes = {"XS", "S", "M", "L", "XL", "XXL"};
-    final String[] bootSizes = {"4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5",
-            "10", "10.5", "11", "11.5", "12", "13", "14", "15", "16", "17"};
+    final String[] bootSizes = {"4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5", "10", "10.5", "11", "11.5", "12", "13", "14", "15", "16", "17"};
 
     AutoCompleteTextView teamNameTv, positionTv, bootSizeTv, kitSizeTv;
     ArrayAdapter<String> adapterItems;
@@ -143,40 +145,47 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, bootSizes);
         bootSizeTv.setAdapter(adapterItems);
 
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        dateOfBirthEt.setOnClickListener(v -> {
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    RegisterPlayerActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, setListener, year, month, day);
+        dateOfBirthEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Calendar calender = Calendar.getInstance();
+                int mYear = calender.get(Calendar.YEAR);
+                int mMonth = calender.get(Calendar.MONTH);
+                int mDay = calender.get(Calendar.DAY_OF_MONTH);
 
-            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            datePickerDialog.show();
+                DatePickerDialog dateDialog = new DatePickerDialog(view.getContext(), datePickerListener, mYear, mMonth, mDay);
+                dateDialog.getDatePicker().setMaxDate(new Date().getTime());
+                dateDialog.show();
 
+            }
         });
-
-        setListener = (datePicker, year1, month1, dayOfMonth) -> {
-            month1 = month1 + 1;
-            String date = day + "/" + month1 + "/" + year1;
-            dateOfBirthEt.setText(date);
-
-        };
-
-        ageEt.setText(Integer.toString(calculateAge(calendar.getTimeInMillis())));
-
     }
 
-    private int calculateAge(long timeInMillis) {
+    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker datePicker, int year, int month, int day) {
+            Calendar calender = Calendar.getInstance();
+            calender.set(Calendar.YEAR, year);
+            calender.set(Calendar.MONTH, month);
+            calender.set(Calendar.DAY_OF_MONTH, day);
+            String format = new SimpleDateFormat("dd MMM yyyy").format(calender.getTime());
 
+            dateOfBirthEt.setText(format);
+            ageEt.setText(Integer.toString(calculateAge(calender.getTimeInMillis())));
+
+        }
+    };
+
+    int calculateAge(long date) {
         Calendar dob = Calendar.getInstance();
-        dob.setTimeInMillis(timeInMillis);
+        dob.setTimeInMillis(date);
         Calendar today = Calendar.getInstance();
         int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
         if (today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
             age--;
         }
+
         return age;
 
     }
@@ -337,16 +346,15 @@ public class RegisterPlayerActivity extends AppCompatActivity {
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
-                        // db updated
-                        progressDialog.dismiss();
-                        startActivity(new Intent(RegisterPlayerActivity.this, LoginActivity.class));
-                        finish();
-                    })
-                    .addOnFailureListener(e -> {
-                        // failed updating db
-                        progressDialog.dismiss();
-                        finish();
-                    });
+                // db updated
+                progressDialog.dismiss();
+                startActivity(new Intent(RegisterPlayerActivity.this, LoginActivity.class));
+                finish();
+            }).addOnFailureListener(e -> {
+                // failed updating db
+                progressDialog.dismiss();
+                finish();
+            });
         } else {
             //save info with image
 
@@ -354,57 +362,54 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             String filepathAndName = "profile_images/" + "" + firebaseAuth.getUid();
             //upload image
             StorageReference storageReference = FirebaseStorage.getInstance().getReference(filepathAndName);
-            storageReference.putFile(image_uri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        // get url of uploaded image
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        //noinspection StatementWithEmptyBody
-                        while (!uriTask.isSuccessful()) ;
-                        Uri downloadImageUri = uriTask.getResult();
+            storageReference.putFile(image_uri).addOnSuccessListener(taskSnapshot -> {
+                // get url of uploaded image
+                Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                //noinspection StatementWithEmptyBody
+                while (!uriTask.isSuccessful()) ;
+                Uri downloadImageUri = uriTask.getResult();
 
-                        if (uriTask.isSuccessful()) {
+                if (uriTask.isSuccessful()) {
 
-                            //setup data to save
-                            HashMap<String, Object> hashMap = new HashMap<>();
-                            hashMap.put("uid", "" + firebaseAuth.getUid());
-                            hashMap.put("email", "" + email);
-                            hashMap.put("surname", "" + surName);
-                            hashMap.put("firstname", "" + firstName);
-                            hashMap.put("lastname", "" + lastName);
-                            hashMap.put("dateofbirth", "" + dateOfBirth);
-                            hashMap.put("countryCode", "" + code);
-                            hashMap.put("phone", "" + phoneNo);
-                            hashMap.put("username", "" + userName);
-                            hashMap.put("age", "" + age);
-                            hashMap.put("teamname", "" + teamName);
-                            hashMap.put("position", "" + position);
-                            hashMap.put("bootsize", "" + bootSize);
-                            hashMap.put("kitsize", "" + kitSize);
-                            hashMap.put("timestamp", "" + timestamp);
-                            hashMap.put("accountType", "Player");
-                            hashMap.put("online", "true");
-                            hashMap.put("profileImage", "" + downloadImageUri);
+                    //setup data to save
+                    HashMap<String, Object> hashMap = new HashMap<>();
+                    hashMap.put("uid", "" + firebaseAuth.getUid());
+                    hashMap.put("email", "" + email);
+                    hashMap.put("surname", "" + surName);
+                    hashMap.put("firstname", "" + firstName);
+                    hashMap.put("lastname", "" + lastName);
+                    hashMap.put("dateofbirth", "" + dateOfBirth);
+                    hashMap.put("countryCode", "" + code);
+                    hashMap.put("phone", "" + phoneNo);
+                    hashMap.put("username", "" + userName);
+                    hashMap.put("age", "" + age);
+                    hashMap.put("teamname", "" + teamName);
+                    hashMap.put("position", "" + position);
+                    hashMap.put("bootsize", "" + bootSize);
+                    hashMap.put("kitsize", "" + kitSize);
+                    hashMap.put("timestamp", "" + timestamp);
+                    hashMap.put("accountType", "Player");
+                    hashMap.put("online", "true");
+                    hashMap.put("profileImage", "" + downloadImageUri);
 
-                            // save to db
+                    // save to db
 
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-                            ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
-                                        // db updated
-                                        progressDialog.dismiss();
-                                        startActivity(new Intent(RegisterPlayerActivity.this, LoginActivity.class));
-                                        finish();
-                                    })
-                                    .addOnFailureListener(e -> {
-                                        // failed updating db
-                                        progressDialog.dismiss();
-                                        finish();
-                                    });
-                        }
-                    })
-                    .addOnFailureListener(e -> {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
+                    ref.child(Objects.requireNonNull(firebaseAuth.getUid())).setValue(hashMap).addOnSuccessListener(unused -> {
+                        // db updated
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterPlayerActivity.this, " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(RegisterPlayerActivity.this, LoginActivity.class));
+                        finish();
+                    }).addOnFailureListener(e -> {
+                        // failed updating db
+                        progressDialog.dismiss();
+                        finish();
                     });
+                }
+            }).addOnFailureListener(e -> {
+                progressDialog.dismiss();
+                Toast.makeText(RegisterPlayerActivity.this, " " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            });
         }
     }
 
@@ -413,36 +418,34 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         String[] options = {"Camera", "Gallery"};
         //dialog
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Pick Image")
-                .setItems(options, (dialog, which) -> {
-                    if (which == 0) {
-                        //camera clicked
-                        if (checkCameraPermission()) {
-                            //camera permissions allowed
-                            pickFromCamera();
+        builder.setTitle("Pick Image").setItems(options, (dialog, which) -> {
+            if (which == 0) {
+                //camera clicked
+                if (checkCameraPermission()) {
+                    //camera permissions allowed
+                    pickFromCamera();
 
-                        } else {
-                            //not allowed, request
-                            requestCameraPermission();
+                } else {
+                    //not allowed, request
+                    requestCameraPermission();
 
-                        }
+                }
 
-                    } else {
-                        //gallery clicked
-                        if (checkStoragePermission()) {
-                            //storage permissions allowed
-                            pickFromGallery();
+            } else {
+                //gallery clicked
+                if (checkStoragePermission()) {
+                    //storage permissions allowed
+                    pickFromGallery();
 
-                        } else {
-                            //not allowed, request
-                            requestStoragePermission();
+                } else {
+                    //not allowed, request
+                    requestStoragePermission();
 
-                        }
+                }
 
-                    }
+            }
 
-                })
-                .show();
+        }).show();
 
     }
 
@@ -468,8 +471,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
 
     private boolean checkStoragePermission() {
 
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                (PackageManager.PERMISSION_GRANTED);
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
     }
 
     private void requestStoragePermission() {
@@ -479,11 +481,9 @@ public class RegisterPlayerActivity extends AppCompatActivity {
     }
 
     private boolean checkCameraPermission() {
-        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) ==
-                (PackageManager.PERMISSION_GRANTED);
+        boolean result = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == (PackageManager.PERMISSION_GRANTED);
 
-        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) ==
-                (PackageManager.PERMISSION_GRANTED);
+        boolean result1 = ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == (PackageManager.PERMISSION_GRANTED);
 
         return result && result1;
     }
