@@ -1,4 +1,4 @@
-package com.yegonron.rugbylms;
+package com.yegonron.rugbylms.models;
 
 public class CommentModel {
     private String profileImage, comment, time, date;

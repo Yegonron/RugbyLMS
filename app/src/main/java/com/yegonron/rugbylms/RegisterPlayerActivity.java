@@ -48,7 +48,7 @@ import java.util.regex.Pattern;
 public class RegisterPlayerActivity extends AppCompatActivity {
 
     private ImageView profileIv;
-    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, userNameEt, emailEt, passwordEt, cPasswordEt;
+    private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, userNameEt, ageEt, emailEt, passwordEt, cPasswordEt;
 
     final String[] teams = {"Leos", "KCB", "Oilers"};
     final String[] positions = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
@@ -97,6 +97,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         ccp = (CountryCodePicker) findViewById(R.id.ccp);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
+        ageEt = findViewById(R.id.ageEt);
         teamNameTv = findViewById(R.id.teamNameTv);
         positionTv = findViewById(R.id.positionTv);
         bootSizeTv = findViewById(R.id.bootSizeTv);
@@ -162,6 +163,22 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             dateOfBirthEt.setText(date);
 
         };
+
+        ageEt.setText(Integer.toString(calculateAge(calendar.getTimeInMillis())));
+
+    }
+
+    private int calculateAge(long timeInMillis) {
+
+        Calendar dob = Calendar.getInstance();
+        dob.setTimeInMillis(timeInMillis);
+        Calendar today = Calendar.getInstance();
+        int age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
+        if (today.get(Calendar.DAY_OF_MONTH) < dob.get(Calendar.DAY_OF_MONTH)) {
+            age--;
+        }
+        return age;
+
     }
 
     private String surName;
@@ -172,6 +189,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
     private String country;
     private String phoneNo;
     private String userName;
+    private String age;
     private String teamName;
     private String position;
     private String bootSize;
@@ -188,6 +206,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         country = ccp.getSelectedCountryEnglishName();
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
+        age = ageEt.getText().toString().trim();
         teamName = teamNameTv.getText().toString().trim();
         position = positionTv.getText().toString().trim();
         bootSize = bootSizeTv.getText().toString().trim();
@@ -304,6 +323,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
             hashMap.put("countryCode", "" + code);
             hashMap.put("phone", "" + phoneNo);
             hashMap.put("username", "" + userName);
+            hashMap.put("age", "" + age);
             hashMap.put("teamname", "" + teamName);
             hashMap.put("position", "" + position);
             hashMap.put("bootsize", "" + bootSize);
@@ -355,6 +375,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
                             hashMap.put("countryCode", "" + code);
                             hashMap.put("phone", "" + phoneNo);
                             hashMap.put("username", "" + userName);
+                            hashMap.put("age", "" + age);
                             hashMap.put("teamname", "" + teamName);
                             hashMap.put("position", "" + position);
                             hashMap.put("bootsize", "" + bootSize);

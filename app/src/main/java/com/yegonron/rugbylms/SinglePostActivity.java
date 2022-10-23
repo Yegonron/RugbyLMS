@@ -1,7 +1,6 @@
 package com.yegonron.rugbylms;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -31,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.yegonron.rugbylms.models.CommentModel;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

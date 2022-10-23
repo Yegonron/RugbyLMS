@@ -35,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+import com.yegonron.rugbylms.models.PostModel;
 
 import java.util.HashMap;
 import java.util.Objects;

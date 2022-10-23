@@ -64,5 +64,6 @@ dependencies {
     implementation 'io.github.medyo:android-about-page:2.0.0'
     implementation 'com.hbb20:ccp:2.6.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'joda-time:joda-time:2.9.1'
 
 }

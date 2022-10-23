@@ -69,7 +69,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
         //Get currently logged in user
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("FixturesModel");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Fixtures");
 
         deleteBtn = findViewById(R.id.deleteBtn);
         updateBtn = findViewById(R.id.updateBtn);

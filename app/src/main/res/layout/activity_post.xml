@@ -65,6 +65,7 @@
                 android:autofillHints=""
                 android:background="@drawable/edit_text_styles"
                 android:hint="Post Title"
+                android:textColorHint="@color/white"
                 android:padding="10dp"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -79,6 +80,7 @@
                 android:autofillHints=""
                 android:background="@drawable/edit_text_styles"
                 android:hint="Post Description"
+                android:textColorHint="@color/white"
                 android:padding="15dp"
                 android:textColor="#ffffff" />
 

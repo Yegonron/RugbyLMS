@@ -258,6 +258,15 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <EditText
+                android:id="@+id/ageEt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/userNameTf"
+                android:layout_centerHorizontal="true"
+                android:text="age"
+                android:visibility="invisible" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/teamNameTf"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
