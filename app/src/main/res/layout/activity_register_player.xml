@@ -229,7 +229,6 @@
 
             </LinearLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/userNameTf"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

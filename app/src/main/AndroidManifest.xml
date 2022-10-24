@@ -112,6 +112,9 @@
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
+            android:name=".SingleAttendanceActivity"
+            android:exported="true" />
+        <activity
             android:name=".SingleFixtureActivity"
             android:exported="true" />
         <activity

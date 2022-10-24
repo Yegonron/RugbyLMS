@@ -1,16 +1,22 @@
 package com.yegonron.rugbylms;
 
+import android.app.DatePickerDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,7 +39,7 @@ import java.util.Calendar;
 public class RecordGameFixturesActivity extends AppCompatActivity {
 
     // Declare the view objects
-    private EditText fixtureTitleEt, homeTeamEt, awayTeamEt, fixtureVenueEt, fixtureTimeEt;
+    private EditText fixtureTitleEt, homeTeamEt, awayTeamEt, fixtureVenueEt, fixtureDateEt, fixtureTimeEt;
 
     //Declare an Instance of the Storage reference where we will upload the post photo
     private StorageReference mStorageRef;
@@ -45,6 +51,8 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
     // Declare  and initialize  a private final static int  that will serve as our request code
 
+    DatePickerDialog.OnDateSetListener setListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +62,7 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
         homeTeamEt = findViewById(R.id.homeTeamEt);
         awayTeamEt = findViewById(R.id.awayTeamEt);
         fixtureVenueEt = findViewById(R.id.fixtureVenueEt);
+        fixtureDateEt = findViewById(R.id.fixtureDateEt);
         fixtureTimeEt = findViewById(R.id.fixtureTimeEt);
         Button recordGameFixtureBtn = findViewById(R.id.recordGameFixtureBtn);
 
@@ -72,6 +81,55 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
         //Get currently logged in user
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
+        Calendar calendar = Calendar.getInstance();
+        final int year = calendar.get(Calendar.YEAR);
+        final int month = calendar.get(Calendar.MONTH);
+        final int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        fixtureDateEt.setOnClickListener(v -> {
+            DatePickerDialog datePickerDialog = new DatePickerDialog(
+                    RecordGameFixturesActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, setListener, year, month, day);
+
+            datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+            datePickerDialog.show();
+
+        });
+
+        setListener = (datePicker, year1, month1, dayOfMonth) -> {
+            month1 = month1 + 1;
+            String date = day + "/" + month1 + "/" + year1;
+            fixtureDateEt.setText(date);
+
+        };
+
+        fixtureTimeEt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // on below line we are getting the
+                // instance of our calendar.
+                final Calendar c = Calendar.getInstance();
+
+                // on below line we are getting our hour, minute.
+                int hour = c.get(Calendar.HOUR_OF_DAY);
+                int minute = c.get(Calendar.MINUTE);
+
+                // on below line we are initializing our Time Picker Dialog
+                TimePickerDialog timePickerDialog = new TimePickerDialog(RecordGameFixturesActivity.this,
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay,
+                                                  int minute) {
+                                // on below line we are setting selected time
+                                // in our text view.
+                                fixtureTimeEt.setText(hourOfDay + ":" + minute);
+                            }
+                        }, hour, minute, false);
+                // at last we are calling show to
+                // display our time picker dialog.
+                timePickerDialog.show();
+            }
+        });
+
         // posting to Firebase
         recordGameFixtureBtn.setOnClickListener(view -> {
 
@@ -81,16 +139,15 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
             final String homeTeam = homeTeamEt.getText().toString().trim();
             final String awayTeam = awayTeamEt.getText().toString().trim();
             final String fixtureVenue = fixtureVenueEt.getText().toString().trim();
+            final String fixtureDate = fixtureDateEt.getText().toString().trim();
             final String fixtureTime = fixtureTimeEt.getText().toString().trim();
 
             //get the date and time of the post
-            Calendar calendar = Calendar.getInstance();
             SimpleDateFormat currentDate = new SimpleDateFormat("dd-MM-yyyy");
             final String saveCurrentDate = currentDate.format(calendar.getTime());
 
-            Calendar calendar1 = Calendar.getInstance();
             SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm");
-            final String saveCurrentTime = currentTime.format(calendar1.getTime());
+            final String saveCurrentTime = currentTime.format(calendar.getTime());
 
             // do a check for empty fields
             if (!TextUtils.isEmpty(homeTeam) && !TextUtils.isEmpty(awayTeam) && !TextUtils.isEmpty(fixtureVenue) && !TextUtils.isEmpty(fixtureTime)) {
@@ -102,10 +159,11 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         newFixture.child("uid").setValue(mCurrentUser.getUid());
-                        newFixture.child("fixtureTitle").setValue(fixtureTitle);
+                        newFixture.child("fixtureTitle").setValue(homeTeam + " VS " + awayTeam);
                         newFixture.child("homeTeam").setValue(homeTeam);
                         newFixture.child("awayTeam").setValue(awayTeam);
                         newFixture.child("fixtureVenue").setValue(fixtureVenue);
+                        newFixture.child("fixtureDate").setValue(fixtureDate);
                         newFixture.child("fixtureTime").setValue(fixtureTime);
                         newFixture.child("date").setValue(saveCurrentDate);
                         newFixture.child("time").setValue(saveCurrentTime);
@@ -118,7 +176,7 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
                                 Intent intent = new Intent(RecordGameFixturesActivity.this, GameFixturesActivity.class);
                                 startActivity(intent);
 
-                                showNotification("fixtureTitle: " + fixtureTitle, "fixtureTime: " + fixtureTime);
+//                                showNotification("fixtureTitle: " + fixtureTitle, "fixtureTime: " + fixtureTime);
 
                             }
                         });

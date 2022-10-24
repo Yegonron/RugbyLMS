@@ -78,13 +78,14 @@
                 android:padding="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="invisible" />
 
             <EditText
                 android:id="@+id/homeTeamEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/fixtureTitleEt"
+                android:layout_below="@id/receive_game_notificationsTv"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
@@ -123,7 +124,7 @@
                 android:textStyle="bold" />
 
             <EditText
-                android:id="@+id/fixtureTimeEt"
+                android:id="@+id/fixtureDateEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fixtureVenueEt"
@@ -132,7 +133,25 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/edit_text_styles"
+                android:hint="Fixture Date"
+                android:inputType="date"
+                android:padding="10dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/fixtureTimeEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fixtureDateEt"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/edit_text_styles"
                 android:hint="Fixture Time"
+                android:inputType="time"
                 android:padding="10dp"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"

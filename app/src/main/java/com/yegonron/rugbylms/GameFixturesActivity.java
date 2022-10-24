@@ -75,7 +75,7 @@ public class GameFixturesActivity extends AppCompatActivity {
     private void updateFixturesUI(FirebaseUser currentUser) {
 
         //create and initialize an instance of Query that retrieves all FixturesModel uploaded
-        Query query = FirebaseDatabase.getInstance().getReference().child("FixturesModel");
+        Query query = FirebaseDatabase.getInstance().getReference().child("Fixtures");
         // Create and initialize and instance of Recycler Options passing in your model class and
         //Create a snap shot of your model
         FirebaseRecyclerOptions<FixturesModel> options = new FirebaseRecyclerOptions.Builder<FixturesModel>().setQuery(query, snapshot -> new FixturesModel(
@@ -83,6 +83,7 @@ public class GameFixturesActivity extends AppCompatActivity {
                 Objects.requireNonNull(snapshot.child("homeTeam").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("awayTeam").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("fixtureVenue").getValue()).toString(),
+                Objects.requireNonNull(snapshot.child("fixtureDate").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("fixtureTime").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("date").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("time").getValue()).toString())).build();
@@ -110,6 +111,7 @@ public class GameFixturesActivity extends AppCompatActivity {
                 holder.setAwayTeam(model.getAwayTeam());
                 holder.setAwayTeam(model.getAwayTeam());
                 holder.setFixtureVenue(model.getFixtureVenue());
+                holder.setFixtureDate(model.getFixtureDate());
                 holder.setFixtureTime(model.getFixtureTime());
                 holder.setDate(model.getDate());
                 holder.setTime(model.getTime());
@@ -148,6 +150,7 @@ public class GameFixturesActivity extends AppCompatActivity {
         public final TextView hTeam;
         public final TextView aTeam;
         public final TextView fVenue;
+        public final TextView fDate;
         public final TextView fTime;
         public final TextView pDate;
         public final TextView pTime;
@@ -167,6 +170,7 @@ public class GameFixturesActivity extends AppCompatActivity {
             hTeam = itemView.findViewById(R.id.homeTeamTv);
             aTeam = itemView.findViewById(R.id.awayTeamTv);
             fVenue = itemView.findViewById(R.id.fixtureVenueTv);
+            fDate = itemView.findViewById(R.id.fixtureDateTv);
             fTime = itemView.findViewById(R.id.fixtureTimeTv);
             pDate = itemView.findViewById(R.id.date);
             pTime = itemView.findViewById(R.id.time);
@@ -178,7 +182,7 @@ public class GameFixturesActivity extends AppCompatActivity {
         // setters
         public void setFixtureTitle(String fixtureTitle) {
 
-            title.setText("Fixture Title: " + fixtureTitle);
+            title.setText(fixtureTitle);
         }
 
         public void setHomeTeam(String homeTeam) {
@@ -194,6 +198,11 @@ public class GameFixturesActivity extends AppCompatActivity {
         public void setFixtureVenue(String fixtureVenue) {
 
             fVenue.setText("Fixture Venue: " + fixtureVenue);
+        }
+
+        public void setFixtureDate(String fixtureDate) {
+
+            fDate.setText("Fixture Date: " + fixtureDate);
         }
 
         public void setFixtureTime(String fixtureTime) {

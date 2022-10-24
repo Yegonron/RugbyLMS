@@ -24,7 +24,7 @@ import java.util.Objects;
 public class SingleFixtureActivity extends AppCompatActivity {
 
     // Declare the view objects
-    private TextView fixtureTitle, homeTeam, awayTeam, fixtureVenue, fixtureTime, date, time;
+    private TextView fixtureTitle, homeTeam, awayTeam, fixtureVenue, fixtureDate, fixtureTime, date, time;
 
     String fixture_key = null;
 
@@ -48,6 +48,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
         homeTeam = findViewById(R.id.homeTeamTv);
         awayTeam = findViewById(R.id.awayTeamTv);
         fixtureVenue = findViewById(R.id.fixtureVenueTv);
+        fixtureDate = findViewById(R.id.fixtureDateTv);
         fixtureTime = findViewById(R.id.fixtureTimeTv);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
@@ -81,8 +82,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
 
             AlertDialog.Builder dialog = new AlertDialog.Builder(SingleFixtureActivity.this);
             dialog.setTitle("Are you sure?");
-            dialog.setMessage("Deleting this fixture will completely remove it" +
-                    " from the system and you won't be able to access it.");
+            dialog.setMessage("Deleting this fixture will completely remove it" + " from the system and you won't be able to access it.");
             dialog.setPositiveButton("Delete", (dialogInterface, i) -> mDatabase.child(fixture_key).removeValue());
 
             dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
@@ -103,15 +103,17 @@ public class SingleFixtureActivity extends AppCompatActivity {
                 String home_team = (String) dataSnapshot.child("homeTeam").getValue();
                 String away_team = (String) dataSnapshot.child("awayTeam").getValue();
                 String fixture_venue = (String) dataSnapshot.child("fixtureVenue").getValue();
+                String fixture_date = (String) dataSnapshot.child("fixtureDate").getValue();
                 String fixture_time = (String) dataSnapshot.child("fixtureTime").getValue();
                 String post_date = (String) dataSnapshot.child("date").getValue();
                 String post_time = (String) dataSnapshot.child("time").getValue();
                 String fixture_uid = (String) dataSnapshot.child("uid").getValue();
 
-                fixtureTitle.setText("Fixture Title: " + fixture_title);
+                fixtureTitle.setText(fixture_title);
                 homeTeam.setText("Home Team: " + home_team);
                 awayTeam.setText("Away Team: " + away_team);
                 fixtureVenue.setText("Fixture Venue: " + fixture_venue);
+                fixtureDate.setText("Fixture Date: " + fixture_date);
                 fixtureTime.setText("Fixture Time: " + fixture_time);
                 date.setText(post_date);
                 time.setText(post_time);

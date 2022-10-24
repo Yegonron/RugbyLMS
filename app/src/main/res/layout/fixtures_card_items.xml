@@ -51,9 +51,9 @@
 
             <TextView
                 android:id="@+id/fixtureTitleTv"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_marginStart="120dp"
                 android:text="Fixture Title"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
@@ -83,6 +83,14 @@
                 android:textColor="@color/white" />
 
             <TextView
+                android:id="@+id/fixtureDateTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="Fixture Date"
+                android:textColor="@color/white" />
+
+            <TextView
                 android:id="@+id/fixtureTimeTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,21 +98,21 @@
                 android:text="Fixture Time"
                 android:textColor="@color/white" />
 
-            <TextView
-                android:id="@+id/homeTeamScoreTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Home Team Score"
-                android:textColor="@color/white" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/homeTeamScoreTv"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_margin="5dp"-->
+            <!--                android:text="Home Team Score"-->
+            <!--                android:textColor="@color/white" />-->
 
-            <TextView
-                android:id="@+id/awayTeamScoreTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="Away Team Score"
-                android:textColor="@color/white" />
+            <!--            <TextView-->
+            <!--                android:id="@+id/awayTeamScoreTv"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_margin="5dp"-->
+            <!--                android:text="Away Team Score"-->
+            <!--                android:textColor="@color/white" />-->
 
         </LinearLayout>
 
