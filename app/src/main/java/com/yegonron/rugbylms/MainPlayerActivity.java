@@ -456,14 +456,9 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
                 startActivity(intent5);
                 break;
 
-            case R.id.help:
-                Intent intent6 = new Intent(MainPlayerActivity.this, HelpActivity.class);
-                startActivity(intent6);
-                break;
-
             case R.id.About_Us:
-                Intent intent7 = new Intent(MainPlayerActivity.this, AboutUsActivity.class);
-                startActivity(intent7);
+                Intent intent6 = new Intent(MainPlayerActivity.this, AboutUsActivity.class);
+                startActivity(intent6);
                 break;
 
             case R.id.Exit:

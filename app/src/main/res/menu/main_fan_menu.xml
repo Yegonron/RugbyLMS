@@ -51,12 +51,6 @@
                     tools:ignore="HardcodedText" />
 
                 <item
-                    android:id="@+id/help"
-                    android:icon="@drawable/ic_help_outline_gray"
-                    android:title="Help"
-                    tools:ignore="HardcodedText" />
-
-                <item
                     android:id="@+id/About_Us"
                     android:icon="@drawable/ic_info_gray"
                     android:title="About Us"

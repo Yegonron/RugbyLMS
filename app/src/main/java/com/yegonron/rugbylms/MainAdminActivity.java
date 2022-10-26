@@ -471,14 +471,9 @@ public class MainAdminActivity extends AppCompatActivity implements NavigationVi
                 startActivity(intent8);
                 break;
 
-            case R.id.help:
-                Intent intent9 = new Intent(MainAdminActivity.this, HelpActivity.class);
-                startActivity(intent9);
-                break;
-
             case R.id.About_Us:
-                Intent intent10 = new Intent(MainAdminActivity.this, AboutUsActivity.class);
-                startActivity(intent10);
+                Intent intent9 = new Intent(MainAdminActivity.this, AboutUsActivity.class);
+                startActivity(intent9);
                 break;
 
             case R.id.Exit:

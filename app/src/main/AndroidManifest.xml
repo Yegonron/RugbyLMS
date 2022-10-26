@@ -28,9 +28,6 @@
             android:name=".GameFixturesActivity"
             android:exported="false" />
         <activity
-            android:name=".HelpActivity"
-            android:exported="false" />
-        <activity
             android:name=".LeagueTableActivity"
             android:exported="false" />
         <activity

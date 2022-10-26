@@ -466,14 +466,9 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
                 startActivity(intent5);
                 break;
 
-            case R.id.help:
-                Intent intent6 = new Intent(MainManagerActivity.this, HelpActivity.class);
-                startActivity(intent6);
-                break;
-
             case R.id.About_Us:
-                Intent intent7 = new Intent(MainManagerActivity.this, AboutUsActivity.class);
-                startActivity(intent7);
+                Intent intent6 = new Intent(MainManagerActivity.this, AboutUsActivity.class);
+                startActivity(intent6);
                 break;
 
             case R.id.Exit:

@@ -9,6 +9,7 @@ public class AttendanceModel {
     String lastname;
     String teamname;
     String position;
+    private String status;
 
     public AttendanceModel(String profileImage, String surname, String firstname, String lastname, String teamname, String position) {
         this.profileImage = profileImage;
@@ -17,6 +18,8 @@ public class AttendanceModel {
         this.lastname = lastname;
         this.teamname = teamname;
         this.position = position;
+        status = "";
+
     }
 
     public AttendanceModel() {
@@ -69,6 +72,14 @@ public class AttendanceModel {
 
     public void setPosition(String position) {
         this.position = position;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
 

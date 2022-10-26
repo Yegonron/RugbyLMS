@@ -458,14 +458,9 @@ public class MainFanActivity extends AppCompatActivity implements NavigationView
                 startActivity(intent4);
                 break;
 
-            case R.id.help:
-                Intent intent5 = new Intent(MainFanActivity.this, HelpActivity.class);
-                startActivity(intent5);
-                break;
-
             case R.id.About_Us:
-                Intent intent6 = new Intent(MainFanActivity.this, AboutUsActivity.class);
-                startActivity(intent6);
+                Intent intent5 = new Intent(MainFanActivity.this, AboutUsActivity.class);
+                startActivity(intent5);
                 break;
 
             case R.id.Exit:

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -109,14 +110,6 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
                 holder.setProfileImage(getApplicationContext(), model.getProfileImage());
                 holder.setName(model.getSurname() + " " + model.getFirstname() + " " + model.getLastname());
 
-                //add  on click listener on the a particular post to  allow opening this post on a different screen
-//                holder.attendance_layout.setOnClickListener(view -> {
-//                    //launch the screen single post activity on clicking a particular cardview item
-//                    //create this activity using the empty activity template
-//                    Intent intent = new Intent(RecordPlayerAttendanceActivity.this, SingleAttendanceActivity.class);
-//                    intent.putExtra("AttendanceID", attendance_key);
-//                    startActivity(intent);
-//                });
             }
         };
 
@@ -143,7 +136,7 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
         public final ImageView user_image;
         public final TextView userName;
 
-//        public final LinearLayout attendance_layout;
+        public final LinearLayout attendance_layout;
 
         //Declare a string variable to hold  the user ID of currently logged in user
         String currentUserID;
@@ -156,7 +149,7 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
             //Initialize the card view item objects
             user_image = itemView.findViewById(R.id.userImage);
             userName = itemView.findViewById(R.id.nameTv);
-//            attendance_layout = itemView.findViewById(R.id.linear_layout_attendance);
+            attendance_layout = itemView.findViewById(R.id.linear_layout_attendance);
 
         }
 
