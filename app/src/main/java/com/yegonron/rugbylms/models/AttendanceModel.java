@@ -8,22 +8,20 @@ public class AttendanceModel {
     String firstname;
     String lastname;
     String teamname;
-    String position;
     private String status;
 
-    public AttendanceModel(String profileImage, String surname, String firstname, String lastname, String teamname, String position) {
+    public AttendanceModel(String profileImage, String surname, String firstname, String lastname, String teamname) {
         this.profileImage = profileImage;
         this.surname = surname;
         this.firstname = firstname;
         this.lastname = lastname;
         this.teamname = teamname;
-        this.position = position;
         status = "";
 
     }
 
-    public AttendanceModel() {
-
+    public AttendanceModel(String profileImage) {
+        this.profileImage = profileImage;
     }
 
     public String getProfileImage() {
@@ -66,14 +64,6 @@ public class AttendanceModel {
         this.teamname = teamname;
     }
 
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -81,5 +71,6 @@ public class AttendanceModel {
     public void setStatus(String status) {
         this.status = status;
     }
+
 }
 

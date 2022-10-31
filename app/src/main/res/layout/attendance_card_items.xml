@@ -48,17 +48,16 @@
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
-            <TextView
+            <CheckedTextView
                 android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginEnd="36dp"
-                android:text="A"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:layout_marginEnd="30dp"
+                android:checkMark="@drawable/checked"
+                android:checked="false"
+                android:gravity="center" />
 
         </RelativeLayout>
 
