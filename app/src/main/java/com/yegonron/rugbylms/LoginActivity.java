@@ -49,6 +49,8 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.setCanceledOnTouchOutside(false);
 
         backBtn.setOnClickListener(v -> onBackPressed());
+
+
         loginBtn.setOnClickListener(view -> loginUser());
 
         noAccountTV.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignUpActivity.class)));

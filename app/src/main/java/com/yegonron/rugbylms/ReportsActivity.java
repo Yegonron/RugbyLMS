@@ -58,7 +58,6 @@ public class ReportsActivity extends AppCompatActivity {
         progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
-
     }
 
     @Override

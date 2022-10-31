@@ -172,7 +172,7 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
                         newFixture.child("username").setValue(dataSnapshot.child("username").getValue()).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
                                 Toast.makeText(getApplicationContext(), "Succesfully Uploaded", Toast.LENGTH_SHORT).show();
-                                //launch the main activity after posting
+                                //launch the Game Fixture activity after posting
                                 Intent intent = new Intent(RecordGameFixturesActivity.this, GameFixturesActivity.class);
                                 startActivity(intent);
 
