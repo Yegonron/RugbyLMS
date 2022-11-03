@@ -6,8 +6,6 @@ import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -162,7 +160,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         });
     }
 
-    private DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
+    private final DatePickerDialog.OnDateSetListener datePickerListener = new DatePickerDialog.OnDateSetListener() {
         @Override
         public void onDateSet(DatePicker datePicker, int year, int month, int day) {
             Calendar calender = Calendar.getInstance();
@@ -195,7 +193,6 @@ public class RegisterPlayerActivity extends AppCompatActivity {
     private String lastName;
     private String dateOfBirth;
     private String code;
-    private String country;
     private String phoneNo;
     private String userName;
     private String age;
@@ -212,7 +209,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         lastName = lastNameEt.getText().toString().trim();
         dateOfBirth = dateOfBirthEt.getText().toString().trim();
         code = ccp.getSelectedCountryCode();
-        country = ccp.getSelectedCountryEnglishName();
+        String country = ccp.getSelectedCountryEnglishName();
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         age = ageEt.getText().toString().trim();

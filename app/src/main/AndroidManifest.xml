@@ -3,12 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission
-        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:allowBackup="true"
@@ -22,10 +23,7 @@
             android:name=".AboutUsActivity"
             android:exported="false" />
         <activity
-            android:name=".AdminAttendanceActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CoachAttendanceActivity"
+            android:name=".AttendanceActivity"
             android:exported="false" />
         <activity
             android:name=".ForgetPasswordActivity"
@@ -109,12 +107,6 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".SheetActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SheetListActivity"
-            android:exported="false" />
-        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
@@ -132,9 +124,6 @@
         <activity
             android:name=".UpdateLeagueTableActivity"
             android:exported="true" />
-        <activity
-            android:name=".UpdatePlayerAttendanceActivity"
-            android:exported="true" />
 
         <activity
             android:name=".SplashScreenActivity"
@@ -146,6 +135,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".FirebaseMessagingService"
+            android:exported="false"
+            android:permission="TODO"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

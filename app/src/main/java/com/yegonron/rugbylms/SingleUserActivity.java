@@ -9,10 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,12 +32,6 @@ public class SingleUserActivity extends AppCompatActivity {
 
     String user_key = null;
 
-    private DatabaseReference mDatabase, mDatabaseUsers;
-    private FirebaseAuth firebaseAuth;
-    private FirebaseUser mCurrentUser;
-
-    private ProgressDialog progressDialog;
-
     String currentUserID = null;
 
     AlertDialog dialog;
@@ -61,20 +52,20 @@ public class SingleUserActivity extends AppCompatActivity {
         ImageButton backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
 
-        progressDialog = new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait..");
         progressDialog.setCanceledOnTouchOutside(false);
 
         user_key = getIntent().getExtras().getString("UserID");
 
         //Initialize an instance of  Firebase Authentication
-        firebaseAuth = FirebaseAuth.getInstance();
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         //Initialize the instance of the firebase user
-        mCurrentUser = firebaseAuth.getCurrentUser();
+        FirebaseUser mCurrentUser = firebaseAuth.getCurrentUser();
         //Get currently logged in user
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
         firebaseAuth = FirebaseAuth.getInstance();
 

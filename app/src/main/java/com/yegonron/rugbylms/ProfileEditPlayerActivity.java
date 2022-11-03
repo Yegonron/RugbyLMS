@@ -148,7 +148,7 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
 
     }
 
-    private String surName, firstName, lastName, dateOfBirth,code, phone, userName, teamName, position, bootSize, kitSize;
+    private String surName, firstName, lastName, dateOfBirth, code, phone, userName, teamName, position, bootSize, kitSize;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();

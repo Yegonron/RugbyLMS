@@ -32,7 +32,6 @@ public class GameFixturesActivity extends AppCompatActivity {
     String currentUserID = null;
 
     private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,7 @@ public class GameFixturesActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -98,7 +97,7 @@ public class GameFixturesActivity extends AppCompatActivity {
             public GameFixturesActivity.FixturesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 //inflate the layout where you have the card view items
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fixtures_card_items, parent, false);
-                return new GameFixturesActivity.FixturesViewHolder(view);
+                return new FixturesViewHolder(view);
             }
 
             @Override
@@ -144,7 +143,7 @@ public class GameFixturesActivity extends AppCompatActivity {
 
     }
 
-    public class FixturesViewHolder extends RecyclerView.ViewHolder {
+    public static class FixturesViewHolder extends RecyclerView.ViewHolder {
         //Declare the view objects in the card view
         public final TextView title;
         public final TextView hTeam;

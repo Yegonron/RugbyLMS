@@ -125,7 +125,6 @@ public class RegisterManagerActivity extends AppCompatActivity {
     private String firstName;
     private String lastName;
     private String code;
-    private String country;
     private String phoneNo;
     private String userName;
     private String teamName;
@@ -137,7 +136,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
         firstName = firstNameEt.getText().toString().trim();
         lastName = lastNameEt.getText().toString().trim();
         code = ccp.getSelectedCountryCode();
-        country = ccp.getSelectedCountryEnglishName();
+        String country = ccp.getSelectedCountryEnglishName();
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         teamName = teamNameTv.getText().toString().trim();

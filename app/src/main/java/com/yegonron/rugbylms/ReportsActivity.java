@@ -35,7 +35,6 @@ public class ReportsActivity extends AppCompatActivity {
     String currentUserID = null;
 
     private FirebaseAuth firebaseAuth;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +53,7 @@ public class ReportsActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait...");
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -105,7 +104,7 @@ public class ReportsActivity extends AppCompatActivity {
             public ReportsActivity.UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
                 //inflate the layout where you have the card view items
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_card_items, parent, false);
-                return new ReportsActivity.UserViewHolder(view);
+                return new UserViewHolder(view);
             }
 
             @Override
@@ -150,7 +149,7 @@ public class ReportsActivity extends AppCompatActivity {
 
     }
 
-    public class UserViewHolder extends RecyclerView.ViewHolder {
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
         //Declare the view objects in the card view
         public final ImageView user_image;
         public final TextView userName;

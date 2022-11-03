@@ -113,7 +113,6 @@ public class RegisterAdminActivity extends AppCompatActivity {
     private String firstName;
     private String lastName;
     private String code;
-    private String country;
     private String phoneNo;
     private String userName;
     private String email;
@@ -124,7 +123,7 @@ public class RegisterAdminActivity extends AppCompatActivity {
         firstName = firstNameEt.getText().toString().trim();
         lastName = lastNameEt.getText().toString().trim();
         code = ccp.getSelectedCountryCode();
-        country = ccp.getSelectedCountryEnglishName();
+        String country = ccp.getSelectedCountryEnglishName();
         phoneNo = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
         email = emailEt.getText().toString().trim();

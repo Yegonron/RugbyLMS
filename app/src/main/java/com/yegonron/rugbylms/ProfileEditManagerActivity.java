@@ -105,7 +105,7 @@ public class ProfileEditManagerActivity extends AppCompatActivity {
 
     }
 
-    private String surName, firstName, lastName,code, phone, userName, teamName;
+    private String surName, firstName, lastName, code, phone, userName, teamName;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();

@@ -28,12 +28,9 @@ public class SingleFixtureActivity extends AppCompatActivity {
 
     String fixture_key = null;
 
-    private DatabaseReference mDatabase, mDatabaseUsers;
+    private DatabaseReference mDatabase;
     private Button updateBtn, deleteBtn;
     private FirebaseAuth firebaseAuth;
-    private FirebaseUser mCurrentUser;
-
-    private ProgressDialog progressDialog;
 
     AlertDialog dialog;
 
@@ -54,7 +51,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
         time = findViewById(R.id.time);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait..");
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -66,9 +63,9 @@ public class SingleFixtureActivity extends AppCompatActivity {
         //Initialize an instance of  Firebase Authentication
         firebaseAuth = FirebaseAuth.getInstance();
         //Initialize the instance of the firebase user
-        mCurrentUser = firebaseAuth.getCurrentUser();
+        FirebaseUser mCurrentUser = firebaseAuth.getCurrentUser();
         //Get currently logged in user
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Fixtures");
 
@@ -88,11 +85,6 @@ public class SingleFixtureActivity extends AppCompatActivity {
             dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
             AlertDialog alertDialog = dialog.create();
             alertDialog.show();
-
-        });
-
-        updateBtn.setOnClickListener(view -> {
-
 
         });
 

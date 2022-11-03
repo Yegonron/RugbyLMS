@@ -129,29 +129,13 @@
                     android:text="fixture Time"
                     android:textColor="@color/white" />
 
-                <!--                <TextView-->
-                <!--                    android:id="@+id/homeTeamScoreTv"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_margin="5dp"-->
-                <!--                    android:text="Home Team Score"-->
-                <!--                    android:textColor="@color/white" />-->
-
-                <!--                <TextView-->
-                <!--                    android:id="@+id/awayTeamScoreTv"-->
-                <!--                    android:layout_width="match_parent"-->
-                <!--                    android:layout_height="wrap_content"-->
-                <!--                    android:layout_margin="5dp"-->
-                <!--                    android:text="Away Team Score"-->
-                <!--                    android:textColor="@color/white" />-->
-
                 <Button
                     android:id="@+id/updateBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="0dp"
                     android:backgroundTint="@color/teal_200"
-                    android:text="update fixture"
+                    android:text="Update Fixture"
                     android:textColor="#fff"
                     android:textStyle="bold" />
 

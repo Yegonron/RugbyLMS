@@ -47,8 +47,6 @@ public class SinglePostActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private FirebaseUser mCurrentUser;
 
-    private ProgressDialog progressDialog;
-
     EditText makeComment;
     private FirebaseRecyclerAdapter adapter;
     String currentUserID = null;
@@ -68,7 +66,7 @@ public class SinglePostActivity extends AppCompatActivity {
         ImageButton backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
 
-        progressDialog = new ProgressDialog(this);
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait..");
         progressDialog.setCanceledOnTouchOutside(false);
 

@@ -94,14 +94,19 @@ public class ProfileEditAdminActivity extends AppCompatActivity {
 
     }
 
-    private String surName, firstName, lastName, code, country, phone, userName;
+    private String surName;
+    private String firstName;
+    private String lastName;
+    private String code;
+    private String phone;
+    private String userName;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
         firstName = firstNameEt.getText().toString().trim();
         lastName = lastNameEt.getText().toString().trim();
         code = ccp.getSelectedCountryCode();
-        country = ccp.getSelectedCountryEnglishName();
+        String country = ccp.getSelectedCountryEnglishName();
         phone = phoneEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
 

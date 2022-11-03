@@ -432,7 +432,7 @@ public class MainPlayerActivity extends AppCompatActivity implements NavigationV
                 break;
 
             case R.id.attendance:
-                Intent intent1 = new Intent(MainPlayerActivity.this, CoachAttendanceActivity.class);
+                Intent intent1 = new Intent(MainPlayerActivity.this, AttendanceActivity.class);
                 startActivity(intent1);
                 break;
 
