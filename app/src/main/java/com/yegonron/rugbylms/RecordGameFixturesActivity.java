@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -80,6 +81,8 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
         mCurrentUser = firebaseAuth.getCurrentUser();
         //Get currently logged in user
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -167,16 +170,19 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
                         newFixture.child("fixtureTime").setValue(fixtureTime);
                         newFixture.child("date").setValue(saveCurrentDate);
                         newFixture.child("time").setValue(saveCurrentTime);
+                        newFixture.child("homeTeamScore").setValue("");
+                        newFixture.child("awayTeamScore").setValue("");
 
                         //get username of the person posting fixtures
                         newFixture.child("username").setValue(dataSnapshot.child("username").getValue()).addOnCompleteListener(task -> {
                             if (task.isSuccessful()) {
+
+                                sendNotification();
+
                                 Toast.makeText(getApplicationContext(), "Succesfully Uploaded", Toast.LENGTH_SHORT).show();
                                 //launch the Game Fixture activity after posting
                                 Intent intent = new Intent(RecordGameFixturesActivity.this, GameFixturesActivity.class);
                                 startActivity(intent);
-
-//                                showNotification("fixtureTitle: " + fixtureTitle, "fixtureTime: " + fixtureTime);
 
                             }
                         });
@@ -192,21 +198,13 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
 
     }
 
-    private void showNotification(String title, String msg) {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    private void sendNotification() {
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel notificationChannel = new NotificationChannel("ID", "Name", NotificationManager.IMPORTANCE_DEFAULT);
-            notificationChannel.setDescription("Desc");
-            notificationManager.createNotificationChannel(notificationChannel);
-        }
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender("/topics/all",
+                fixtureTitleEt.getText().toString(),
+                fixtureDateEt.getText().toString(), getApplicationContext(), RecordGameFixturesActivity.this);
+        notificationsSender.SendNotifications();
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "ID").setSmallIcon(R.drawable.icon).setContentTitle(title).setContentText(msg).setAutoCancel(true);
-
-        Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pi);
-        notificationManager.notify(0, builder.build());
     }
 
 }

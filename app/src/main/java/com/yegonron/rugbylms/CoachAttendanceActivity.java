@@ -70,10 +70,10 @@ public class CoachAttendanceActivity extends AppCompatActivity {
         Log.i("1234567890", "loadData: " + tid);
         playerModels.clear();
         while (cursor.moveToNext()) {
-            long sid = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.P_ID));
+            long pid = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.P_ID));
             int roll = cursor.getInt(cursor.getColumnIndexOrThrow(DbHelper.PLAYER_ROLL_KEY));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.PLAYER_NAME_KEY));
-            playerModels.add(new PlayerModel(sid, roll, name));
+            playerModels.add(new PlayerModel(pid, roll, name));
 
         }
         cursor.close();

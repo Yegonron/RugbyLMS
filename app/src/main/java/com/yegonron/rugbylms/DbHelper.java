@@ -69,6 +69,96 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String DROP_STATUS_TABLE = " DROP TABLE IF EXISTS " + STATUS_TABLE_NAME;
     private static final String SELECT_STATUS_TABLE = " SELECT * FROM " + STATUS_TABLE_NAME;
 
+
+    //Game Table
+    private static final String GAME_TABLE_NAME = "GAME_TABLE";
+    private static final String G_ID = "_GID";
+    private static final String GAME_DATE = "GAME_DATE";
+    private static final String HOME_TEAM = "HOME_TEAM";
+    private static final String AWAY_TEAM = "AWAY_TEAM";
+    private static final String HOME_TEAM_SCORE = "HOME_TEAM_SCORE";
+    private static final String AWAY_TEAM_SCORE = "AWAY_TEAM_SCORE";
+
+    private static final String CREATE_GAME_TABLE =
+            " CREATE TABLE IF NOT EXISTS " + GAME_TABLE_NAME + "(" +
+                    G_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    T_ID + " INTEGER NOT NULL, " +
+                    GAME_DATE + " DATETIME NOT NULL, " +
+                    HOME_TEAM + " INTEGER NOT NULL, " +
+                    AWAY_TEAM + " INTEGER NOT NULL, " +
+                    HOME_TEAM_SCORE + " INTEGER NOT NULL, " +
+                    AWAY_TEAM_SCORE + " INTEGER NOT NULL, " +
+                    " FOREIGN KEY ( " + T_ID + ") REFERENCES " + TEAM_TABLE_NAME + "(" + T_ID + ")" +
+                    ");";
+
+    private static final String DROP_GAME_TABLE = " DROP TABLE IF EXISTS " + GAME_TABLE_NAME;
+    private static final String SELECT_GAME_TABLE = " SELECT * FROM " + GAME_TABLE_NAME;
+
+    //Fixtures Table
+    private static final String FIXTURES_TABLE_NAME = "FIXTURES_TABLE";
+    public static final String F_ID = "_FID";
+    public static final String FIXTURES_NAME_KEY = "FIXTURES_NAME";
+    public static final String FIXTURE_DATE = "FIXTURE_DATE";
+    public static final String PATH = "PATH";
+    public static final String FIXTURE_VENUE = "FIXTURE_VENUE";
+    public static final String FIXTURE_TIME = "FIXTURE_TIME";
+
+    private static final String CREATE_FIXTURES_TABLE =
+            " CREATE TABLE IF NOT EXISTS " + FIXTURES_TABLE_NAME + "(" +
+                    F_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                    T_ID + " INTEGER NOT NULL, " +
+                    G_ID + " INTEGER NOT NULL, " +
+                    FIXTURES_NAME_KEY + " TEXT NOT NULL, " +
+                    FIXTURE_DATE + " DATETIME NOT NULL, " +
+                    PATH + " VARCHAR NOT NULL, " +
+                    HOME_TEAM + " INTEGER NOT NULL, " +
+                    AWAY_TEAM + " INTEGER NOT NULL, " +
+                    FIXTURE_VENUE + " VARCHAR NOT NULL, " +
+                    FIXTURE_TIME + " TIME NOT NULL, " +
+                    SEASON_NAME_KEY + " TEXT NOT NULL, " +
+                    " FOREIGN KEY ( " + T_ID + ") REFERENCES " + TEAM_TABLE_NAME + "(" + T_ID + ")" +
+                    " , FOREIGN KEY ( " + G_ID + ") REFERENCES " + GAME_TABLE_NAME + "(" + T_ID + ")" +
+                    ");";
+
+
+    private static final String DROP_FIXTURES_TABLE = " DROP TABLE IF EXISTS " + FIXTURES_TABLE_NAME;
+    private static final String SELECT_FIXTURES_TABLE = " SELECT * FROM " + FIXTURES_TABLE_NAME;
+
+    private static final String UPDATE_GAME_FIXTURES = " SELECT TEAM_NAME_KEY AS Team, Sum(P) AS P,Sum(W) AS W,Sum(D) AS D,Sum(L) AS L,\n" +
+            "    SUM(GF) as GF,SUM(GA) AS GA,SUM(GD) AS GD,SUM(Pts) AS Pts\n" +
+            "    FROM(\n" +
+            "         SELECT\n" +
+            "              HOME_TEAM Team,\n" +
+            "              1 P,\n" +
+            "              IF(HOME_TEAM_SCORE > AWAY_TEAM_SCORE,1,0) W,\n" +
+            "              IF(HOME_TEAM_SCORE = AWAY_TEAM_SCORE,1,0) D,\n" +
+            "              IF(HOME_TEAM_SCORE < AWAY_TEAM_SCORE,1,0) L,\n" +
+            "              HOME_TEAM_SCORE GF,\n" +
+            "              AWAY_TEAM_SCORE GA,\n" +
+            "              HOME_TEAM_SCORE-AWAY_TEAM_SCORE GD,\n" +
+            "              CASE WHEN HOME_TEAM_SCORE > AWAY_TEAM_SCORE THEN 4 " +
+            "                   WHEN HOME_TEAM_SCORE = AWAY_TEAM_SCORE THEN 2 " +
+            "              ELSE 0 END PTS\n" +
+            "         FROM GAME_TABLE_NAME\n" +
+            "         UNION ALL\n" +
+            "         SELECT\n" +
+            "               AWAY_TEAM,\n" +
+            "               1,\n" +
+            "               IF(HOME_TEAM_SCORE < AWAY_TEAM_SCORE,1,0),\n" +
+            "               IF(HOME_TEAM_SCORE = AWAY_TEAM_SCORE,1,0),\n" +
+            "               IF(HOME_TEAM_SCORE > AWAY_TEAM_SCORE,1,0),\n" +
+            "               AWAY_TEAM_SCORE,\n" +
+            "               HOME_TEAM_SCORE,\n" +
+            "               AWAY_TEAM_SCORE-HOME_TEAM_SCORE GD,\n" +
+            "               CASE WHEN HOME_TEAM_SCORE < AWAY_TEAM_SCORE THEN 2 " +
+            "                    WHEN HOME_TEAM_SCORE = AWAY_TEAM_SCORE THEN 1 " +
+            "               ELSE 0 END\n" +
+            "          FROM GAME_TABLE_NAME\n" +
+            "     ) as tot\n" +
+            "    JOIN TEAM_TABLE_NAME t ON tot.Team=t.T_ID\n" +
+            "    GROUP BY Team\n" +
+            "    ORDER BY SUM(Pts) DESC;";
+
     public DbHelper(@Nullable Context context) {
 
         super(context, "Attendance.db", null, VERSION);
@@ -79,6 +169,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TEAM_TABLE);
         db.execSQL(CREATE_PLAYER_TABLE);
         db.execSQL(CREATE_STATUS_TABLE);
+        db.execSQL(CREATE_GAME_TABLE);
+        db.execSQL(CREATE_FIXTURES_TABLE);
 
     }
 
@@ -88,6 +180,8 @@ public class DbHelper extends SQLiteOpenHelper {
             db.execSQL(DROP_TEAM_TABLE);
             db.execSQL(DROP_PLAYER_TABLE);
             db.execSQL(DROP_STATUS_TABLE);
+            db.execSQL(DROP_GAME_TABLE);
+            db.execSQL(DROP_FIXTURES_TABLE);
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -7,7 +7,6 @@ public class PlayerModel {
     private String name;
     private String status;
 
-
     public PlayerModel(long pid, int roll, String name) {
         this.pid = pid;
         this.roll = roll;

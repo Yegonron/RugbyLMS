@@ -55,11 +55,11 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
         teamModels.clear();
 
         while (cursor.moveToNext()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(DbHelper.T_ID));
+            int tid = cursor.getInt(cursor.getColumnIndexOrThrow(DbHelper.T_ID));
             String teamName = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.TEAM_NAME_KEY));
             String season = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.SEASON_NAME_KEY));
 
-            teamModels.add(new TeamModel(id, teamName, season));
+            teamModels.add(new TeamModel(tid, teamName, season));
 
         }
 

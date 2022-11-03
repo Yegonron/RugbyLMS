@@ -49,6 +49,7 @@ public class SheetListActivity extends AppCompatActivity {
     private void loadListItems() {
         Cursor cursor = new DbHelper(this).getDistinctMonths(tid);
 
+        Log.i("1234567890", "loadListItems: " + cursor.getCount());
         while (cursor.moveToNext()) {
             String date = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.DATE_KEY));
             listItems.add(date.substring(3));

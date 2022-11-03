@@ -65,10 +65,10 @@ public class AdminAttendanceActivity extends AppCompatActivity {
         Log.i("1234567890", "loadData: " + tid);
         playerModels.clear();
         while (cursor.moveToNext()) {
-            long sid = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.P_ID));
+            long pid = cursor.getLong(cursor.getColumnIndexOrThrow(DbHelper.P_ID));
             int roll = cursor.getInt(cursor.getColumnIndexOrThrow(DbHelper.PLAYER_ROLL_KEY));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(DbHelper.PLAYER_NAME_KEY));
-            playerModels.add(new PlayerModel(sid, roll, name));
+            playerModels.add(new PlayerModel(pid, roll, name));
 
         }
         cursor.close();
@@ -138,8 +138,8 @@ public class AdminAttendanceActivity extends AppCompatActivity {
 
     private void addPlayer(String roll_string, String name) {
         int roll = Integer.parseInt(roll_string);
-        long sid = dbHelper.addPlayer(tid, roll, name);
-        PlayerModel playerModel = new PlayerModel(sid, roll, name);
+        long pid = dbHelper.addPlayer(tid, roll, name);
+        PlayerModel playerModel = new PlayerModel(pid, roll, name);
         playerModels.add(playerModel);
         adapter.notifyDataSetChanged();
 
