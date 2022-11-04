@@ -144,19 +144,16 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         bootSizeTv.setAdapter(adapterItems);
 
 
-        dateOfBirthEt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Calendar calender = Calendar.getInstance();
-                int mYear = calender.get(Calendar.YEAR);
-                int mMonth = calender.get(Calendar.MONTH);
-                int mDay = calender.get(Calendar.DAY_OF_MONTH);
+        dateOfBirthEt.setOnClickListener(view -> {
+            final Calendar calender = Calendar.getInstance();
+            int mYear = calender.get(Calendar.YEAR);
+            int mMonth = calender.get(Calendar.MONTH);
+            int mDay = calender.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dateDialog = new DatePickerDialog(view.getContext(), datePickerListener, mYear, mMonth, mDay);
-                dateDialog.getDatePicker().setMaxDate(new Date().getTime());
-                dateDialog.show();
+            DatePickerDialog dateDialog = new DatePickerDialog(view.getContext(), datePickerListener, mYear, mMonth, mDay);
+            dateDialog.getDatePicker().setMaxDate(new Date().getTime());
+            dateDialog.show();
 
-            }
         });
     }
 

@@ -98,32 +98,25 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
 
         };
 
-        fixtureTimeEt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // on below line we are getting the
-                // instance of our calendar.
-                final Calendar c = Calendar.getInstance();
+        fixtureTimeEt.setOnClickListener(v -> {
+            // on below line we are getting the
+            // instance of our calendar.
+            final Calendar c = Calendar.getInstance();
 
-                // on below line we are getting our hour, minute.
-                int hour = c.get(Calendar.HOUR_OF_DAY);
-                int minute = c.get(Calendar.MINUTE);
+            // on below line we are getting our hour, minute.
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
 
-                // on below line we are initializing our Time Picker Dialog
-                TimePickerDialog timePickerDialog = new TimePickerDialog(RecordGameFixturesActivity.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker view, int hourOfDay,
-                                                  int minute) {
-                                // on below line we are setting selected time
-                                // in our text view.
-                                fixtureTimeEt.setText(hourOfDay + ":" + minute);
-                            }
-                        }, hour, minute, false);
-                // at last we are calling show to
-                // display our time picker dialog.
-                timePickerDialog.show();
-            }
+            // on below line we are initializing our Time Picker Dialog
+            TimePickerDialog timePickerDialog = new TimePickerDialog(RecordGameFixturesActivity.this,
+                    (view, hourOfDay, minute1) -> {
+                        // on below line we are setting selected time
+                        // in our text view.
+                        fixtureTimeEt.setText(hourOfDay + ":" + minute1);
+                    }, hour, minute, false);
+            // at last we are calling show to
+            // display our time picker dialog.
+            timePickerDialog.show();
         });
 
         // posting to Firebase

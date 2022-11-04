@@ -109,13 +109,6 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
                 holder.setName(model.getSurname() + " " + model.getFirstname() + " " + model.getLastname());
 
                 //add  on click listener on the a particular post to  allow opening this post on a different screen
-//                holder.attendance_layout.setOnClickListener(view -> {
-//                    //launch the screen single post activity on clicking a particular cardview item
-//                    //create this activity using the empty activity template
-//                    Intent intent = new Intent(RecordPlayerAttendanceActivity.this, SingleAttendanceActivity.class);
-//                    intent.putExtra("AttendanceID", attendance_key);
-//                    startActivity(intent);
-//                });
             }
         };
 
