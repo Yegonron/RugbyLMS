@@ -83,9 +83,7 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
                 Objects.requireNonNull(snapshot.child("profileImage").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("surname").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("firstname").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("lastname").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("teamname").getValue()).toString(),
-                Objects.requireNonNull(snapshot.child("position").getValue()).toString())).build();
+                Objects.requireNonNull(snapshot.child("lastname").getValue()).toString())).build();
         // crate a fire base adapter passing in the model, an a View holder
         // Create a  new ViewHolder as a public inner class that extends RecyclerView.Holder, outside the create , start and update the Ui methods.
         //Then implement the methods onCreateViewHolder and onBindViewHolder
@@ -155,7 +153,11 @@ public class RecordPlayerAttendanceActivity extends AppCompatActivity {
         // create yos setters, you will use this setter in you onBindViewHolder method
         // setters
         public void setProfileImage(Context cxt, String profileImage) {
-            Picasso.get().load(profileImage).into(user_image);
+            try {
+                Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(user_image);
+            } catch (Exception e) {
+                user_image.setImageResource(R.drawable.profile);
+            }
 
         }
 

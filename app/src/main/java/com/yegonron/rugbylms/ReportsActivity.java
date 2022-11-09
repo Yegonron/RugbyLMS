@@ -87,6 +87,7 @@ public class ReportsActivity extends AppCompatActivity {
                 Objects.requireNonNull(snapshot.child("surname").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("firstname").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("lastname").getValue()).toString(),
+                Objects.requireNonNull(snapshot.child("countryCode").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("phone").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("age").getValue()).toString(),
                 Objects.requireNonNull(snapshot.child("teamname").getValue()).toString(),
@@ -115,6 +116,7 @@ public class ReportsActivity extends AppCompatActivity {
                 holder.setProfileImage(getApplicationContext(), model.getProfileImage());
                 holder.setName(model.getSurname() + " " + model.getFirstname() + " " + model.getLastname());
                 holder.setAge(model.getAge());
+                holder.setCode(model.getCode());
                 holder.setPhone(model.getPhone());
                 holder.setPosition(model.getPosition());
                 holder.setKitsize(model.getKitsize());
@@ -154,6 +156,7 @@ public class ReportsActivity extends AppCompatActivity {
         public final ImageView user_image;
         public final TextView userName;
         public final TextView userAge;
+        public final TextView userCode;
         public final TextView userPhone;
         public final TextView userPosition;
         public final TextView userBootSize;
@@ -173,6 +176,7 @@ public class ReportsActivity extends AppCompatActivity {
             user_image = itemView.findViewById(R.id.userImage);
             userName = itemView.findViewById(R.id.nameTv);
             userAge = itemView.findViewById(R.id.ageTv);
+            userCode = itemView.findViewById(R.id.codeTv);
             userPhone = itemView.findViewById(R.id.phoneTv);
             userPosition = itemView.findViewById(R.id.positionTv);
             userBootSize = itemView.findViewById(R.id.bootSizeTv);
@@ -184,7 +188,11 @@ public class ReportsActivity extends AppCompatActivity {
         // create yos setters, you will use this setter in you onBindViewHolder method
         // setters
         public void setProfileImage(Context cxt, String profileImage) {
-            Picasso.get().load(profileImage).into(user_image);
+            try {
+                Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(user_image);
+            } catch (Exception e) {
+                user_image.setImageResource(R.drawable.profile);
+            }
 
         }
 
@@ -199,9 +207,16 @@ public class ReportsActivity extends AppCompatActivity {
             userAge.setText("Age: " + age);
         }
 
+        public void setCode(String code) {
+
+            userCode.setText("Phone: +" + code);
+
+        }
+
         public void setPhone(String phone) {
 
-            userPhone.setText("Phone: " + phone);
+            userPhone.setText(phone);
+
         }
 
         public void setPosition(String position) {

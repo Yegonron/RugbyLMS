@@ -75,6 +75,7 @@ public class SingleUserActivity extends AppCompatActivity {
                 String user_surname = (String) dataSnapshot.child("surname").getValue();
                 String user_firstname = (String) dataSnapshot.child("firstname").getValue();
                 String user_lastname = (String) dataSnapshot.child("lastname").getValue();
+                String user_code = (String) dataSnapshot.child("countryCode").getValue();
                 String user_phone = (String) dataSnapshot.child("phone").getValue();
                 String user_age = (String) dataSnapshot.child("age").getValue();
                 String user_position = (String) dataSnapshot.child("position").getValue();
@@ -85,7 +86,7 @@ public class SingleUserActivity extends AppCompatActivity {
                 String user_uid = (String) dataSnapshot.child("uid").getValue();
 
                 name.setText("Name: " + user_surname + " " + user_firstname + " " + user_lastname);
-                phone.setText("Phone: " + user_phone);
+                phone.setText("Phone: +" + user_code + " " + user_phone);
                 age.setText("Age: " + user_age);
                 position.setText("Position: " + user_position);
                 kitSize.setText("Kit Size: " + user_kitsize);

@@ -27,7 +27,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/ic_person_gray" />
+                    android:background="@drawable/ic_person_black" />
 
             </RelativeLayout>
 
@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="80dp"
+                android:layout_marginStart="70dp"
                 android:fontFamily="serif"
                 android:text="UserName"
                 android:textColor="@color/black"

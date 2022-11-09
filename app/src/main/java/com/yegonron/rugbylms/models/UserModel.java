@@ -7,6 +7,7 @@ public class UserModel {
     String surname;
     String firstname;
     String lastname;
+    String code;
     String phone;
     String age;
     String teamname;
@@ -15,12 +16,13 @@ public class UserModel {
     String bootsize;
 
     //create a constructor
-    public UserModel(String profileImage, String accountType, String surname, String firstname, String lastname, String phone, String age, String teamname, String position, String kitsize, String bootsize) {
+    public UserModel(String profileImage, String accountType, String surname, String firstname, String lastname, String code, String phone, String age, String teamname, String position, String kitsize, String bootsize) {
         this.profileImage = profileImage;
         this.accountType = accountType;
         this.surname = surname;
         this.firstname = firstname;
         this.lastname = lastname;
+        this.code = code;
         this.phone = phone;
         this.age = age;
         this.teamname = teamname;
@@ -29,9 +31,9 @@ public class UserModel {
         this.bootsize = bootsize;
 
     }
+
     //requires an empty constructor
     public UserModel() {
-
     }
 
     // setters & getters
@@ -73,6 +75,14 @@ public class UserModel {
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getPhone() {
