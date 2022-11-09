@@ -2,8 +2,8 @@ package com.yegonron.rugbylms.models;
 
 public class CommentModel {
     private String profileImage, comment, time, date;
-    //create a constructor
 
+    //create a constructor
     public CommentModel(String profileImage, String comment, String time, String date) {
         this.comment = comment;
         this.profileImage = profileImage;
@@ -33,7 +33,6 @@ public class CommentModel {
     }
 
     //getters
-
     public String getComment() {
         return comment;
     }

@@ -2,6 +2,7 @@
 <resources>
 
     <style name="app_title">Rugby LMS
+        <item name="android:textSize">20sp</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="android:actionMenuTextColor">@color/white</item>
     </style>

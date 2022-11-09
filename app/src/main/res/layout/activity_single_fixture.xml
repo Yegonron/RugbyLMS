@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/green">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -32,7 +33,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp">
+        android:layout_marginTop="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="100dp"
+                    android:layout_marginStart="80dp"
                     android:layout_marginTop="4dp"
                     android:text="Date"
                     android:textColor="@color/white"
@@ -63,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="200dp"
+                    android:layout_marginStart="220dp"
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="5dp"
                     android:text="Time"
@@ -84,7 +85,7 @@
                     android:id="@+id/fixtureTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="120dp"
+                    android:layout_marginStart="110dp"
                     android:text="Fixture Title"
                     android:textColor="@color/white"
                     android:textStyle="bold" />

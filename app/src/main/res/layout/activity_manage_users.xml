@@ -32,7 +32,6 @@
     </RelativeLayout>
 
     <ScrollView
-        android:id="@+id/createUserSv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp">
@@ -126,6 +125,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/shape_rect02"
                 android:hint="Account Type"
+                android:padding="5dp"
                 android:textColorHint="@color/gray01">
 
                 <AutoCompleteTextView
@@ -135,6 +135,7 @@
                     android:drawableStart="@drawable/ic_team_gray"
                     android:drawablePadding="5dp"
                     android:inputType="none"
+                    android:padding="5dp"
                     android:textColor="@color/black" />
 
             </com.google.android.material.textfield.TextInputLayout>

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private EditText passwordEt, cPasswordEt;
+    private EditText passwordEt;
 
     private ProgressDialog progressDialog;
 
@@ -69,6 +70,16 @@ public class SettingsActivity extends AppCompatActivity {
         String password = passwordEt.getText().toString().trim();
 
         //validate data
+        if (password.length() < 6) {
+            Toast.makeText(this, "Password should be at least 6 characters long...", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (isValidPassword(password)) {
+            Toast.makeText(SettingsActivity.this, " ", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(SettingsActivity.this, "Password should contain at least one capital letter, one number and one symbol ", Toast.LENGTH_LONG).show();
+            return;
+        }
 
         progressDialog.setMessage("Changing password...");
         progressDialog.show();

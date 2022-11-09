@@ -6,16 +6,13 @@ public class AttendanceModel {
     String surname;
     String firstname;
     String lastname;
-    String position;
 
     //create a constructor
-    public AttendanceModel(String profileImage, String surname, String firstname, String lastname, String position, String bootsize) {
+    public AttendanceModel(String profileImage, String surname, String firstname, String lastname) {
         this.profileImage = profileImage;
         this.surname = surname;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.position = position;
-
     }
 
     //requires an empty constructor
@@ -23,45 +20,40 @@ public class AttendanceModel {
 
     }
 
-    // setters & getters
 
-    public String getProfileImage() {
-        return profileImage;
-    }
-
+    // setters
     public void setProfileImage(String profileImage) {
         this.profileImage = profileImage;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
     public void setFirstname(String firstname) {
         this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
     }
 
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
 
-    public String getPosition() {
-        return position;
+    //getters
+
+    public String getProfileImage() {
+        return profileImage;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public String getSurname() {
+        return surname;
     }
+
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
 }

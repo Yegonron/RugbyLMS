@@ -73,7 +73,7 @@
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:navigationIcon="@drawable/ic_menu_white"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:titleTextAppearance="@string/app_name"
+                app:titleTextAppearance="@style/app_title"
                 tools:ignore="MissingConstraints" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

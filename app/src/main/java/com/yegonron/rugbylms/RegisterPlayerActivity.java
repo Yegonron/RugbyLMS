@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.TextUtils;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;

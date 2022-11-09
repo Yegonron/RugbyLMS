@@ -104,7 +104,10 @@ public class SinglePostActivity extends AppCompatActivity {
             dialog.setTitle("Are you sure?");
             dialog.setMessage("Deleting this post will completely remove it" +
                     " from the system and you won't be able to access it.");
-            dialog.setPositiveButton("Delete", (dialogInterface, i) -> mDatabase.child(post_key).removeValue());
+
+            dialog.setPositiveButton("Delete", (dialogInterface, i) ->
+
+                    mDatabase.child(post_key).removeValue());
 
             dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
             AlertDialog alertDialog = dialog.create();
@@ -138,8 +141,8 @@ public class SinglePostActivity extends AppCompatActivity {
         });
 
         postComment.setOnClickListener(v -> {
-            //Lis
-            Toast.makeText(SinglePostActivity.this, "Posting...", Toast.LENGTH_LONG).show();
+
+            Toast.makeText(SinglePostActivity.this, "Posting comment...", Toast.LENGTH_LONG).show();
             //get the comment from the edit texts
             final String comment = makeComment.getText().toString().trim();
             //get the date and time of the post
@@ -163,6 +166,9 @@ public class SinglePostActivity extends AppCompatActivity {
                         newComment.child("date").setValue(saveCurrentDate);
                         newComment.child("profileImage").setValue(dataSnapshot.child("profileImage").getValue());
                         newComment.child("username").setValue(dataSnapshot.child("username").getValue());
+
+                        Toast.makeText(SinglePostActivity.this, "Posted", Toast.LENGTH_LONG).show();
+
                     }
 
                     @Override
