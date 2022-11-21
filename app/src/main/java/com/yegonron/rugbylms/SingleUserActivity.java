@@ -19,6 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 public class SingleUserActivity extends AppCompatActivity {
 
     // Declare the view objects
@@ -63,7 +65,7 @@ public class SingleUserActivity extends AppCompatActivity {
         //Initialize the instance of the firebase user
         FirebaseUser mCurrentUser = firebaseAuth.getCurrentUser();
         //Get currently logged in user
-        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(mCurrentUser).getUid());
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 

@@ -82,7 +82,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
         surNameEt = findViewById(R.id.surNameEt);
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
-        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+        ccp = findViewById(R.id.ccp);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
         teamNameTv = findViewById(R.id.teamNameTv);

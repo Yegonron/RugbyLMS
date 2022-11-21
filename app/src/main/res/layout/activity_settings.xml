@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -93,34 +94,43 @@
             android:textColor="@color/black"
             android:textSize="18sp" />
 
-        <EditText
-            android:id="@+id/passwordEt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/passwordTf"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/changePasswordTv"
             android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
             android:background="@drawable/shape_rect02"
-            android:drawableStart="@drawable/ic_lock_gray"
-            android:drawablePadding="5dp"
-            android:hint="Password"
             android:inputType="textPassword"
             android:padding="5dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/gray01">
+            android:textColorHint="@color/gray01"
+            app:passwordToggleEnabled="true">
 
-        </EditText>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordEt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_lock_gray"
+                android:drawablePadding="5dp"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:padding="5dp"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/changePasswordBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/passwordEt"
+            android:layout_below="@id/passwordTf"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
-             android:backgroundTint="@color/black"
+            android:backgroundTint="@color/black"
             android:minWidth="120dp"
             android:text="change password"
             android:textColor="@color/white" />
@@ -161,7 +171,7 @@
             android:layout_marginStart="100dp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="15dp"
-             android:backgroundTint="@color/red"
+            android:backgroundTint="@color/red"
             android:text="Delete Account" />
 
     </RelativeLayout>

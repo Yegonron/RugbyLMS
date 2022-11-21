@@ -54,8 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         deleteBtn.setOnClickListener(view -> {
             AlertDialog.Builder dialog = new AlertDialog.Builder(SettingsActivity.this);
             dialog.setTitle("Are you sure?");
-            dialog.setMessage("Deleting this account will result in completely removing your" +
-                    " account from the system and you won't be able to access the app.");
+            dialog.setMessage("Deleting this account will result in completely removing your" + " account from the system and you won't be able to access the app.");
             dialog.setPositiveButton("Delete", (dialogInterface, i) -> deleteCurrentUser());
 
             dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
@@ -87,12 +86,12 @@ public class SettingsActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         assert user != null;
-        user.updatePassword(password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "User password updated.");
-                    }
-                });
+        user.updatePassword(password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(TAG, "User password updated.");
+                progressDialog.dismiss();
+            }
+        });
 
     }
 
@@ -116,19 +115,13 @@ public class SettingsActivity extends AppCompatActivity {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        FirebaseDatabase.getInstance()
-                .getReference()
-                .child("Users")
-                .child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid())
-                .setValue(null)
-                .addOnSuccessListener(avoid -> FirebaseAuth.getInstance().getCurrentUser().delete()
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful()) {
-                                progressDialog.dismiss();
-                                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
-                                startActivity(intent);
+        FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid()).setValue(null).addOnSuccessListener(avoid -> FirebaseAuth.getInstance().getCurrentUser().delete().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                progressDialog.dismiss();
+                Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+                startActivity(intent);
 
-                            }
-                        }));
+            }
+        }));
     }
 }

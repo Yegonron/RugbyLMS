@@ -93,7 +93,7 @@ public class RegisterPlayerActivity extends AppCompatActivity {
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
         dateOfBirthEt = findViewById(R.id.dateOfBirthEt);
-        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+        ccp = findViewById(R.id.ccp);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
         ageEt = findViewById(R.id.ageEt);

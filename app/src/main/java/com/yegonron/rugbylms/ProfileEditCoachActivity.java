@@ -74,7 +74,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
         surNameEt = findViewById(R.id.surNameEt);
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
-        ccp = (CountryCodePicker) findViewById(R.id.ccp);
+        ccp = findViewById(R.id.ccp);
         phoneEt = findViewById(R.id.phoneEt);
         userNameEt = findViewById(R.id.userNameEt);
         teamNameTv = findViewById(R.id.teamNameTv);
@@ -207,7 +207,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             String surname = "" + ds.child("surname").getValue();
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
-                            String code = "" + ds.child("countryCode").getValue().toString();
+                            String code = "" + Objects.requireNonNull(ds.child("countryCode").getValue()).toString();
                             String phone = "" + ds.child("phone").getValue();
                             String username = "" + ds.child("username").getValue();
                             String teamname = "" + ds.child("teamname").getValue();

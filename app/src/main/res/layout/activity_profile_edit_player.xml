@@ -40,7 +40,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
@@ -338,7 +337,7 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="5dp"
-                android:layout_toRightOf="@id/bootSizeTf"
+                android:layout_toEndOf="@id/bootSizeTf"
                 android:background="@drawable/shape_rect02"
                 android:hint="Kit Size"
                 android:padding="5dp"

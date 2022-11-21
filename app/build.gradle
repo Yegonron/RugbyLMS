@@ -38,6 +38,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
     implementation platform('com.google.firebase:firebase-bom:31.0.2')
     implementation 'com.google.firebase:firebase-auth:21.1.0'
@@ -66,5 +67,9 @@ dependencies {
     implementation 'com.hbb20:ccp:2.6.1'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'joda-time:joda-time:2.12.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.ISchwarz23:SortableTableView:2.8.1'
+
 
 }

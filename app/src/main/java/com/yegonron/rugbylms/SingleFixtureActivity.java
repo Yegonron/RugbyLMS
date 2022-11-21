@@ -65,7 +65,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
         //Initialize the instance of the firebase user
         FirebaseUser mCurrentUser = firebaseAuth.getCurrentUser();
         //Get currently logged in user
-        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(Objects.requireNonNull(mCurrentUser).getUid());
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Fixtures");
 
