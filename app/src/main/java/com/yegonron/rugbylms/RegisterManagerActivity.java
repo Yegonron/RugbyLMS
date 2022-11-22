@@ -46,7 +46,7 @@ public class RegisterManagerActivity extends AppCompatActivity {
     private ImageView profileIv;
     private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt, emailEt, passwordEt, cPasswordEt;
 
-    final String[] teams = {"Leos", "KCB", "Oilers"};
+    final String[] teams = {"Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"};
 
     AutoCompleteTextView teamNameTv;
     ArrayAdapter<String> adapterItems;

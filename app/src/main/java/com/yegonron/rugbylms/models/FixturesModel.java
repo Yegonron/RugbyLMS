@@ -32,7 +32,6 @@ public class FixturesModel {
 
     // setters & getters
 
-
     public String getFixtureTitle() {
         return fixtureTitle;
     }
@@ -96,4 +95,5 @@ public class FixturesModel {
     public void setTime(String time) {
         this.time = time;
     }
+
 }

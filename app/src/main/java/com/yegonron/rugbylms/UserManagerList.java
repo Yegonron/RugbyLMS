@@ -9,22 +9,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.yegonron.rugbylms.adapters.UserGroupsAdapter;
+import com.yegonron.rugbylms.adapters.UserGroupsManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class UserList extends AppCompatActivity {
+public class UserManagerList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DatabaseReference database;
-    UserGroupsAdapter userGroupsAdapter;
-    ArrayList<String> userGroupsList;
+    UserGroupsManagerAdapter userGroupsManagerAdapter;
+    ArrayList<String> userGroupsManagerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+        setContentView(R.layout.activity_user_manager_list);
 
         ImageButton backBtn = findViewById(R.id.listBackBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
@@ -32,12 +32,12 @@ public class UserList extends AppCompatActivity {
         recyclerView = findViewById(R.id.myUserList);
         database = FirebaseDatabase.getInstance().getReference();
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(UserManagerList.this));
 
-        userGroupsList = new ArrayList<>(Arrays.asList("Admin", "Manager", "Coach", "Player", "Fan"));
-        userGroupsAdapter = new UserGroupsAdapter(this, userGroupsList, database);
+        userGroupsManagerList = new ArrayList<>(Arrays.asList("Admin", "Manager", "Coach", "Player", "Fan"));
+        userGroupsManagerAdapter = new UserGroupsManagerAdapter(UserManagerList.this, userGroupsManagerList, database);
         recyclerView = findViewById(R.id.myUserList);
-        recyclerView.setAdapter(userGroupsAdapter);
+        recyclerView.setAdapter(userGroupsManagerAdapter);
 
     }
 }

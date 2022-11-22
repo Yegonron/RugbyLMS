@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UserReport extends AppCompatActivity {
+public class GameManagerReport extends AppCompatActivity {
 
     private FirebaseRecyclerAdapter adapter;
 
@@ -48,7 +48,7 @@ public class UserReport extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_report);
+        setContentView(R.layout.activity_game_manager_report);
 
         onlineUsers = new ArrayList<>();
         barArraylist = new ArrayList<>();
@@ -77,16 +77,16 @@ public class UserReport extends AppCompatActivity {
     }
 
     private void loadHorizontalBarChartData() {
-        String[] labels = new String[]{"Admin", "Manager", "Coach", "Player", "Fan"};
+        String[] labels = new String[]{"Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"};
         for (int i = 0; i < labels.length; i++) {
             int finalI = i;
-            database.child("Users").orderByChild("accountType").equalTo(labels[i]).addListenerForSingleValueEvent(new ValueEventListener() {
+            database.child("Fixtures").orderByChild("homeTeam").equalTo(labels[i]).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         barArraylist.add(new BarEntry((float) finalI, (float) snapshot.getChildrenCount()));
 
-                        BarDataSet barDataSet = new BarDataSet(barArraylist, "User Groups");
+                        BarDataSet barDataSet = new BarDataSet(barArraylist, "Fixtures Groups");
                         BarData barData = new BarData(barDataSet);
                         barChart.setData(barData);
                         barChart.invalidate();
@@ -121,18 +121,18 @@ public class UserReport extends AppCompatActivity {
 
     private void loadPieChartData() {
         String[] activity = new String[]{"true", "false"};
-        String[] activityLabel = new String[]{"Online", "Offline"};
+        String[] activityLabel = new String[]{"Played", "Pending"};
         Map<String, Integer> typeActivityMap = new HashMap<>();
         for (int i = 0; i < activity.length; i++) {
             int finalI = i;
-            database.child("Users").orderByChild("online").equalTo(activity[i]).addListenerForSingleValueEvent(new ValueEventListener() {
+            database.child("Fixtures").orderByChild("status").equalTo(activity[i]).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()) {
                         typeActivityMap.put(activityLabel[finalI], Integer.parseInt(String.valueOf(snapshot.getChildrenCount())));
                         onlineUsers.add(new PieEntry(Objects.requireNonNull(typeActivityMap.get(activityLabel[finalI])).floatValue(), activityLabel[finalI]));
 
-                        PieDataSet dataSet = new PieDataSet(onlineUsers, "Users Activity");
+                        PieDataSet dataSet = new PieDataSet(onlineUsers, "Fixtures Activity");
                         dataSet.setColors(colors);
 
                         PieData data = new PieData(dataSet);
@@ -159,11 +159,12 @@ public class UserReport extends AppCompatActivity {
         pieChart.setUsePercentValues(false);
         pieChart.setEntryLabelTextSize(12);
         pieChart.setEntryLabelColor(Color.BLACK);
-        pieChart.setCenterText("User's Activity");
+        pieChart.setCenterText("Fixture's Activity");
         pieChart.setCenterTextSize(12);
         pieChart.getDescription().setEnabled(false);
 
         Legend legend = pieChart.getLegend();
         legend.setEnabled(false);
+
     }
 }

@@ -442,7 +442,7 @@ public class MainManagerActivity extends AppCompatActivity implements Navigation
                 break;
 
             case R.id.reports:
-                Intent intent1 = new Intent(MainManagerActivity.this, ReportsActivity.class);
+                Intent intent1 = new Intent(MainManagerActivity.this, ReportsManagerActivity.class);
                 startActivity(intent1);
                 break;
 

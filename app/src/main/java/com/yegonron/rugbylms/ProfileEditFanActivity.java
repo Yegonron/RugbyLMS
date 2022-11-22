@@ -9,6 +9,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -41,6 +43,11 @@ public class ProfileEditFanActivity extends AppCompatActivity {
     private ImageView profileIv;
     private EditText surNameEt, firstNameEt, lastNameEt, userNameEt;
 
+    final String[] teams = {"Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"};
+
+    AutoCompleteTextView teamNameTv;
+    ArrayAdapter<String> adapterItems;
+
     private static final int CAMERA_REQUEST_CODE = 200;
     private static final int STORAGE_REQUEST_CODE = 300;
 
@@ -64,7 +71,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         firstNameEt = findViewById(R.id.firstNameEt);
         lastNameEt = findViewById(R.id.lastNameEt);
         userNameEt = findViewById(R.id.userNameEt);
-
+        teamNameTv = findViewById(R.id.teamNameTv);
 
         profileIv = findViewById(R.id.profileIv);
         Button updateBtn = findViewById(R.id.updateBtn);
@@ -84,15 +91,19 @@ public class ProfileEditFanActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         checkUser();
 
+        adapterItems = new ArrayAdapter<>(this, R.layout.list_item, teams);
+        teamNameTv.setAdapter(adapterItems);
+
     }
 
-    private String surName, firstName, lastName, userName;
+    private String surName, firstName, lastName, userName, teamName;
 
     private void inputData() {
         surName = surNameEt.getText().toString().trim();
         firstName = firstNameEt.getText().toString().trim();
         lastName = lastNameEt.getText().toString().trim();
         userName = userNameEt.getText().toString().trim();
+        teamName = teamNameTv.getText().toString().trim();
 
         updateProfile();
     }
@@ -107,6 +118,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
             hashMap.put("firstname", "" + firstName);
             hashMap.put("lastname", "" + lastName);
             hashMap.put("username", "" + userName);
+            hashMap.put("teamname", "" + teamName);
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
             ref.child(Objects.requireNonNull(firebaseAuth.getUid())).updateChildren(hashMap)
@@ -137,6 +149,7 @@ public class ProfileEditFanActivity extends AppCompatActivity {
                             hashMap.put("firstname", "" + firstName);
                             hashMap.put("lastname", "" + lastName);
                             hashMap.put("username", "" + userName);
+                            hashMap.put("teamname", "" + teamName);
                             hashMap.put("profileImage", "" + downloadImageUri);
 
                             DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
@@ -181,12 +194,14 @@ public class ProfileEditFanActivity extends AppCompatActivity {
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
                             String username = "" + ds.child("username").getValue();
+                            String teamname = "" + ds.child("teamname").getValue();
                             String profileImage = "" + ds.child("profileImage").getValue();
 
                             surNameEt.setText(surname);
                             firstNameEt.setText(firstname);
                             lastNameEt.setText(lastname);
                             userNameEt.setText(username);
+                            teamNameTv.setText(teamname);
 
                             try {
                                 Picasso.get().load(profileImage).placeholder(R.drawable.profile).into(profileIv);

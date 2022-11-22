@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
 
         backBtn.setOnClickListener(v -> onBackPressed());
 
-
         loginBtn.setOnClickListener(view -> loginUser());
 
         noAccountTV.setOnClickListener(v -> startActivity(new Intent(LoginActivity.this, SignUpActivity.class)));

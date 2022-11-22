@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -83,7 +82,7 @@ public class SinglePostActivity extends AppCompatActivity {
 
         post_key = getIntent().getExtras().getString("PostID");
 
-        //Initialize the database reference/node where you will be storing posts
+        //Initialize the database reference/node where you will be storing comments
         commentRef = FirebaseDatabase.getInstance().getReference().child("Comments").child(post_key);
         //Initialize an instance of  Firebase Authentication
         firebaseAuth = FirebaseAuth.getInstance();
@@ -100,18 +99,9 @@ public class SinglePostActivity extends AppCompatActivity {
 
         deleteBtn.setOnClickListener(view -> {
 
-            AlertDialog.Builder dialog = new AlertDialog.Builder(SinglePostActivity.this);
-            dialog.setTitle("Are you sure?");
-            dialog.setMessage("Deleting this post will completely remove it" +
-                    " from the system and you won't be able to access it.");
-
-            dialog.setPositiveButton("Delete", (dialogInterface, i) ->
-
-                    mDatabase.child(post_key).removeValue());
-
-            dialog.setNegativeButton("Dismiss", (dialogInterface, i) -> dialogInterface.dismiss());
-            AlertDialog alertDialog = dialog.create();
-            alertDialog.show();
+            mDatabase.child(post_key).removeValue();
+            Toast.makeText(SinglePostActivity.this, "Post Deleted", Toast.LENGTH_LONG).show();
+            onBackPressed();
 
         });
 
@@ -190,14 +180,14 @@ public class SinglePostActivity extends AppCompatActivity {
         FirebaseUser currentUser = firebaseAuth.getCurrentUser();
         if (currentUser != null) {
             //if user is logged in populate the Ui With card views
-            updateUI();
+            updateUI(currentUser);
             adapter.startListening();
 
         }
 
     }
 
-    private void updateUI() {
+    private void updateUI(FirebaseUser currentUser) {
         //create and initialize an instance of Query that retrieves all posts uploaded
         Query query = FirebaseDatabase.getInstance().getReference().child("Comments").child(post_key);
         // Create and initialize and instance of Recycler Options passing in your model class and
@@ -262,7 +252,6 @@ public class SinglePostActivity extends AppCompatActivity {
         public commentModelViewHolder(@NonNull View itemView) {
             super(itemView);
             //Initialize the card view item objects
-
             commenterimage = itemView.findViewById(R.id.commenterImage);
             commentTime = itemView.findViewById(R.id.commentTime);
             commentDate = itemView.findViewById(R.id.commentDate);

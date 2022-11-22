@@ -16,11 +16,11 @@ import com.yegonron.rugbylms.models.User;
 
 import java.util.ArrayList;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
+public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> {
     Context context;
     ArrayList<User> list;
 
-    public UserAdapter(Context context, ArrayList<User> list) {
+    public TeamAdapter(Context context, ArrayList<User> list) {
         this.context = context;
         this.list = list;
     }

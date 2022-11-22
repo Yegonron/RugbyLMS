@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,14 +33,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class UserReport extends AppCompatActivity {
+public class UserManagerReport extends AppCompatActivity {
 
     private FirebaseRecyclerAdapter adapter;
 
     private DatabaseReference database;
     private PieChart pieChart;
     private HorizontalBarChart barChart;
+
     private FirebaseAuth firebaseAuth;
+    //Declare an Instance of the database reference  where we have user details
+    private DatabaseReference mDatabaseUsers;
+    //Declare a Instance of currently logged in user
+    private FirebaseUser mCurrentUser;
 
     ArrayList<BarEntry> barArraylist;
     ArrayList<PieEntry> onlineUsers;
@@ -48,7 +54,7 @@ public class UserReport extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_report);
+        setContentView(R.layout.activity_user_manager_report);
 
         onlineUsers = new ArrayList<>();
         barArraylist = new ArrayList<>();
@@ -57,6 +63,12 @@ public class UserReport extends AppCompatActivity {
         backBtn.setOnClickListener(v -> onBackPressed());
 
         database = FirebaseDatabase.getInstance().getReference();
+        //Declare an Instance of firebase authentication
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        //Initialize the instance of the firebase user
+        mCurrentUser = mAuth.getCurrentUser();
+        //Get currently logged in user
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
         colors = new ArrayList<>();
         for (int color : ColorTemplate.MATERIAL_COLORS) {
@@ -76,8 +88,10 @@ public class UserReport extends AppCompatActivity {
         loadHorizontalBarChartData();
     }
 
+
     private void loadHorizontalBarChartData() {
         String[] labels = new String[]{"Admin", "Manager", "Coach", "Player", "Fan"};
+
         for (int i = 0; i < labels.length; i++) {
             int finalI = i;
             database.child("Users").orderByChild("accountType").equalTo(labels[i]).addListenerForSingleValueEvent(new ValueEventListener() {

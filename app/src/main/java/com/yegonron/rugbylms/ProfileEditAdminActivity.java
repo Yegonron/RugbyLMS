@@ -200,7 +200,7 @@ public class ProfileEditAdminActivity extends AppCompatActivity {
                             String surname = "" + ds.child("surname").getValue();
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
-                            String code = "" + Objects.requireNonNull(ds.child("countryCode").getValue()).toString();
+                            String code = "" + Objects.requireNonNull(ds.child("countryCode").getValue());
                             String phone = "" + ds.child("phone").getValue();
                             String username = "" + ds.child("username").getValue();
                             String profileImage = "" + ds.child("profileImage").getValue();

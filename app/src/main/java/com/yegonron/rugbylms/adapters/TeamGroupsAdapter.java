@@ -21,36 +21,35 @@ import com.google.firebase.database.ValueEventListener;
 import com.yegonron.rugbylms.R;
 import com.yegonron.rugbylms.models.User;
 
-
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.UserGroupsAdapterViewHolder> {
+public class TeamGroupsAdapter extends RecyclerView.Adapter<TeamGroupsAdapter.TeamListAdapterViewHolder> {
     Context context;
-    ArrayList<String> userGroupList;
+    ArrayList<String> teamGroupList;
     DatabaseReference database;
 
-    public UserGroupsAdapter(Context context, ArrayList<String> userGroupList, DatabaseReference database) {
+    public TeamGroupsAdapter(Context context, ArrayList<String> teamGroupList, DatabaseReference database) {
         this.context = context;
-        this.userGroupList = userGroupList;
+        this.teamGroupList = teamGroupList;
         this.database = database;
     }
 
     @NonNull
     @Override
-    public UserGroupsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public TeamListAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.list_groups_layout, parent, false);
-        return new UserGroupsAdapterViewHolder(v);
+        return new TeamListAdapterViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserGroupsAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TeamListAdapterViewHolder holder, int position) {
 
-        UserAdapter userAdapter;
+        TeamAdapter teamAdapter;
         ArrayList<User> list = new ArrayList<>();
-        userAdapter = new UserAdapter(context, list);
-        holder.groupName.setText(userGroupList.get(position));
-        database.child("Users").orderByChild("accountType").equalTo(userGroupList.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+        teamAdapter = new TeamAdapter(context, list);
+        holder.groupName.setText(teamGroupList.get(position));
+        database.child("Users").orderByChild("teamname").equalTo(teamGroupList.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -58,11 +57,10 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
                         User user = new User((String) dataSnapshot.child("email").getValue(),
                                 Objects.requireNonNull(dataSnapshot.child("profileImage").getValue()).toString(), dataSnapshot.child("surname").getValue() + " " + dataSnapshot.child("firstname").getValue() + " " + dataSnapshot.child("lastname").getValue());
 
-
                         list.add(user);
 
                     }
-                    userAdapter.notifyDataSetChanged();
+                    teamAdapter.notifyDataSetChanged();
 
                 }
             }
@@ -73,22 +71,22 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
             }
         });
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.recyclerView.setAdapter(userAdapter);
+        holder.recyclerView.setAdapter(teamAdapter);
     }
 
     @Override
     public int getItemCount() {
-        return userGroupList.size();
+        return teamGroupList.size();
     }
 
-    public class UserGroupsAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class TeamListAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView groupName;
         ImageView imageView;
         CardView cardView;
         RecyclerView recyclerView;
         LinearLayout linearLayout, layout;
 
-        public UserGroupsAdapterViewHolder(@NonNull View itemView) {
+        public TeamListAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
 
             groupName = itemView.findViewById(R.id.lbl_user_group);
@@ -98,12 +96,12 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
             linearLayout = itemView.findViewById(R.id.LL2);
             layout = itemView.findViewById(R.id.users);
 
-            cardView.setOnClickListener(v -> switchVisibility(groupName, cardView, imageView, linearLayout, layout, userGroupList.get(getAdapterPosition()), database, context));
+            cardView.setOnClickListener(v -> switchVisibility(groupName, cardView, imageView, linearLayout, layout, teamGroupList.get(getAdapterPosition()), database, context));
         }
     }
 
-    private void switchVisibility(TextView groupName, CardView cardView, ImageView imageView, LinearLayout linearLayout, LinearLayout layout, String userGroup, DatabaseReference database, Context context) {
-        database.child("Users").orderByChild("accountType").equalTo(userGroup).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void switchVisibility(TextView groupName, CardView cardView, ImageView imageView, LinearLayout linearLayout, LinearLayout layout, String teamGroup, DatabaseReference database, Context context) {
+        database.child("Users").orderByChild("teamname").equalTo(teamGroup).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {

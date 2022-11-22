@@ -69,8 +69,6 @@ public class SingleUserActivity extends AppCompatActivity {
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
         mDatabase.child(user_key).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

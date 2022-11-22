@@ -9,24 +9,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.yegonron.rugbylms.adapters.UserGroupsAdapter;
+import com.yegonron.rugbylms.adapters.GameGroupsManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class UserList extends AppCompatActivity {
+public class GameManagerList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DatabaseReference database;
-    UserGroupsAdapter userGroupsAdapter;
-    ArrayList<String> userGroupsList;
+    GameGroupsManagerAdapter gameGroupsManagerAdapter;
+    ArrayList<String> gameGroupsManagerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+        setContentView(R.layout.activity_game_manager_list);
 
-        ImageButton backBtn = findViewById(R.id.listBackBtn);
+        ImageButton backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
 
         recyclerView = findViewById(R.id.myUserList);
@@ -34,10 +34,10 @@ public class UserList extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        userGroupsList = new ArrayList<>(Arrays.asList("Admin", "Manager", "Coach", "Player", "Fan"));
-        userGroupsAdapter = new UserGroupsAdapter(this, userGroupsList, database);
+        gameGroupsManagerList = new ArrayList<>(Arrays.asList("Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"));
+        gameGroupsManagerAdapter = new GameGroupsManagerAdapter(this, gameGroupsManagerList, database);
         recyclerView = findViewById(R.id.myUserList);
-        recyclerView.setAdapter(userGroupsAdapter);
+        recyclerView.setAdapter(gameGroupsManagerAdapter);
 
     }
 }

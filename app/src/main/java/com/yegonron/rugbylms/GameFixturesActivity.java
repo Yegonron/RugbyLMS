@@ -31,6 +31,8 @@ public class GameFixturesActivity extends AppCompatActivity {
     private FirebaseRecyclerAdapter adapter;
     String currentUserID = null;
 
+    private TextView homeTeamScore, awayTeamScore;
+
     private FirebaseAuth firebaseAuth;
 
     @Override
@@ -107,7 +109,6 @@ public class GameFixturesActivity extends AppCompatActivity {
                 //populate the card views with data
                 holder.setFixtureTitle(model.getFixtureTitle());
                 holder.setHomeTeam(model.getHomeTeam());
-                holder.setAwayTeam(model.getAwayTeam());
                 holder.setAwayTeam(model.getAwayTeam());
                 holder.setFixtureVenue(model.getFixtureVenue());
                 holder.setFixtureDate(model.getFixtureDate());

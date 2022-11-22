@@ -45,7 +45,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
     private ImageView profileIv;
     private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt;
 
-    final String[] teams = {"Leos", "KCB", "Oilers"};
+    final String[] teams = {"Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"};
 
     AutoCompleteTextView teamNameTv;
     ArrayAdapter<String> adapterItems;
@@ -207,7 +207,7 @@ public class ProfileEditCoachActivity extends AppCompatActivity {
                             String surname = "" + ds.child("surname").getValue();
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
-                            String code = "" + Objects.requireNonNull(ds.child("countryCode").getValue()).toString();
+                            String code = "" + Objects.requireNonNull(ds.child("countryCode").getValue());
                             String phone = "" + ds.child("phone").getValue();
                             String username = "" + ds.child("username").getValue();
                             String teamname = "" + ds.child("teamname").getValue();

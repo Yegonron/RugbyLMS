@@ -9,35 +9,37 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.yegonron.rugbylms.adapters.UserGroupsAdapter;
+import com.yegonron.rugbylms.adapters.TeamGroupsManagerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class UserList extends AppCompatActivity {
+
+public class TeamManagerList extends AppCompatActivity {
 
     RecyclerView recyclerView;
     DatabaseReference database;
-    UserGroupsAdapter userGroupsAdapter;
-    ArrayList<String> userGroupsList;
+    TeamGroupsManagerAdapter teamGroupsManagerAdapter;
+    ArrayList<String> teamGroupsManagerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_list);
+        setContentView(R.layout.activity_team_manager_list);
 
-        ImageButton backBtn = findViewById(R.id.listBackBtn);
+        ImageButton backBtn = findViewById(R.id.backBtn);
         backBtn.setOnClickListener(v -> onBackPressed());
 
-        recyclerView = findViewById(R.id.myUserList);
+        recyclerView = findViewById(R.id.myTeamList);
         database = FirebaseDatabase.getInstance().getReference();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        userGroupsList = new ArrayList<>(Arrays.asList("Admin", "Manager", "Coach", "Player", "Fan"));
-        userGroupsAdapter = new UserGroupsAdapter(this, userGroupsList, database);
-        recyclerView = findViewById(R.id.myUserList);
-        recyclerView.setAdapter(userGroupsAdapter);
+        teamGroupsManagerList = new ArrayList<>(Arrays.asList("Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"));
+        teamGroupsManagerAdapter = new TeamGroupsManagerAdapter(this, teamGroupsManagerList, database);
+        recyclerView = findViewById(R.id.myTeamList);
+        recyclerView.setAdapter(teamGroupsManagerAdapter);
+
 
     }
 }

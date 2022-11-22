@@ -35,6 +35,12 @@
             android:name=".GameList"
             android:exported="false" />
         <activity
+            android:name=".GameManagerReport"
+            android:exported="false" />
+        <activity
+            android:name=".GameManagerList"
+            android:exported="false" />
+        <activity
             android:name=".GameReport"
             android:exported="false" />
         <activity
@@ -110,6 +116,9 @@
             android:name=".ReportsActivity"
             android:exported="false" />
         <activity
+            android:name=".ReportsManagerActivity"
+            android:exported="false" />
+        <activity
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
@@ -131,6 +140,12 @@
             android:name=".TeamList"
             android:exported="false" />
         <activity
+            android:name=".TeamManagerList"
+            android:exported="false" />
+        <activity
+            android:name=".TeamManagerReport"
+            android:exported="false" />
+        <activity
             android:name=".TeamReport"
             android:exported="false" />
         <activity
@@ -138,6 +153,12 @@
             android:exported="true" />
         <activity
             android:name=".UserList"
+            android:exported="false" />
+        <activity
+            android:name=".UserManagerList"
+            android:exported="false" />
+        <activity
+            android:name=".UserManagerReport"
             android:exported="false" />
         <activity
             android:name=".UserReport"

@@ -122,7 +122,6 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
 
             Toast.makeText(RecordGameFixturesActivity.this, "Posting...", Toast.LENGTH_LONG).show();
             //get title and desc from the edit texts
-            final String fixtureTitle = fixtureTitleEt.getText().toString().trim();
             final String homeTeam = homeTeamEt.getText().toString().trim();
             final String awayTeam = awayTeamEt.getText().toString().trim();
             final String fixtureVenue = fixtureVenueEt.getText().toString().trim();
@@ -154,8 +153,7 @@ public class RecordGameFixturesActivity extends AppCompatActivity {
                         newFixture.child("fixtureTime").setValue(fixtureTime);
                         newFixture.child("date").setValue(saveCurrentDate);
                         newFixture.child("time").setValue(saveCurrentTime);
-                        newFixture.child("homeTeamScore").setValue("");
-                        newFixture.child("awayTeamScore").setValue("");
+                        newFixture.child("status").setValue("false");
 
                         //get username of the person posting fixtures
                         newFixture.child("username").setValue(dataSnapshot.child("username").getValue()).addOnCompleteListener(task -> {

@@ -45,7 +45,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
     private ImageView profileIv;
     private EditText surNameEt, firstNameEt, lastNameEt, phoneEt, userNameEt, emailEt, passwordEt, cPasswordEt;
 
-    final String[] teams = {"Leos", "KCB", "Oilers"};
+    final String[] teams = {"Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"};
 
     AutoCompleteTextView teamNameTv;
     ArrayAdapter<String> adapterItems;
@@ -117,6 +117,7 @@ public class RegisterCoachActivity extends AppCompatActivity {
 
         adapterItems = new ArrayAdapter<>(this, R.layout.list_item, teams);
         teamNameTv.setAdapter(adapterItems);
+
     }
 
     private String surName;

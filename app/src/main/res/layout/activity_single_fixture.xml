@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green">
+    android:background="@color/green"
+    tools:context=".SingleFixtureActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -85,26 +87,64 @@
                     android:id="@+id/fixtureTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="110dp"
+                    android:layout_marginStart="130dp"
                     android:text="Fixture Title"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/homeTeamTv"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Home Team"
-                    android:textColor="@color/white" />
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/awayTeamTv"
+                    <TextView
+                        android:id="@+id/homeTeamTv"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:hint="Home Team"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+
+                    <TextView
+                        android:id="@+id/homeTeamScoreTv"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_toEndOf="@id/homeTeamTv"
+                        android:hint="Scores"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="away Team"
-                    android:textColor="@color/white" />
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/awayTeamTv"
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:text="away Team"
+                        android:textColor="@color/white" />
+
+                    <TextView
+                        android:id="@+id/awayTeamScoreTv"
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:layout_toEndOf="@id/awayTeamTv"
+                        android:text="Scores"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/fixtureVenueTv"
@@ -130,13 +170,44 @@
                     android:text="fixture Time"
                     android:textColor="@color/white" />
 
+                <RelativeLayout
+                    android:id="@+id/scoresRl"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/homeTeamScoreEt"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="50dp"
+                        android:layout_marginEnd="45dp"
+                        android:background="@drawable/layoutstyle"
+                        android:hint="H Score"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+
+                    <EditText
+                        android:id="@+id/awayTeamScoreEt"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_toEndOf="@id/homeTeamScoreEt"
+                        android:background="@drawable/layoutstyle"
+                        android:hint="A Score"
+                        android:inputType="number"
+                        android:textAlignment="center"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white" />
+
+                </RelativeLayout>
+
                 <Button
                     android:id="@+id/updateBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
                     android:backgroundTint="@color/teal_200"
-                    android:text="Update Fixture"
+                    android:text="Record Game Scores"
                     android:textColor="#fff"
                     android:textStyle="bold" />
 
@@ -144,7 +215,6 @@
                     android:id="@+id/deleteBtn"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="0dp"
                     android:backgroundTint="#FFEA0404"
                     android:text="delete fixture"
                     android:textColor="#fff"
@@ -155,5 +225,6 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>

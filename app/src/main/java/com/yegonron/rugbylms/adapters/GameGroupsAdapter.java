@@ -19,18 +19,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.yegonron.rugbylms.R;
-import com.yegonron.rugbylms.models.User;
-
+import com.yegonron.rugbylms.models.FixturesModel;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.UserGroupsAdapterViewHolder> {
+public class GameGroupsAdapter extends RecyclerView.Adapter<GameGroupsAdapter.GameGroupsAdapterViewHolder> {
     Context context;
     ArrayList<String> userGroupList;
     DatabaseReference database;
 
-    public UserGroupsAdapter(Context context, ArrayList<String> userGroupList, DatabaseReference database) {
+    public GameGroupsAdapter(Context context, ArrayList<String> userGroupList, DatabaseReference database) {
         this.context = context;
         this.userGroupList = userGroupList;
         this.database = database;
@@ -38,31 +36,29 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
 
     @NonNull
     @Override
-    public UserGroupsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public GameGroupsAdapterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(context).inflate(R.layout.list_groups_layout, parent, false);
-        return new UserGroupsAdapterViewHolder(v);
+        return new GameGroupsAdapterViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull UserGroupsAdapterViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull GameGroupsAdapterViewHolder holder, int position) {
 
-        UserAdapter userAdapter;
-        ArrayList<User> list = new ArrayList<>();
-        userAdapter = new UserAdapter(context, list);
+        GameAdapter gameAdapter;
+        ArrayList<FixturesModel> list = new ArrayList<>();
+        gameAdapter = new GameAdapter(context, list);
         holder.groupName.setText(userGroupList.get(position));
-        database.child("Users").orderByChild("accountType").equalTo(userGroupList.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+        database.child("Fixtures").orderByChild("homeTeam").equalTo(userGroupList.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        User user = new User((String) dataSnapshot.child("email").getValue(),
-                                Objects.requireNonNull(dataSnapshot.child("profileImage").getValue()).toString(), dataSnapshot.child("surname").getValue() + " " + dataSnapshot.child("firstname").getValue() + " " + dataSnapshot.child("lastname").getValue());
+                        FixturesModel fixtureModel = new FixturesModel((String) dataSnapshot.child("fixtureTitle").getValue(), (String) dataSnapshot.child("homeTeam").getValue(), (String) dataSnapshot.child("awayTeam").getValue(), (String) dataSnapshot.child("fixtureVenue").getValue(), (String) dataSnapshot.child("fixtureDate").getValue(), (String) dataSnapshot.child("fixtureTime").getValue(), (String) dataSnapshot.child("date").getValue(), (String) dataSnapshot.child("time").getValue());
 
-
-                        list.add(user);
+                        list.add(fixtureModel);
 
                     }
-                    userAdapter.notifyDataSetChanged();
+                    gameAdapter.notifyDataSetChanged();
 
                 }
             }
@@ -73,7 +69,7 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
             }
         });
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        holder.recyclerView.setAdapter(userAdapter);
+        holder.recyclerView.setAdapter(gameAdapter);
     }
 
     @Override
@@ -81,14 +77,14 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
         return userGroupList.size();
     }
 
-    public class UserGroupsAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class GameGroupsAdapterViewHolder extends RecyclerView.ViewHolder {
         TextView groupName;
         ImageView imageView;
         CardView cardView;
         RecyclerView recyclerView;
         LinearLayout linearLayout, layout;
 
-        public UserGroupsAdapterViewHolder(@NonNull View itemView) {
+        public GameGroupsAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
 
             groupName = itemView.findViewById(R.id.lbl_user_group);
@@ -102,8 +98,8 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
         }
     }
 
-    private void switchVisibility(TextView groupName, CardView cardView, ImageView imageView, LinearLayout linearLayout, LinearLayout layout, String userGroup, DatabaseReference database, Context context) {
-        database.child("Users").orderByChild("accountType").equalTo(userGroup).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void switchVisibility(TextView groupName, CardView cardView, ImageView imageView, LinearLayout linearLayout, LinearLayout layout, String fixtureGroup, DatabaseReference database, Context context) {
+        database.child("Fixtures").orderByChild("homeTeam").equalTo(fixtureGroup).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {

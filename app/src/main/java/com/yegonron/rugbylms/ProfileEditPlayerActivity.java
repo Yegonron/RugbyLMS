@@ -49,11 +49,11 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
     private ImageView profileIv;
     private EditText surNameEt, firstNameEt, lastNameEt, dateOfBirthEt, phoneEt, userNameEt;
 
-    final String[] teams = {"Leos", "KCB", "Oilers"};
+    final String[] teams = {"Homeboyz", "Impala", "Kabras", "KCB", "Leos", "Mwamba", "Nakuru", "Nondies", "Oilers", "Quins"};
     final String[] positions = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"};
     final String[] kitSizes = {"XS", "S", "M", "L", "XL", "XXL"};
-    final String[] bootSizes = {"4", "4.5", "5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5",
-            "10", "10.5", "11", "11.5", "12", "13", "14", "15", "16", "17"};
+    final String[] bootSizes = {"5", "5.5", "6", "6.5", "7", "7.5", "8", "8.5", "9", "9.5",
+            "10", "10.5", "11", "11.5", "12", "13", "14"};
 
     AutoCompleteTextView teamNameTv, positionTv, bootSizeTv, kitSizeTv;
     ArrayAdapter<String> adapterItems;
@@ -265,7 +265,7 @@ public class ProfileEditPlayerActivity extends AppCompatActivity {
                             String firstname = "" + ds.child("firstname").getValue();
                             String lastname = "" + ds.child("lastname").getValue();
                             String dateofbirth = "" + ds.child("dateofbirth").getValue();
-                            String code = "" + Objects.requireNonNull(ds.child("countryCode").getValue()).toString();
+                            String code = "" + Objects.requireNonNull(ds.child("countryCode").getValue());
                             String phone = "" + ds.child("phone").getValue();
                             String username = "" + ds.child("username").getValue();
                             String teamname = "" + ds.child("teamname").getValue();

@@ -21,18 +21,17 @@ import com.google.firebase.database.ValueEventListener;
 import com.yegonron.rugbylms.R;
 import com.yegonron.rugbylms.models.User;
 
-
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.UserGroupsAdapterViewHolder> {
+public class UserGroupsManagerAdapter extends RecyclerView.Adapter<UserGroupsManagerAdapter.UserGroupsAdapterViewHolder> {
     Context context;
-    ArrayList<String> userGroupList;
+    ArrayList<String> userGroupManagerList;
     DatabaseReference database;
 
-    public UserGroupsAdapter(Context context, ArrayList<String> userGroupList, DatabaseReference database) {
+    public UserGroupsManagerAdapter(Context context, ArrayList<String> userGroupManagerList, DatabaseReference database) {
         this.context = context;
-        this.userGroupList = userGroupList;
+        this.userGroupManagerList = userGroupManagerList;
         this.database = database;
     }
 
@@ -49,15 +48,14 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
         UserAdapter userAdapter;
         ArrayList<User> list = new ArrayList<>();
         userAdapter = new UserAdapter(context, list);
-        holder.groupName.setText(userGroupList.get(position));
-        database.child("Users").orderByChild("accountType").equalTo(userGroupList.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
+        holder.groupName.setText(userGroupManagerList.get(position));
+        database.child("Users").orderByChild("accountType").equalTo(userGroupManagerList.get(position)).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         User user = new User((String) dataSnapshot.child("email").getValue(),
                                 Objects.requireNonNull(dataSnapshot.child("profileImage").getValue()).toString(), dataSnapshot.child("surname").getValue() + " " + dataSnapshot.child("firstname").getValue() + " " + dataSnapshot.child("lastname").getValue());
-
 
                         list.add(user);
 
@@ -78,7 +76,7 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
 
     @Override
     public int getItemCount() {
-        return userGroupList.size();
+        return userGroupManagerList.size();
     }
 
     public class UserGroupsAdapterViewHolder extends RecyclerView.ViewHolder {
@@ -98,7 +96,7 @@ public class UserGroupsAdapter extends RecyclerView.Adapter<UserGroupsAdapter.Us
             linearLayout = itemView.findViewById(R.id.LL2);
             layout = itemView.findViewById(R.id.users);
 
-            cardView.setOnClickListener(v -> switchVisibility(groupName, cardView, imageView, linearLayout, layout, userGroupList.get(getAdapterPosition()), database, context));
+            cardView.setOnClickListener(v -> switchVisibility(groupName, cardView, imageView, linearLayout, layout, userGroupManagerList.get(getAdapterPosition()), database, context));
         }
     }
 
