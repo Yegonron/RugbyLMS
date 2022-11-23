@@ -15,8 +15,8 @@ import com.yegonron.rugbylms.models.FixturesModel;
 import java.util.ArrayList;
 
 public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> {
-    Context context;
-    ArrayList<FixturesModel> list;
+    final Context context;
+    final ArrayList<FixturesModel> list;
 
     public GameAdapter(Context context, ArrayList<FixturesModel> list) {
         this.context = context;
@@ -48,10 +48,10 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.MyViewHolder> 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView title;
-        TextView fVenue;
-        TextView fDate;
-        TextView fTime;
+        final TextView title;
+        final TextView fVenue;
+        final TextView fDate;
+        final TextView fTime;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

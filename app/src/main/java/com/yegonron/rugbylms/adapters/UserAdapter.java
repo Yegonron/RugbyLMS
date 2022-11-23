@@ -17,8 +17,8 @@ import com.yegonron.rugbylms.models.User;
 import java.util.ArrayList;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> {
-    Context context;
-    ArrayList<User> list;
+    final Context context;
+    final ArrayList<User> list;
 
     public UserAdapter(Context context, ArrayList<User> list) {
         this.context = context;
@@ -49,8 +49,9 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name, email;
-        ImageView profileIv;
+        final TextView name;
+        final TextView email;
+        final ImageView profileIv;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);

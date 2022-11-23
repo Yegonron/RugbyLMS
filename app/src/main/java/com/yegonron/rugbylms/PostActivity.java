@@ -34,9 +34,6 @@ public class PostActivity extends AppCompatActivity {
     private EditText textTitle;
     private EditText textDesc;
 
-    private ProgressDialog progressDialog;
-    private FirebaseAuth firebaseAuth;
-
     //Declare an Instance of the Storage reference where we will upload the post photo
     private StorageReference mStorageRef;
     //Declare an Instance of the database reference  where we will be saving the post details
@@ -61,8 +58,8 @@ public class PostActivity extends AppCompatActivity {
         textDesc = findViewById(R.id.textDesc);
         textTitle = findViewById(R.id.textTitle);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(this);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        ProgressDialog progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Please wait..");
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -144,7 +141,7 @@ public class PostActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 //launch the main activity after posting
 
-                                                checkUserType();
+                                                onBackPressed();
                                             }
                                         });
                                     }
@@ -160,58 +157,6 @@ public class PostActivity extends AppCompatActivity {
                 });
             }
         });
-    }
-
-    private void checkUserType() {
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            String accountType = "" + ds.child("accountType").getValue();
-                            switch (accountType) {
-                                case "Player":
-                                    progressDialog.dismiss();
-                                    //user is player
-                                    startActivity(new Intent(PostActivity.this, MainPlayerActivity.class));
-                                    finish();
-                                    break;
-                                case "Coach":
-                                    progressDialog.dismiss();
-                                    //user is coach
-                                    startActivity(new Intent(PostActivity.this, MainCoachActivity.class));
-                                    finish();
-                                    break;
-                                case "Fan":
-                                    progressDialog.dismiss();
-                                    //user is fan
-                                    startActivity(new Intent(PostActivity.this, MainFanActivity.class));
-                                    finish();
-                                    break;
-                                case "Manager":
-                                    progressDialog.dismiss();
-                                    //user is manager
-                                    startActivity(new Intent(PostActivity.this, MainManagerActivity.class));
-                                    finish();
-                                    break;
-                                case "Admin":
-                                    progressDialog.dismiss();
-                                    //user is admin
-                                    startActivity(new Intent(PostActivity.this, MainAdminActivity.class));
-                                    finish();
-                                    break;
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-
     }
 
     @Override

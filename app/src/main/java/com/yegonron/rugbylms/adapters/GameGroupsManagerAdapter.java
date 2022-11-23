@@ -24,9 +24,9 @@ import com.yegonron.rugbylms.models.FixturesModel;
 import java.util.ArrayList;
 
 public class GameGroupsManagerAdapter extends RecyclerView.Adapter<GameGroupsManagerAdapter.GameGroupsAdapterViewHolder> {
-    Context context;
-    ArrayList<String> userGroupManagerList;
-    DatabaseReference database;
+    final Context context;
+    final ArrayList<String> userGroupManagerList;
+    final DatabaseReference database;
 
     public GameGroupsManagerAdapter(Context context, ArrayList<String> userGroupManagerList, DatabaseReference database) {
         this.context = context;
@@ -78,11 +78,12 @@ public class GameGroupsManagerAdapter extends RecyclerView.Adapter<GameGroupsMan
     }
 
     public class GameGroupsAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView groupName;
-        ImageView imageView;
-        CardView cardView;
-        RecyclerView recyclerView;
-        LinearLayout linearLayout, layout;
+        final TextView groupName;
+        final ImageView imageView;
+        final CardView cardView;
+        final RecyclerView recyclerView;
+        final LinearLayout linearLayout;
+        final LinearLayout layout;
 
         public GameGroupsAdapterViewHolder(@NonNull View itemView) {
             super(itemView);

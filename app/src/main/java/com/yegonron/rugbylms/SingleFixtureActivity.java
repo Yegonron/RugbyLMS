@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,7 +33,14 @@ import java.util.Objects;
 public class SingleFixtureActivity extends AppCompatActivity {
 
     // Declare the view objects
-    private TextView fixtureTitle, homeTeam, awayTeam, fixtureVenue, fixtureDate, fixtureTime, date, time, homeTeamScoreTv, awayTeamScoreTv;
+    private TextView fixtureTitle;
+    private TextView homeTeam;
+    private TextView awayTeam;
+    private TextView fixtureVenue;
+    private TextView fixtureDate;
+    private TextView fixtureTime;
+    private TextView date;
+    private TextView time;
     EditText hScore, aScore;
     private RelativeLayout scores;
 
@@ -46,6 +54,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
 
     AlertDialog dialog;
     private FirebaseRecyclerAdapter adapter;
+    private RecyclerView recyclerView;
     String currentUserID = null;
 
     @Override
@@ -61,8 +70,8 @@ public class SingleFixtureActivity extends AppCompatActivity {
         fixtureTime = findViewById(R.id.fixtureTimeTv);
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
-        homeTeamScoreTv = findViewById(R.id.homeTeamScoreTv);
-        awayTeamScoreTv = findViewById(R.id.awayTeamScoreTv);
+        TextView homeTeamScore = findViewById(R.id.homeTeamScoreTv);
+        TextView awayTeamScore = findViewById(R.id.awayTeamScoreTv);
 
         scores = findViewById(R.id.scoresRl);
         hScore = findViewById(R.id.homeTeamScoreEt);
@@ -78,7 +87,7 @@ public class SingleFixtureActivity extends AppCompatActivity {
 
         fixture_key = getIntent().getExtras().getString("FixtureID");
 
-        //Initialize the database reference/node where you will be storing comments
+        //Initialize the database reference/node where you will be storing scores
         scoresRef = FirebaseDatabase.getInstance().getReference().child("Scores").child(fixture_key);
         //Initialize an instance of  Firebase Authentication
         firebaseAuth = FirebaseAuth.getInstance();
@@ -124,6 +133,8 @@ public class SingleFixtureActivity extends AppCompatActivity {
                         newScores.child("profileImage").setValue(dataSnapshot.child("profileImage").getValue());
                         newScores.child("username").setValue(dataSnapshot.child("username").getValue());
 
+                        newScores.child("homeTeam").setValue(dataSnapshot.child("homeTeam").getValue());
+                        newScores.child("awayTeam").setValue(dataSnapshot.child("awayTeam").getValue());
                         newScores.child("fixtureTitle").setValue(dataSnapshot.child("fixtureTitle").getValue());
                         newScores.child("fixtureDate").setValue(dataSnapshot.child("fixtureDate").getValue());
 
@@ -187,32 +198,21 @@ public class SingleFixtureActivity extends AppCompatActivity {
             }
         });
 
-        loadScores();
-
+//        scoresRef.child(fixture_key).addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String home_team_score = (String) dataSnapshot.child("homeTeamScore").getValue();
+//                String away_team_score = (String) dataSnapshot.child("awayTeamScore").getValue();
+//
+//                homeTeamScore.setText(home_team_score);
+//                awayTeamScore.setText(away_team_score);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
-
-    private void loadScores() {
-
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Scores");
-        ref.orderByChild("uid").equalTo(fixture_key)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            String hScore = "" + ds.child("homeTeamScore").getValue();
-                            String aScore = "" + ds.child("awayTeamScore").getValue();
-
-                            homeTeamScoreTv.setText(hScore);
-                            awayTeamScoreTv.setText(aScore);
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-    }
-
 }

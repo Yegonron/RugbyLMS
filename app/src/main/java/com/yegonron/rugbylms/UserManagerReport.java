@@ -42,10 +42,6 @@ public class UserManagerReport extends AppCompatActivity {
     private HorizontalBarChart barChart;
 
     private FirebaseAuth firebaseAuth;
-    //Declare an Instance of the database reference  where we have user details
-    private DatabaseReference mDatabaseUsers;
-    //Declare a Instance of currently logged in user
-    private FirebaseUser mCurrentUser;
 
     ArrayList<BarEntry> barArraylist;
     ArrayList<PieEntry> onlineUsers;
@@ -66,9 +62,11 @@ public class UserManagerReport extends AppCompatActivity {
         //Declare an Instance of firebase authentication
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         //Initialize the instance of the firebase user
-        mCurrentUser = mAuth.getCurrentUser();
+        //Declare a Instance of currently logged in user
+        FirebaseUser mCurrentUser = mAuth.getCurrentUser();
         //Get currently logged in user
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        //Declare an Instance of the database reference  where we have user details
+        DatabaseReference mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
 
         colors = new ArrayList<>();
         for (int color : ColorTemplate.MATERIAL_COLORS) {

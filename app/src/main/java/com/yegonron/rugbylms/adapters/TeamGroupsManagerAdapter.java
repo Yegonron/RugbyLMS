@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TeamGroupsManagerAdapter extends RecyclerView.Adapter<TeamGroupsManagerAdapter.TeamListAdapterViewHolder> {
-    Context context;
-    ArrayList<String> teamGroupManagerList;
-    DatabaseReference database;
+    final Context context;
+    final ArrayList<String> teamGroupManagerList;
+    final DatabaseReference database;
 
     public TeamGroupsManagerAdapter(Context context, ArrayList<String> teamGroupManagerList, DatabaseReference database) {
         this.context = context;
@@ -80,11 +80,12 @@ public class TeamGroupsManagerAdapter extends RecyclerView.Adapter<TeamGroupsMan
     }
 
     public class TeamListAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView groupName;
-        ImageView imageView;
-        CardView cardView;
-        RecyclerView recyclerView;
-        LinearLayout linearLayout, layout;
+        final TextView groupName;
+        final ImageView imageView;
+        final CardView cardView;
+        final RecyclerView recyclerView;
+        final LinearLayout linearLayout;
+        final LinearLayout layout;
 
         public TeamListAdapterViewHolder(@NonNull View itemView) {
             super(itemView);

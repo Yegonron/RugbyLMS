@@ -115,7 +115,6 @@
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
-                        android:layout_marginBottom="5dp"
                         android:layout_toEndOf="@id/homeTeamTv"
                         android:hint="Scores"
                         android:textColor="@color/white"
@@ -131,7 +130,10 @@
                         android:id="@+id/awayTeamTv"
                         android:layout_width="250dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:text="away Team"
                         android:textColor="@color/white" />
 
@@ -139,7 +141,10 @@
                         android:id="@+id/awayTeamScoreTv"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
                         android:layout_toEndOf="@id/awayTeamTv"
                         android:text="Scores"
                         android:textColor="@color/white" />
@@ -225,6 +230,5 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
 
 </RelativeLayout>

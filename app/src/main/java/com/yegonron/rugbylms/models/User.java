@@ -1,7 +1,10 @@
 package com.yegonron.rugbylms.models;
 
 public class User {
-    String PID, PROFILE_IMAGE, PLAYER_NAME, ROLL;
+    final String PID;
+    final String PROFILE_IMAGE;
+    final String PLAYER_NAME;
+    String ROLL;
 
 
     public User(String PID, String PROFILE_IMAGE, String PLAYER_NAME) {

@@ -23,7 +23,13 @@
             android:name=".AboutUsActivity"
             android:exported="false" />
         <activity
+            android:name=".AdminAttendanceActivity"
+            android:exported="false" />
+        <activity
             android:name=".AttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CoachAttendanceActivity"
             android:exported="false" />
         <activity
             android:name=".ForgetPasswordActivity"
@@ -122,6 +128,12 @@
             android:name=".SettingsActivity"
             android:exported="false" />
         <activity
+            android:name=".SheetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SheetListActivity"
+            android:exported="false" />
+        <activity
             android:name=".SignUpActivity"
             android:exported="false" />
         <activity
@@ -151,6 +163,9 @@
         <activity
             android:name=".UpdateLeagueTableActivity"
             android:exported="true" />
+        <activity
+            android:name=".UpdatePlayerAttendanceActivity"
+            android:exported="false" />
         <activity
             android:name=".UserList"
             android:exported="false" />

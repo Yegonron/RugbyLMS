@@ -42,7 +42,6 @@
         app:cardCornerRadius="8dp">
 
         <LinearLayout
-            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/bg3"
@@ -88,7 +87,6 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout02"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
@@ -188,7 +186,6 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout03"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
@@ -290,7 +287,6 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:id="@+id/LinearLayout04"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 

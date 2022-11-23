@@ -25,9 +25,9 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class UserGroupsManagerAdapter extends RecyclerView.Adapter<UserGroupsManagerAdapter.UserGroupsAdapterViewHolder> {
-    Context context;
-    ArrayList<String> userGroupManagerList;
-    DatabaseReference database;
+    final Context context;
+    final ArrayList<String> userGroupManagerList;
+    final DatabaseReference database;
 
     public UserGroupsManagerAdapter(Context context, ArrayList<String> userGroupManagerList, DatabaseReference database) {
         this.context = context;
@@ -80,11 +80,12 @@ public class UserGroupsManagerAdapter extends RecyclerView.Adapter<UserGroupsMan
     }
 
     public class UserGroupsAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView groupName;
-        ImageView imageView;
-        CardView cardView;
-        RecyclerView recyclerView;
-        LinearLayout linearLayout, layout;
+        final TextView groupName;
+        final ImageView imageView;
+        final CardView cardView;
+        final RecyclerView recyclerView;
+        final LinearLayout linearLayout;
+        final LinearLayout layout;
 
         public UserGroupsAdapterViewHolder(@NonNull View itemView) {
             super(itemView);

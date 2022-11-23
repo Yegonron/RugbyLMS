@@ -31,6 +31,12 @@
             tools:ignore="HardcodedText" />
 
         <item
+            android:id="@+id/updatePlayerAttendance"
+            android:icon="@drawable/ic_team_gray"
+            android:title="Update Player Attendance"
+            tools:ignore="HardcodedText" />
+
+        <item
             android:id="@+id/recordGameFixtures"
             android:icon="@drawable/ic_record_game_fixtures_gray"
             android:title="Record Game Fixtures"
